@@ -26,8 +26,8 @@ const App: React.FC = () => {
   // } = theme.useToken();
 
   return (
-    <Layout style={{ height: "100vh" }}>
-      <Sider breakpoint="lg" collapsedWidth="0">
+    <Layout style={{ width: '100vw' ,height: '100vh' }}>
+      <Sider breakpoint="lg" collapsedWidth="0" >
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
@@ -37,9 +37,11 @@ const App: React.FC = () => {
           onClick={(e) => navigate(e.key)}
         />
       </Sider>
-      <Layout>
+
+        <div style={{ width: '100vw' ,height: '100vh' }}>
         <Outlet />
-      </Layout>
+        </div>
+
     </Layout>
   );
 };
