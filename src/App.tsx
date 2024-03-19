@@ -9,8 +9,8 @@ function Fullfill() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Full />}>
-          <Route path="/Warehouse" element={<Warehouse />} />
-          <Route path="/Item" element={<Item />} />
+          <Route path="/warehouse" element={<Warehouse />} />
+          <Route path="/item" element={<Item />} />
         </Route>
       </Routes>
     </BrowserRouter>
