@@ -96,13 +96,11 @@ const rowSelection = {
 
 const Warehouse = () => {
   return (
-    <>
+    <div>
       <Card title="คลังสินค้า" >
         <Button>เพิ่ม</Button>
         {" "}
         <Button>ลบ</Button>
-
-        <div>
 
       <Divider />
 
@@ -114,9 +112,9 @@ const Warehouse = () => {
         columns={columns}
         dataSource={data}
       />
-    </div>
+    
       </Card>
-    </>
+    </div>
 
   )
 }
