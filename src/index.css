@@ -17,8 +17,17 @@ body {
 }
 
 .ant-menu .ant-menu-item-selected {
-  background: #ff4d4f;
+  background: #1e2427;
+  border-radius: inherit;
 }
 
+.ant-menu .ant-menu-submenu-title .ant-menu-item-icon{
+  /* color: red; */
+  text-transform: none;
+}
+
+/* .ant-layout-header{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+} */
 
 
