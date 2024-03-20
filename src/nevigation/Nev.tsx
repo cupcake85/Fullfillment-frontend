@@ -14,7 +14,6 @@ const items: MenuItem[] = [
     children: [
       {
         key: "/warehouse",
-        icon: React.createElement(HomeOutlined),
         label: "Warehouse",
       },
     ],
@@ -26,7 +25,6 @@ const items: MenuItem[] = [
     children: [
       {
         key: "/item",
-        icon: React.createElement(ProductOutlined),
         label: "Item",
       },
     ],
