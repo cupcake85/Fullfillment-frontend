@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Card, Modal, Table, Input  } from 'antd';
+import { Button, Card, Modal, Table, Input } from 'antd';
 import '../warehouse.css';
+import { TableRowSelection } from 'antd/es/table/interface';
 
 
 const Warehouse = () => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hisModalOpen, setHisModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -16,6 +19,10 @@ const Warehouse = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const showHisModal = () => {
+    setHisModalOpen(true);
   };
 
   interface DataType {
@@ -31,7 +38,7 @@ const Warehouse = () => {
   const columns = [
     {
       title: '#',
-      dataIndex: 'key'
+      dataIndex: 'key',
     },
     {
       title: 'SKU',
@@ -60,18 +67,42 @@ const Warehouse = () => {
     {
       title: 'Action',
       render: () => (
-        <span style={{ display: 'flex', flexDirection: 'column' }} >
-          <Button type="primary" style={{ marginBottom: '8px' }} onClick={showModal}>แก้ไข</Button>{" "}
-          <Modal title="แก้ไขสินค้า" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <div style={{ display: 'flex', flexDirection: 'column' , borderRadius:20}} >
-              SKU<Input type='number' />
-              สินค้าคงเหลือ <Input type='text' />
-              เพิ่ม/ลดสินค้า<Input type='text' />
-              หมายเหตุ <Input type='text' />
-            </div>
-          </Modal>
-          <Button type="default">ประวัติ</Button>
-        </span>
+        <>
+          <span style={{ display: 'flex', flexDirection: 'column', width: '70px' }} >
+            <Button type="primary" style={{ backgroundColor: 'grey' }} onClick={showModal}>แก้ไข</Button>
+            <Modal title="แก้ไขสินค้า" open={isModalOpen}
+              footer={[
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '50px' }}>
+                  <Button style={{ backgroundColor: 'red', color: 'white', borderRadius: '20px' }}
+                    onClick={handleCancel}>บันทึก</Button>
+                  <Button onClick={handleCancel}
+                    style={{ backgroundColor: 'black', color: 'white', borderRadius: '20px' }}>ยกเลิก</Button>
+                </div>
+              ]}
+            >
+              <span style={{ display: 'flex', flexDirection: 'column', borderRadius: 20 }} >
+                SKU<Input type='text' />
+                สินค้าคงเหลือ <Input type='text' />
+                เพิ่ม/ลดสินค้า<Input type='number' />
+                หมายเหตุ <Input type='text' />
+              </span>
+            </Modal>
+            <Button type="default" onClick={showHisModal}>ประวัติ</Button>
+            <Modal title="Basic Modal" open={hisModalOpen} onOk={handleOk} onCancel={handleCancel}
+              footer={[
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '50px' }}>
+                  <Button style={{ backgroundColor: 'red', color: 'white', borderRadius: '20px' }}
+                    onClick={handleCancel}>บันทึก</Button>
+                  <Button onClick={handleCancel}
+                    style={{ backgroundColor: 'black', color: 'white', borderRadius: '20px' }}>ยกเลิก</Button>
+                </div>
+              ]}>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+            </Modal>
+          </span>
+        </>
       ),
     }
   ];
@@ -87,7 +118,7 @@ const Warehouse = () => {
       total: 100
     },
     {
-      key: '1',
+      key: '2',
       name: 'SunDose',
       sku: "WHO050",
       detail: 'New York No. 1 Lake Park',
@@ -95,47 +126,18 @@ const Warehouse = () => {
       storage: 'Zone A/ Rack A2',
       total: 100
     },
-    {
-      key: '1',
-      name: 'SunDose',
-      sku: "WHO050",
-      detail: 'New York No. 1 Lake Park',
-      store: 'LRT White',
-      storage: 'Zone A/ Rack A2',
-      total: 100
-    },
-    {
-      key: '1',
-      name: 'SunDose',
-      sku: "WHO050",
-      detail: 'New York No. 1 Lake Park',
-      store: 'LRT White',
-      storage: 'Zone A/ Rack A2',
-      total: 100
-    },
-    {
-      key: '1',
-      name: 'SunDose',
-      sku: "WHO050",
-      detail: 'New York No. 1 Lake Park',
-      store: 'LRT White',
-      storage: 'Zone A/ Rack A2',
-      total: 100
-    },
-
 
   ];
 
-  // const rowSelection = {
-  //   onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-  //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  //   },
-  //   getCheckboxProps: (record: DataType) => ({
-  //     disabled: record.name === 'Disabled User', // Column configuration not to be checked
-  //     name: record.name,
-  //   }),
-  // };
+  const onSelectChange = (selectedRowKey: React.Key[]) => {
+    setSelectedRowKeys(selectedRowKey);
+  };
 
+  const rowSelection : TableRowSelection<DataType> = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    type: 'radio',
+  };
 
   return (
     <Card
@@ -143,21 +145,22 @@ const Warehouse = () => {
       bordered={false}
       style={{
         backgroundColor: 'white',
-        margin: 46,
+        margin: 65,
         borderRadius: 20
       }}>
       <Button className='btn-manage'>เพิ่ม</Button> {" "}
       <Button className='btn-manage'>ลด</Button>
       <Table
-        // pagination={{ defaultCurrent: 6, total: 500 }}
+        rowSelection={rowSelection}
+        pagination={{ defaultCurrent: 6, total: 500 }}
         style={{ backgroundColor: ' #e4e5e5' }}
         dataSource={data}
         columns={columns}
-        scroll={{ x: 1000 }} //ความกว้าง scroll ได้ 1200
+        scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
       />
     </Card>
 
   )
 }
 
-export default Warehouse
+export default Warehouse;
