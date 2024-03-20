@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Divider, Radio, Row, Table } from "antd";
 import type { TableColumnsType } from "antd";
+import axios from "axios";
 
 interface DataType {
   key: React.Key;
@@ -43,6 +44,9 @@ const columns: TableColumnsType<DataType> = [
     dataIndex: "total",
   },
 ];
+
+
+
 
 const data: DataType[] = [
   {
@@ -99,6 +103,21 @@ const rowSelection = {
 };
 
 const Warehouse = () => {
+const [warehouse, setWarehouse] = useState ([])
+
+  useEffect(() => {
+    getWarehouse();
+    
+  }, []);
+
+  const getWarehouse = async() =>
+{
+  const request = await axios.get('http://192.168.2.57:3000/item/')
+  console.log (request)
+  setWarehouse(request.data.data)
+}
+
+
   return (
     <div >
       <Card title="คลังสินค้า">
@@ -110,7 +129,7 @@ const Warehouse = () => {
           ...rowSelection,
         }}
         columns={columns}
-        dataSource={data}
+        dataSource={warehouse}
       />
     </div>
   );

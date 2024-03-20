@@ -1,48 +1,90 @@
 import React, { useState } from "react";
-import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
-import { Layout, Menu, theme } from "antd";
+import { ProductOutlined, HomeOutlined } from "@ant-design/icons";
+import { Layout, Menu, Image, Row, Col } from "antd";
 import { useNavigate, Outlet } from "react-router-dom";
+import type { MenuProps } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
-
-const items = [
-  {
-    key: "/Warehouse",
-    icon: React.createElement(UserOutlined),
-    label: "Warehouse",
-  },
-  {
-    key: "/Item",
-    icon: React.createElement(VideoCameraOutlined),
-    label: "Item",
-  },
-];
+const iconDemo =
+  "https://th.bing.com/th/id/OIP.ZTYY0ApuIc1CkNrORfO5JwAAAA?w=228&h=182&c=7&r=0&o=5&dpr=1.6&pid=1.7";
 
 const App: React.FC = () => {
   const navigate = useNavigate();
+  type MenuItem = Required<MenuProps>["items"][number];
+  const [c, setC] = useState<string>("");
+  const items: MenuItem[] = [
+    {
+      key: "/warehouse",
+      icon: React.createElement(
+        HomeOutlined,
+        c === "/warehouse" ? { style: { color: "red" } } : undefined
+      ),
+      label: "Warehouse",
+      children: [
+        {
+          key: "/warehouse",
+          label: "คลังสินค้า",
+        },
+      ],
+    },
+    {
+      key: "/item",
+      icon: React.createElement(
+        ProductOutlined,
+        c === "/item" ? { style: { color: "red" } } : undefined
+      ),
+      label: "Item",
+      children: [
+        {
+          key: "/item",
+          label: "จัดการ",
+        },
+      ],
+    },
+  ];
 
-  // const {
-  //   token: { colorBgContainer, borderRadiusLG },
-  // } = theme.useToken();
+  const onClick = (e: string) => {
+    navigate(e);
+    setC(e);
+  };
 
+  
   return (
-    <Layout style={{ width: '100vw' ,height: '100vh' }}>
-      <Sider breakpoint="lg" collapsedWidth="0" >
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["2"]}
-          items={items}
-          onClick={(e) => navigate(e.key)}
-        />
-      </Sider>
+    <>
+      <Layout style={{ width: "100vw", height: "100vh" }}>
+        <Header
+          style={{
+            // position: 'sticky',         ฟิกโพซิชัน
+            zIndex: 10,
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          <Image src={iconDemo} style={{ width: "64px", height: "64px" }} />
+        </Header>
+        <Layout>
+          <Sider
+            breakpoint="lg"
+            collapsedWidth="0"
+            style={{ background: "black" }}
+          >
+            <div className="demo-logo-vertical" /*สไลด์ด้านข้าง*/ />
 
-        <div style={{ width: '100vw' ,height: '100vh' }}>
-        <Outlet />
-        </div>
-
-    </Layout>
+            <Menu
+              theme="dark"
+              style={{ background: "black" }}
+              mode="inline"
+              defaultSelectedKeys={["/"]}
+              items={items}
+              onClick={(e) => onClick(e.key)}
+            />
+          </Sider>
+          <div style={{ width: "100vw", height: "100vh" }}>
+            <Outlet />
+          </div>
+        </Layout>
+      </Layout>
+    </>
   );
 };
 

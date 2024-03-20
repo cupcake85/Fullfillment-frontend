@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -11,4 +15,19 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+.ant-menu .ant-menu-item-selected {
+  background: #1e2427;
+  border-radius: inherit;
+}
+
+.ant-menu .ant-menu-submenu-title .ant-menu-item-icon{
+  /* color: red; */
+  text-transform: none;
+}
+
+/* .ant-layout-header{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+} */
+
 
