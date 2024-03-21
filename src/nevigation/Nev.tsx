@@ -48,13 +48,12 @@ const App: React.FC = () => {
     setC(e);
   };
 
-  
   return (
     <>
       <Layout style={{ width: "100vw", height: "100vh" }}>
         <Header
           style={{
-            // position: 'sticky',         ฟิกโพซิชัน
+            position: "sticky",
             zIndex: 10,
             backgroundColor: "#fff",
             boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
@@ -66,7 +65,7 @@ const App: React.FC = () => {
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            style={{ background: "black" }}
+            style={{ background: "black", width: "100vw", height: "100vh" }}
           >
             <div className="demo-logo-vertical" /*สไลด์ด้านข้าง*/ />
 
