@@ -10,6 +10,7 @@ import {
   TableColumnsType,
   Space,
   Modal,
+  Form,
 } from "antd";
 import {
   DeleteFilled,
@@ -17,6 +18,7 @@ import {
   PlusCircleFilled,
   ProfileFilled,
 } from "@ant-design/icons";
+import ItemInput from "../componant/item-input";
 
 const Item = () => {
   type SizeType = ConfigProviderProps["componentSize"];
@@ -49,6 +51,20 @@ const Item = () => {
     "checkbox"
   );
 
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // const showModal = () => {
+  //   setIsModalOpen(true);
+  // };
+
+  // const handleOk = () => {
+  //   setIsModalOpen(false);
+  // };
+
+  // const handleCancel = () => {
+  //   setIsModalOpen(false);
+  // };
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -62,6 +78,8 @@ const Item = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const [form] = Form.useForm();
 
   const columns: TableColumnsType<DataType> = [
     {
@@ -88,62 +106,62 @@ const Item = () => {
     {
       title: "",
       key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button onClick={showModal}>Edit</Button>
-          <Modal
-            style={{ backgroundColor: "#40a9ff" }}
-            title="จัดการสินค้า"
-            centered
-            width={800}
-            open={isModalOpen}
-            onOk={handleOk}
-            onCancel={handleCancel}
-          >
-            <Row align={"middle"}>
-              <Col span={3}>
-                <p>SKU</p>
-              </Col>
-              <Col>
-                <input></input>
-              </Col>
-            </Row>
-            <Row align={"middle"}>
-              <Col span={3}>
-                <p>ชื่อสินค้า</p>
-              </Col>
-              <Col>
-                <input></input>
-              </Col>
-            </Row>
-            <Row align={"middle"}>
-              <Col span={3}>
-                <p>หมายเหตุ</p>
-              </Col>
-              <Col>
-                <input></input>
-              </Col>
-            </Row>
-            <Row align={"middle"}>
-              <Col span={3}>
-                <p>ลูกค้า</p>
-              </Col>
-              <Col>
-                <input></input>
-              </Col>
-            </Row>
-            <Row align={"middle"}>
-              <Col span={3}>
-                <p>คำอธิบาย</p>
-              </Col>
-              <Col>
-                <input></input>
-              </Col>
-            </Row>
-          </Modal>
-          <Button>Delete</Button>
-        </Space>
-      ),
+      // render: (_, record) => (
+      //   // <Space size="middle">
+      //   //   <Button onClick={showModal}>Edit</Button>
+      //   //   <Modal
+      //   //     style={{ backgroundColor: "#40a9ff" }}
+      //   //     title="จัดการสินค้า"
+      //   //     centered
+      //   //     width={800}
+      //   //     open={isModalOpen}
+      //   //     onOk={handleOk}
+      //   //     onCancel={handleCancel}
+      //   //   >
+      //   //     <Row align={"middle"}>
+      //   //       <Col span={3}>
+      //   //         <p>SKU</p>
+      //   //       </Col>
+      //   //       <Col>
+      //   //         <input></input>
+      //   //       </Col>
+      //   //     </Row>
+      //   //     <Row align={"middle"}>
+      //   //       <Col span={3}>
+      //   //         <p>ชื่อสินค้า</p>
+      //   //       </Col>
+      //   //       <Col>
+      //   //         <input></input>
+      //   //       </Col>
+      //   //     </Row>
+      //   //     <Row align={"middle"}>
+      //   //       <Col span={3}>
+      //   //         <p>หมายเหตุ</p>
+      //   //       </Col>
+      //   //       <Col>
+      //   //         <input></input>
+      //   //       </Col>
+      //   //     </Row>
+      //   //     <Row align={"middle"}>
+      //   //       <Col span={3}>
+      //   //         <p>ลูกค้า</p>
+      //   //       </Col>
+      //   //       <Col>
+      //   //         <input></input>
+      //   //       </Col>
+      //   //     </Row>
+      //   //     <Row align={"middle"}>
+      //   //       <Col span={3}>
+      //   //         <p>คำอธิบาย</p>
+      //   //       </Col>
+      //   //       <Col>
+      //   //         <input></input>
+      //   //       </Col>
+      //   //     </Row>
+      //   //   </Modal>
+      //   //   <Button>Delete</Button>
+      //   // </Space>
+      // ),
     },
   ];
 
@@ -205,7 +223,7 @@ const Item = () => {
               >
                 ลบ
               </Button>{" "}
-              <Button
+              {/* <Button
                 style={{ backgroundColor: "#262626" }}
                 type="primary"
                 shape="round"
@@ -213,7 +231,19 @@ const Item = () => {
                 size={size}
               >
                 สินค้า
+              </Button> */}
+
+              <Button
+                style={{ backgroundColor: "#262626" }}
+                type="primary"
+                onClick={showModal}
+              >
+                Open modal
               </Button>
+              <Modal title="Basic Modal" open={isModalOpen} onCancel={handleCancel} footer={null}>
+                <ItemInput form={form} handleCancel={handleCancel} />
+              </Modal>
+
             </Col>
           </Row>
         </Col>
