@@ -5,27 +5,6 @@ import { useNavigate, Outlet } from "react-router-dom";
 import type { MenuProps } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
-<<<<<<< HEAD
-
-
-const items = [
-  {
-    key: "/Warehouse",
-    icon: React.createElement(UserOutlined),
-    label: "Warehouse",
-    
-  },
-  {
-    key: "/Item",
-    icon: React.createElement(VideoCameraOutlined),
-    label: "Item",
-  },
-];
-
-const App: React.FC = () => {
-  const navigate = useNavigate();
-  
-=======
 const iconDemo =
   "https://th.bing.com/th/id/OIP.ZTYY0ApuIc1CkNrORfO5JwAAAA?w=228&h=182&c=7&r=0&o=5&dpr=1.6&pid=1.7";
 
@@ -63,7 +42,6 @@ const App: React.FC = () => {
       ],
     },
   ];
->>>>>>> origin/main
 
   const onClick = (e: string) => {
     navigate(e);
@@ -72,24 +50,6 @@ const App: React.FC = () => {
 
   
   return (
-<<<<<<< HEAD
-    <Layout style={{ width: '100vw' ,height: '100vh' }}>
-      <Sider breakpoint="lg" collapsedWidth="0" >
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["2"]}
-          items={items}
-          
-          onClick={(e) => navigate(e.key)} 
-        />
-      </Sider>
-        <div style={{ width: '100vw', overflow:'auto' }}>
-          <Outlet />
-        </div>
-    </Layout>
-=======
     <>
       <Layout style={{ width: "100vw", height: "100vh" }}>
         <Header
@@ -125,7 +85,6 @@ const App: React.FC = () => {
         </Layout>
       </Layout>
     </>
->>>>>>> origin/main
   );
 };
 
