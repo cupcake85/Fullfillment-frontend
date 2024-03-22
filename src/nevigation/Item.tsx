@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   ConfigProviderProps,
@@ -9,36 +9,49 @@ import {
   TableColumnsType,
   Table,
   Space,
-  Input,
   Form,
 } from "antd";
 import {
   DeleteFilled,
-  FileAddFilled,
   PlusCircleFilled,
   ProfileFilled,
 } from "@ant-design/icons";
 import ItemInput from "../component/item-input";
-import form from "antd/es/form";
+import axios from "axios";
+// import ItemEdit from "../component/item-edit";
 
 const Item = () => {
   //------------------------------------------------------------Table----------------------------------------------------------------------------------------
   interface DataType {
-    key: React.Key;
+    id: React.Key;
     sku: string;
     name: string;
     shop: string;
-    note: string;
+    details: string;
   }
 
-  const [selectionType, setSelectionType] = useState<"checkbox" | "radio">(
-    "checkbox"
-  );
+  const [form] = Form.useForm();
+  const [itemData, setItemData] = useState([]);
+  const [selectionType] = useState<"checkbox" | "radio">( "checkbox" );
+
+  useEffect(() => {
+    getItemData();
+  }, []);
+
+  const onClick = (value: any) => {
+    showModal()
+    form.setFieldsValue({
+      id: value.id,
+      sku: value.sku,
+      details: value.details,
+      name: value.name,
+    })
+  }
 
   const columns: TableColumnsType<DataType> = [
     {
       title: "#",
-      dataIndex: "key",
+      dataIndex: "id",
     },
     {
       title: "SKU",
@@ -50,22 +63,18 @@ const Item = () => {
       render: (text: string) => <a>{text}</a>,
     },
     {
-      title: "ร้านค้า",
-      dataIndex: "shop",
-    },
-    {
       title: "หมายเหตุ",
-      dataIndex: "note",
+      dataIndex: "details",
     },
     //------------------------------------------------------------edit modal----------------------------------------------------------------------------------------
     {
       title: "",
       key: "action",
-      render: (_, record) => (
+      render: (value: any, record) => (
         <Space size="middle">
           <Col>
             <Button
-              onClick={showModal}
+              onClick={() => showModalAdd(value)}
               size="small"
               style={{
                 width: 60,
@@ -75,7 +84,7 @@ const Item = () => {
             >
               Edit
             </Button>
-            <Button size="small" style={{ width: 60 }}>
+            <Button size="small" style={{ width: 60 }} >
               Delete
             </Button>
           </Col>
@@ -86,15 +95,8 @@ const Item = () => {
             onOk={handleOk}
             onCancel={handleCancel}
             width={600}
+            footer={null}
           >
-            <Form
-              name="basic"
-              labelCol={{ span: 8 }}
-              wrapperCol={{ span: 16 }}
-              style={{ maxWidth: 600 }}
-              initialValues={{ remember: true }}
-              autoComplete="off"
-            ></Form>
           </Modal>
         </Space>
       ),
@@ -102,50 +104,21 @@ const Item = () => {
     //------------------------------------------------------------edit modal----------------------------------------------------------------------------------------
   ];
 
-  const data: DataType[] = [
-    {
-      key: "1",
-      sku: "",
-      name: "",
-      shop: "",
-      note: "",
-    },
-    {
-      key: "2",
-      sku: "",
-      name: "",
-      shop: "",
-      note: "",
-    },
-    {
-      key: "3",
-      sku: "",
-      name: "",
-      shop: "",
-      note: "",
-    },
-    {
-      key: "4",
-      sku: "",
-      name: "",
-      shop: "",
-      note: "",
-    },
-  ];
-
   const rowSelection = {
+    type: selectionType,
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
     getCheckboxProps: (record: DataType) => ({
-      disabled: record.name === "Disabled User", // Column configuration not to be checked
       name: record.name,
     }),
   };
+
+  const getItemData = async () => {
+    const request = await axios.get('http://192.168.2.57:3000/items/')
+    console.log('request', request)
+    setItemData(request.data.data)
+  }
   //------------------------------------------------------------Table----------------------------------------------------------------------------------------
   //------------------------------------------------------------Modal----------------------------------------------------------------------------------------
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -154,7 +127,10 @@ const Item = () => {
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const showModalAdd = () => {
+  const showModalAdd = (value?:any) => {
+    if(value ){
+      form.setFieldsValue(value)
+    }
     setIsModalOpenAdd(true);
   };
 
@@ -173,12 +149,11 @@ const Item = () => {
   const handleCancelAdd = () => {
     setIsModalOpenAdd(false);
   };
-  const [form] = Form.useForm();
   //------------------------------------------------------------Modal----------------------------------------------------------------------------------------
 
   type SizeType = ConfigProviderProps["componentSize"];
 
-  const [size, setSize] = useState<SizeType>("large");
+  const [size] = useState<SizeType>("large");
 
   return (
     <div>
@@ -249,14 +224,12 @@ const Item = () => {
             <Col span={20}>
               <br></br>
               <Table
-                rowSelection={{
-                  type: selectionType,
-                  ...rowSelection,
-                }}
+                rowSelection={rowSelection}
                 columns={columns}
-                dataSource={data}
-                pagination={{ defaultCurrent: 1, total: 500 }}
+                dataSource={itemData}
+                pagination={{ defaultCurrent: 1, total:50}}
                 scroll={{ x: 400, y: 350 }}
+                style={{ backgroundColor: '#e4e5e5' }}
               />
             </Col>
           </Row>

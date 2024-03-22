@@ -12,8 +12,27 @@ const ItemInput = ({
   const [api, contextHolder] = notification.useNotification();
 
   const handleSubmit = async (value: any) => {
+    if(value.id){
+      try {
+        await axios.put("http://192.168.2.57:3000/items/" + value.id, value );
+        api.success({
+        message: "Success",
+        description: "Item update successfully",
+        });
+      } catch(error) {
+        api.error({
+          message: "Error",
+          // description: error.message ,
+        });
+      } finally {
+        form.resetFields();
+        handleCancel();
+      }
+      
+    } else {
     try {
-      await axios.post("http://localhost:3001/items", value);
+        console.log(value)
+      await axios.post("http://192.168.2.57:3000/items/", value);
       api.success({
         message: "Success",
         description: "Item added successfully",
@@ -21,12 +40,14 @@ const ItemInput = ({
     } catch (error) {
       api.error({
         message: "Error",
-        description: "Error while adding item",
+        // description: error.message ,
       });
+      console.log(error)
     } finally {
       form.resetFields();
       handleCancel();
     }
+  }
   };
 
   return (
@@ -39,16 +60,18 @@ const ItemInput = ({
         <Input></Input>
       </Form.Item>
 
-      <Form.Item name="detail" label="detail">
+      <Form.Item name="details" label="details">
         <Input></Input>
       </Form.Item>
 
-      <Form.Item>
+      <Form.Item name="id" hidden>
+        <Input></Input>
+      </Form.Item>
+
         <Button type="primary" htmlType="submit">
             Submit
         </Button>
         <Button onClick={handleCancel}>Cancel</Button>
-      </Form.Item>
       {contextHolder}
     </Form>
   );
