@@ -17,8 +17,12 @@ body {
 }
 
 .ant-menu .ant-menu-item-selected {
-  background: #1e2427;
+  background:  #272a2a;
   border-radius: inherit;
+}
+
+.ant-btn-default {
+  background-color: rgb(175, 175, 175);
 }
 
 .ant-menu .ant-menu-submenu-title .ant-menu-item-icon{
@@ -26,8 +30,7 @@ body {
   text-transform: none;
 }
 
-/* .ant-layout-header{
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
-} */
-
+.ant-menu-dark.ant-menu-inline .ant-menu-sub.ant-menu-inline{
+  background-color: #2F353A;
+}
 
