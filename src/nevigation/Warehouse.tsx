@@ -3,7 +3,6 @@ import { Button, Card, Modal, Table, Input, Divider, Form, InputNumber } from 'a
 import '../warehouse.css';
 import axios from 'axios';
 import { useForm } from 'antd/es/form/Form';
-import ItemInput from "../components/plus-modal";
 
 type FieldType = {
   username?: string;
