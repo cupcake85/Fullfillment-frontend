@@ -65,13 +65,13 @@ const App: React.FC = () => {
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            style={{ background: "black", width: "100vw", height: "100vh" }}
+            style={{ background: "#2F353A", width: "100vw", height: "100vh" }}
           >
             <div className="demo-logo-vertical" /*สไลด์ด้านข้าง*/ />
 
             <Menu
               theme="dark"
-              style={{ background: "black" }}
+              style={{ background: "#2F353A" }}
               mode="inline"
               defaultSelectedKeys={["/"]}
               items={items}
