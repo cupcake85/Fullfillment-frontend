@@ -4,6 +4,21 @@
     border-radius: 17px;
     margin-bottom: 15px
 };
+.custom-ant-table .ant-table-thead > tr > th {
+    background-color: #ff00ff; /* เปลี่ยนเป็นสีชมพูตามที่ต้องการ */
+    color: white;
+    font-weight: 600;
+  }
+  
+/* 
+.ant-table-wrapper .ant-table-thead >tr>td {
+    position: relative;
+    color: rgb(255 255 255 / 88%);
+    font-weight: 600;
+    text-align: start;
+    background: #3B4248;
+    border-bottom: 1px solid #f0f0f0
+} */
 
 /* .card-wh {
     background-color: pink;

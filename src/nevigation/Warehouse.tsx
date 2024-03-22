@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Modal, Table, Input } from 'antd';
+import { Button, Card, Modal, Table, Input, Divider, Form } from 'antd';
 import '../warehouse.css';
-import { TableRowSelection } from 'antd/es/table/interface';
 import axios from 'axios';
+import { useForm } from 'antd/es/form/Form';
+
+type FieldType = {
+  username?: string;
+  quantity?: string;
+  remember?: string;
+};
 
 interface DataType {
   key: React.Key;
@@ -11,99 +17,128 @@ interface DataType {
   detail: string;
   store: string;
   storage: string;
-  total: number;
+  quantity: number;
 }
 
-const columns = [
-  {
-    title: '#',
-    dataIndex: 'key',
-  },
-  {
-    title: 'SKU',
-    dataIndex: 'sku',
-  },
-  {
-    title: 'ชื่อสินค้า',
-    dataIndex: 'name',
-  },
-  {
-    title: 'รายละเอียด',
-    dataIndex: 'detail',
-  },
-  {
-    title: 'ร้านค้า',
-    dataIndex: 'store'
-  },
-  {
-    title: 'สถานที่เก็บสินค้า',
-    dataIndex: 'storage'
-  },
-  {
-    title: 'คงเหลือ',
-    dataIndex: 'total'
-  },
-  // {
-  //   title: 'การจัดการ',
-  //   dataIndex: 'operation',
-  //   render: (_: any, record: any) => (
-  //     <Button onClick={() => showHisModal(record)}>แก้ไข</Button>
-  //   ),
-  // },
-
-];
 const Warehouse = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hisModalOpen, setHisModalOpen] = useState(false);
   const [warehousedata, setWarehouse] = useState([]);
+  const [selectionType] = useState<'checkbox' | 'radio'>('checkbox');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [form] = useForm();
+  const showModal = () => { setIsModalVisible(true); };
+  const handleCancel = () => { setIsModalVisible(false) };
 
   useEffect(() => {
     getWarehouse();
   }, []);
 
+  const columns = [
+    {
+      title: '#',
+      dataIndex: 'key',
+    },
+    {
+      title: 'SKU',
+      dataIndex: 'sku',
+    },
+    {
+      title: 'ชื่อสินค้า',
+      dataIndex: 'name',
+    },
+    {
+      title: 'รายละเอียด',
+      dataIndex: 'details',
+    },
+    {
+      title: 'คงเหลือ',
+      key: 'quantity',
+      dataIndex: 'quantity'
+    },
+    {
+      title: 'Action',
+      render: (value: any, record: any) => {
+        console.log(value);
+
+        return <div>
+          <Button onClick={() => onClick(value)}>แก้ไข</Button>
+          <Button onClick={() => historyClick(value)}>ประวัติ</Button>
+        </div>
+      }
+    }
+  ];
+
+  // const data: DataType[] = [
+  //   {
+  //     key: '1',
+  //     sku: 'HW001',
+  //     name: "House",
+  //     detail: "ksdpksp",
+  //     store: "pdlspdl",
+  //     storage: "string",
+  //     quantity: 100
+  //   },
+  //   {
+  //     key: '2',
+  //     sku: 'HW001',
+  //     name: "House",
+  //     detail: "ksdpksp",
+  //     store: "pdlspdl",
+  //     storage: "string",
+  //     quantity: 100
+  //   },
+  //   {
+  //     key: '3',
+  //     sku: 'HW001',
+  //     name: "House",
+  //     detail: "ksdpksp",
+  //     store: "pdlspdl",
+  //     storage: "string",
+  //     quantity: 100
+  //   },
+  // ];
+
+  const rowSelection = {
+    type: selectionType,
+    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: (record: DataType) => ({
+      name: record.name,
+    }),
+  };
+
   const getWarehouse = async () => {
-    const request = await axios.get('http://192.168.2.57:3000/item/')
+    const request = await axios.get('http://192.168.2.57:3000/items/')
     console.log('request', request)
     setWarehouse(request.data.data)
   }
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  const updateWarehouse = async (id: number, value: any) => {
+    const request = await axios.put('http://192.168.2.57:3000/items/' + id, value)
+    console.log('request', request)
+    getWarehouse();
+  }
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
+  function onokfunction() {
+    const a = form.getFieldsValue(['id', /*'sku', 'details', 'name',*/ 'quantity'])
+    updateWarehouse(a.id, a)
+    setIsModalVisible(false) //ปิด Modal ทิ้ง
+  }
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  const onClick = (value: any) => {
+    showModal()
+    form.setFieldsValue({
+      id: value.id,
+      sku: value.sku,
+      details: value.details,
+      name: value.name,
+      quantity: value.quantity
+    })
+  }
 
-  const showHisModal = (record: any) => {
-    setHisModalOpen(true);
-    // ทำอย่างอื่น ๆ เช่น ดึงข้อมูลสำหรับแก้ไขจาก record
-  };
-
-  const handleHisOk = () => {
-    setHisModalOpen(false);
-    // ทำการบันทึกการแก้ไขหรือปรับปรุงข้อมูลที่นี่
-  };
-
-  const handleHisCancel = () => {
-    setHisModalOpen(false);
-  };
-
-
-  const onSelectChange = (selectedRowKey: React.Key[]) => {
-    setSelectedRowKeys(selectedRowKey);
-  };
-
-  const rowSelection: TableRowSelection<DataType> = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    type: 'radio',
-  };
+  const historyClick = (value: any) => {
+    showModal();
+  }
 
   return (
     <>
@@ -119,25 +154,65 @@ const Warehouse = () => {
           <Button style={{ backgroundColor: '#979a9c', color: 'white', borderRadius: '17px', marginBottom: '15px' }}>เพิ่ม</Button>{' '}
           <Button style={{ backgroundColor: '#979a9c', color: 'white', borderRadius: '17px', marginBottom: '15px' }}>ลด</Button>
         </div>
+
+        <Divider />
+
         <Table
           rowSelection={rowSelection}
           pagination={{ defaultCurrent: 1 }} //แถบเลือกหน้า
           style={{ backgroundColor: '#e4e5e5' }}
           dataSource={warehousedata}
+          // dataSource={data}
           columns={columns}
           scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
         />
-        {/* <Modal
-          title="แก้ไขสินค้า"
-          visible={hisModalOpen}
-          onOk={handleHisOk}
-          onCancel={handleHisCancel}
-        >
-          {/* เพิ่มฟอร์มหรือเนื้อหาที่เกี่ยวข้องที่นี่ */}
-        
       </Card>
+
+      <Modal title="Basic Modal" open={isModalVisible} onOk={onokfunction} onCancel={handleCancel}>
+        <Form
+          name="basic"
+          form={form}
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          style={{ maxWidth: 600 }}
+          autoComplete="off"
+        >
+          <Form.Item
+            name="id" hidden
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="name"
+            name="name"
+          >
+            <Input disabled />
+          </Form.Item>
+          <Form.Item
+            label="SKU"
+            name="sku"
+          >
+            <Input disabled />
+          </Form.Item>
+          <Form.Item
+            label="Detail"
+            name="details"
+          >
+            <Input disabled />
+          </Form.Item>
+          <Form.Item
+            label="quantity"
+            name="quantity"
+            rules={[{ required: true, message: 'Please input your quantity!' }]}
+          >
+            <Input />
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };
 
 export default Warehouse;
+
+
