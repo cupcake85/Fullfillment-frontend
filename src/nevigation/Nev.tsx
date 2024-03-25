@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ProductOutlined, HomeOutlined } from "@ant-design/icons";
+import { ProductOutlined, HomeOutlined, ShopOutlined } from "@ant-design/icons";
 import { Layout, Menu, Image, Row, Col } from "antd";
 import { useNavigate, Outlet } from "react-router-dom";
 import type { MenuProps } from "antd";
@@ -41,6 +41,20 @@ const App: React.FC = () => {
         },
       ],
     },
+    {
+      key: "/store",
+      icon: React.createElement(
+        ShopOutlined,
+        c === "/store" ? { style: { color: "red" } } : undefined
+      ),
+      label: "Store",
+      children: [
+        {
+          key: "/store",
+          label: "ร้านค้า",
+        },
+      ],
+    },
   ];
 
   const onClick = (e: string) => {
@@ -65,7 +79,7 @@ const App: React.FC = () => {
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            style={{ background: "#2F353A", width: "100vw", height: "100vh" }}
+            style={{ background: "#2F353A", width: "100vw", height: "200vh" }}
           >
             <div className="demo-logo-vertical" /*สไลด์ด้านข้าง*/ />
 

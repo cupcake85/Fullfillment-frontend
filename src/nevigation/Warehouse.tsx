@@ -241,7 +241,7 @@ const Warehouse = () => {
           borderRadius: 20
         }}>
         <div >
-          <Button onClick={() => clickAdd()}
+          <Button onClick={() => showAddModal()}
             style={{ backgroundColor: '#979a9c', color: 'white', borderRadius: '17px', marginBottom: '15px' }}
           >เพิ่ม</Button>{' '}
           <Button style={{ backgroundColor: '#979a9c', color: 'white', borderRadius: '17px', marginBottom: '15px' }}>ลด</Button>

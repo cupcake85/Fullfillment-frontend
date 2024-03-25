@@ -227,7 +227,7 @@ const Item = () => {
                 rowSelection={rowSelection}
                 columns={columns}
                 dataSource={itemData}
-                pagination={{ defaultCurrent: 1, total:50}}
+                pagination={{ defaultCurrent: 1}}
                 scroll={{ x: 400, y: 350 }}
                 style={{ backgroundColor: '#e4e5e5' }}
               />
