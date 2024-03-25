@@ -1,9 +1,12 @@
+import React from "react";
 import { useState } from "react";
-import { Layout, Menu, Button, theme, Card, Modal, Table } from "antd";
+import { Layout, Form, Button, theme, Card, Modal, Table, Input } from "antd";
+import type { FormItemProps } from "antd";
+import { useForm } from "antd/es/form/Form";
 
 const Store = () => {
   const { Content } = Layout;
-
+  const [form] = useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -14,6 +17,17 @@ const Store = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const onClick = (value: any) => {
+    showModal();
+    form.setFieldsValue({
+      id: value.id,
+      sku: value.sku,
+      details: value.details,
+      name: value.name,
+      quantity: value.quantity,
+    });
   };
 
   const columns = [
@@ -39,16 +53,14 @@ const Store = () => {
       dataIndex: "details",
     },
     {
-        title: "อีเมล",
-        dataIndex: "details",
-      },
-      {
-        title: "จัดการ",
-        dataIndex: "details",
-      },
+      title: "อีเมล",
+      dataIndex: "details",
+    },
+    {
+      title: "จัดการ",
+      dataIndex: "details",
+    },
   ];
-
-  
 
   return (
     <Layout
@@ -78,12 +90,38 @@ const Store = () => {
           เพิ่มผู้ใช้งาน
         </Button>
         <Modal
-          title="Basic Modal"
+          title="เพิ่มผู้ใช้งาน"
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
         >
-          hello
+          <Form
+            name="basic"
+            form={form}
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            style={{ maxWidth: 600 }}
+            autoComplete="off"
+          >
+            <Form.Item label="ชื่อลูกค้า" name="">
+              <Input />
+            </Form.Item>
+            <Form.Item label="รหัสผู้จัดส่ง" name="">
+              <Input />
+            </Form.Item>
+            <Form.Item label="ชื่อผู้จัดส่ง" name="">
+              <Input />
+            </Form.Item>
+            <Form.Item label="รหัสไปรษณีย์" name="">
+              <Input />
+            </Form.Item>
+            <Form.Item label="เบอร์โทร" name="">
+              <Input />
+            </Form.Item>
+            <Form.Item label="อีเมล" name="">
+              <Input />
+            </Form.Item>
+          </Form>
         </Modal>
 
         <Table
