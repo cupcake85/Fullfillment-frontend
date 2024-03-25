@@ -79,7 +79,7 @@ const App: React.FC = () => {
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            style={{ background: "#2F353A", width: "100vw", height: "200vh" }}
+            style={{ background: "#2F353A", width: "100vw", height: "100vh" }}
           >
             <div className="demo-logo-vertical" /*สไลด์ด้านข้าง*/ />
 
@@ -92,7 +92,7 @@ const App: React.FC = () => {
               onClick={(e) => onClick(e.key)}
             />
           </Sider>
-          <div style={{ width: "100vw", height: "100vh" ,/*overflow:'scroll'*/}}>
+          <div style={{ width: "100vw", height: "100vh" ,overflow:'scroll'}}>
             <Outlet />
           </div>
         </Layout>
