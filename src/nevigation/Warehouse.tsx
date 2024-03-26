@@ -274,6 +274,7 @@ const Warehouse = () => {
           style={{ backgroundColor: '#e4e5e5' }}
           columns={addColumns}
           dataSource={selectedRows}
+          pagination={{defaultCurrent: 1, total:50}}
         />
       </Modal>
 
