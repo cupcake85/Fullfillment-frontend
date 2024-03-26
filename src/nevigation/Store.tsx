@@ -5,7 +5,19 @@ import type { FormItemProps } from "antd";
 import { useForm } from "antd/es/form/Form";
 
 const Store = () => {
+
+  interface DataType {
+    id: React.Key;
+    sku: string;
+    name: string;
+    shop: string;
+    details: string;
+  }
+
   const { Content } = Layout;
+  const [itemData, setItemData] = useState([]);
+
+  const [selectionType] = useState<"checkbox" | "radio">( "checkbox" );
   const [form] = useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -30,6 +42,16 @@ const Store = () => {
     });
   };
 
+  const rowSelection = {
+    type: selectionType,
+    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: (record: DataType) => ({
+      name: record.name,
+    }),
+  };
+
   const columns = [
     {
       title: "ชื่อลูกค้า",
@@ -45,7 +67,6 @@ const Store = () => {
     },
     {
       title: "รหัสไปรษณีย์ผู้จัดส่ง",
-
       dataIndex: "quantity",
     },
     {
@@ -59,6 +80,7 @@ const Store = () => {
     {
       title: "จัดการ",
       dataIndex: "details",
+      
     },
   ];
 
@@ -75,7 +97,7 @@ const Store = () => {
           margin: "15px 10px",
           padding: 20,
           minHeight: 250,
-          backgroundColor: "gray",
+          // backgroundColor: "pink",
         }}
       >
         <Card
@@ -86,9 +108,15 @@ const Store = () => {
         >
           ผู้ใช้งาน
         </Card>
-        <Button type="primary" onClick={showModal}>
-          เพิ่มผู้ใช้งาน
-        </Button>
+        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+          <Button
+            type="primary"
+            onClick={showModal}
+            style={{backgroundColor: "gray"}}
+          >
+            เพิ่มผู้ใช้งาน
+          </Button>
+        </div>
         <Modal
           title="เพิ่มผู้ใช้งาน"
           open={isModalOpen}
@@ -125,8 +153,9 @@ const Store = () => {
         </Modal>
 
         <Table
-          // pagination={{ defaultCurrent: 1 }}
-          style={{ backgroundColor: "#e4e5e5" }}
+          rowSelection={rowSelection}
+          dataSource={itemData}
+          style={{ backgroundColor: "#e4e5e5", borderRadius: "15px"}}
           columns={columns}
           scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
         />
@@ -136,3 +165,8 @@ const Store = () => {
 };
 
 export default Store;
+
+
+// .ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper .ant-table-thead{
+//   background-color: #3B4248;
+// }
