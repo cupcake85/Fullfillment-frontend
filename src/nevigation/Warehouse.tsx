@@ -3,6 +3,7 @@ import { Button, Card, Modal, Table, Input, Divider, Form, InputNumber } from 'a
 import '../warehouse.css';
 import axios from 'axios';
 import { useForm } from 'antd/es/form/Form';
+import { CloseCircleFilled, FolderFilled, MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 
 type FieldType = {
   username?: string;
@@ -28,49 +29,16 @@ const Warehouse = () => {
   const [historyId, setHistoryId] = useState();
   const [getHistory, setHistory] = useState([]);
 
-
   const showModal = () => { setIsModalVisible(true); };
   const handleCancel = () => { setIsModalVisible(false) };
   const showAddModal = () => { setAddmodal(true); };
   const addCancel = () => { setAddmodal(false) };
-  const showModalh = () => {
-    setIsModalHistory(true);
-  };
-  const handleCancelh = () => {
-    setIsModalHistory(false);
-  };
+  const showModalh = () => { setIsModalHistory(true); };
+  const handleCancelh = () => { setIsModalHistory(false); };
 
+  useEffect(() => { getWarehouse(); }, []);
 
-  useEffect(() => {
-    getWarehouse();
-  }, []);
-
-  // const data: DataType[] = [
-  //   {
-  //     key: '1',
-  //     sku: 'John Brown',
-  //     name: 'John Brown',
-  //     details: 'New York No. 1 Lake Park',
-  //     quantity: 100,
-  //   },
-  //   {
-  //     key: '1',
-  //     sku: 'John Brown',
-  //     name: 'John Brown',
-  //     details: 'New York No. 1 Lake Park',
-  //     quantity: 100,
-  //   },
-  //   {
-  //     key: '1',
-  //     sku: 'John Brown',
-  //     name: 'John Brown',
-  //     details: 'New York No. 1 Lake Park',
-  //     quantity: 100,
-  //   },
-  // ]
-
-
-  const columns = [
+  const warehouseColumns = [
     {
       title: '#',
       dataIndex: 'id',
@@ -93,13 +61,12 @@ const Warehouse = () => {
       dataIndex: 'quantity'
     },
     {
-      title: 'Action',
+      title: '',
       render: (value: any, record: any) => {
         console.log(value);
-
         return <div>
-          <Button onClick={() => onClick(value)}>แก้ไข</Button>
-          <Button onClick={() => historyClick(value)}>ประวัติ</Button>
+          <Button onClick={() => editClick(value)} style={{backgroundColor:'#3B4248', color:'white'}}>แก้ไข</Button>
+          <Button onClick={() => historyClick(value)} style={{backgroundColor:'white', }}>ประวัติ</Button>
         </div>
       }
     }
@@ -171,32 +138,36 @@ const Warehouse = () => {
       return 0;
     });
     console.log('request get', request)
-    // setWarehouse(request.data.data) ยังไม่ sort
     setWarehouse(sortedData)
   }
+  // http://192.168.2.57:3000/history/{:id}
 
-  const updateWarehouse = async (id: number, value: any) => {
-    const request = await axios.put('http://192.168.2.57:3000/items/' + id, value)
-    console.log('request put', request)
-    getWarehouse();
+  function editOk() {
+    const formData = form.getFieldsValue(['id', 'sku', 'details', 'name', 'quantity']); //รับค่าที่กรอกในฟอร์มจากฟิลด์ที่กำหนดไว้
+    updateWarehouse(formData.id, formData); // เรียกใช้ updateWarehouse() โดยส่งข้อมูล id และ formData เพื่ออัปเดตข้อมูลในคลังสินค้า
+    setIsModalVisible(false);
   }
 
-  function onokfunction() {
-    const a = form.getFieldsValue(['id', 'sku', 'details', 'name', 'quantity'])
-    updateWarehouse(a.id, a)
-    setIsModalVisible(false) //ปิด Modal ทิ้ง
+  const updateWarehouse = async (id: number, formData: any) => {
+    try {
+      const request = await axios.post('http://192.168.2.57:3000/history/' + id, formData);
+      console.log('request post', request);
+      getWarehouse(); // เมื่อทำการส่งข้อมูลสำเร็จ ให้ดึงข้อมูลคลังสินค้าใหม่
+    } catch (error) {
+      console.error('เกิดข้อผิดพลาดในการส่งข้อมูล:', error);
+    }
   }
 
-  const onClick = (value: any) => {
+  const editClick = (value: any) => {
     showModal()
     form.setFieldsValue({
       id: value.id,
       sku: value.sku,
-      details: value.details,
-      name: value.name,
+      // details: value.details,
+      // name: value.name,
       quantity: value.quantity
     })
-  }
+  };
 
   const clickAdd = () => {
     showAddModal()
@@ -207,6 +178,18 @@ const Warehouse = () => {
     History(value.id)
   };
 
+  const History = async (id: number) => {
+    try {
+      const request = await axios.get("http://192.168.2.57:3000/history/");
+      const history = request.data.data.filter((item: any) => {
+        console.log('ไอเท็ม', item, id)
+        return item?.item?.id === id //เช็ค null
+      })
+      setHistory(history)
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
@@ -215,59 +198,44 @@ const Warehouse = () => {
     }
   };
 
-  const History = async (id: number) => {
-    try {
-      const request = await axios.get("http://192.168.2.57:3000/history/");
-      // setHistory(request.data.data);
-      const history = request.data.data.filter((item: any) => {
-        return item.item.id === id
-      })
-      setHistory(history)
-
-      console.log(history);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <>
+
       <Card
         title='คลังสินค้า'
         bordered={false}
         style={{
           backgroundColor: 'white',
           margin: 65,
-          borderRadius: 20
+          borderRadius: 20,
         }}>
         <div >
-          <Button onClick={() => clickAdd()}
-            style={{ backgroundColor: '#979a9c', color: 'white', borderRadius: '17px', marginBottom: '15px' }}
-          >เพิ่ม</Button>{' '}
-          <Button style={{ backgroundColor: '#979a9c', color: 'white', borderRadius: '17px', marginBottom: '15px' }}>ลด</Button>
+          <Button
+            icon={<PlusCircleOutlined />}
+            onClick={() => clickAdd()}
+            style={{ backgroundColor: '#979A9C', color: 'white', borderRadius: '17px', marginBottom: '15px',}}>
+            จัดการเพิ่ม/ลด
+          </Button>
         </div>
-
-        <Divider />
 
         <Table
           rowSelection={rowSelection}
           rowKey={"id"} //ใช้ id แยกข้อมูลที่มาจาก array แล้ว
-          pagination={{ defaultCurrent: 1 }} //แถบเลือกหน้า
-          style={{ backgroundColor: '#e4e5e5' }}
+          pagination={{ defaultCurrent: 1 }}
+          style={{ backgroundColor: '#e4e5e5' ,}}
           dataSource={warehousedata}
-          // dataSource={data}
-          columns={columns}
+          columns={warehouseColumns}
           scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
         />
       </Card>
 
-      <Modal title="แก้ไขสินค้า" open={isModalVisible} onOk={onokfunction} onCancel={handleCancel}>
+      <Modal title="แก้ไขสินค้า" open={isModalVisible} footer={null} onCancel={handleCancel}>
         <Form
           name="basic"
           form={form}
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
+          style={{ maxWidth: 600, }}
           autoComplete="off"
         >
           <Form.Item
@@ -276,30 +244,28 @@ const Warehouse = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="name"
-            name="name"
-          >
-            <Input disabled />
-          </Form.Item>
-          <Form.Item
             label="SKU"
             name="sku"
           >
-            <Input disabled />
+            <Input disabled style={{ borderRadius: 100, border: 'solid 0.5px grey' }} />
           </Form.Item>
+
           <Form.Item
-            label="Detail"
-            name="details"
-          >
-            <Input disabled />
-          </Form.Item>
-          <Form.Item
-            label="quantity"
+            label="สินค้าคงเหลือ"
             name="quantity"
-            rules={[{ required: true, message: 'Please input your quantity!' }]}
           >
-            <Input />
+            <Input disabled style={{ borderRadius: 100, border: 'solid 0.5px grey' }} />
           </Form.Item>
+          <Form.Item
+            label="เพิ่มลดสินค้า"
+            rules={[{ required: true, message: '+100' }]}
+          >
+            <Input type='number' placeholder='+/-100' style={{ borderRadius: 100, border: 'solid 0.5px grey' }} />
+          </Form.Item>
+          <div style={{ textAlign: 'center', }}>
+            <Button icon={<FolderFilled />} onClick={editOk} style={{ backgroundColor: '#bc211c', margin: 10, color: 'white', borderRadius: 100 }}>บันทึก</Button>
+            <Button icon={<CloseCircleFilled />} onClick={handleCancel} style={{ backgroundColor: '#2F353A', color: 'white', borderRadius: 100 }}>ยกเลิก</Button>
+          </div>
         </Form>
       </Modal>
 
@@ -314,7 +280,7 @@ const Warehouse = () => {
       <Modal
         title="Basic Modal"
         open={isModalHistory}
-        onOk={onokfunction}
+        // onOk={onokfunction}
         onCancel={handleCancelh}
         footer={null}
       >

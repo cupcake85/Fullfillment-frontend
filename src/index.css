@@ -34,3 +34,17 @@ body {
   background-color: #2F353A;
 }
 
+.ant-card .ant-card-head {
+  background-color: #F7F7F7;
+}
+
+.ant-card .ant-card-head-title {
+  font-size: x-large;
+}
+.ant-table-wrapper .ant-table-thead >tr>th{
+  background-color: #3B4248;
+  color: #fff;
+}
+:where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+  width: 0px;
+}

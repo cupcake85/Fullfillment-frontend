@@ -78,7 +78,7 @@ const App: React.FC = () => {
               onClick={(e) => onClick(e.key)}
             />
           </Sider>
-          <div style={{ width: "100vw", height: "100vh" ,/*overflow:'scroll'*/}}>
+          <div style={{ width: "100vw", height: "100vh" }}>
             <Outlet />
           </div>
         </Layout>
