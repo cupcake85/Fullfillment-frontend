@@ -31,7 +31,6 @@ const Store = () => {
   const { Content } = Layout;
   const [itemData, setItemData] = useState([]);
   const [form] = useForm();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isReload, setIsReload] = useState(false);
   const [isModalOpenAdd, setIsModalOpenAdd] = useState(false);
@@ -212,6 +211,7 @@ const Store = () => {
             form={form}
             handleCancelEdit={cancelModalEdit}
             setIsReload={setIsReload}
+            getItemData={getItemData}
           ></EditStore>
         </Modal>
 

@@ -5,16 +5,19 @@ import axios from "axios";
 const editStore = ({
   form,
   handleCancelEdit,
-  setIsReload
+  setIsReload,
+  getItemData,
 }: {
   form: FormInstance;
   handleCancelEdit: () => void;
-  setIsReload:(value:boolean)=>void
+  getItemData: () => Promise<void>;
+  setIsReload: (value: boolean) => void;
 }) => {
   const [api, contextHolder] = notification.useNotification();
 
   function editOk() {
     const value = form.getFieldValue([
+      "id",
       "name",
       "shipperCode",
       "shipperName",
@@ -23,26 +26,24 @@ const editStore = ({
       "email",
     ]);
     updateStore(value.id, value);
-    handleCancelEdit();
+    setIsReload(true);
   }
 
   const updateStore = async (id: number, value: any) => {
     try {
-      const request = await axios.post(
+      const request = await axios.put(
         "http://192.168.2.57:3000/stores/" + id,
         value
       );
       console.log("request post", request);
-      setIsReload(true)
+      getItemData(); // เมื่อทำการส่งข้อมูลสำเร็จ ให้ดึงข้อมูลคลังสินค้าใหม่
     } catch (error) {
-      console.error(error);
+      console.error("เกิดข้อผิดพลาดในการส่งข้อมูล:", error);
     }
   };
 
-  
-
   return (
-    <Form layout="vertical" onFinish={editOk} form={form}>
+    <Form layout="vertical"  form={form}>
       <Form.Item label="ชื่อลูกค้า" name="name">
         <Input />
       </Form.Item>
@@ -55,16 +56,35 @@ const editStore = ({
       <Form.Item label="รหัสไปรษณีย์" name="zipCode">
         <Input />
       </Form.Item>
-      <Form.Item label="เบอร์โทร" name="phoneNumber" >
+      <Form.Item label="เบอร์โทร" name="phoneNumber">
         <Input />
       </Form.Item>
       <Form.Item label="อีเมล" name="email">
         <Input />
       </Form.Item>
-      <Button type="primary" htmlType="submit">
-        Submit
-      </Button>
-      <Button onClick={handleCancelEdit}>Cancel</Button>
+      <div style={{ textAlign: "center" }}>
+        <Button
+          onClick={editOk}
+          style={{
+            backgroundColor: "#bc211c",
+            margin: 10,
+            color: "white",
+            borderRadius: 100,
+          }}
+        >
+          บันทึก
+        </Button>
+        <Button
+          onClick={handleCancelEdit}
+          style={{
+            backgroundColor: "#2F353A",
+            color: "white",
+            borderRadius: 100,
+          }}
+        >
+          ยกเลิก
+        </Button>
+      </div>
       {contextHolder}
     </Form>
   );
