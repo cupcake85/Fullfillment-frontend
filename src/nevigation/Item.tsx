@@ -18,7 +18,6 @@ import {
 } from "@ant-design/icons";
 import ItemInput from "../component/item-input";
 import axios from "axios";
-// import ItemEdit from "../component/item-edit";
 
 const Item = () => {
   //------------------------------------------------------------Table----------------------------------------------------------------------------------------
@@ -26,17 +25,19 @@ const Item = () => {
     id: React.Key;
     sku: string;
     name: string;
-    shop: string;
     details: string;
+    stores: number;
   }
 
   const [form] = Form.useForm();
   const [itemData, setItemData] = useState([]);
+  const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
   const [selectionType] = useState<"checkbox" | "radio">( "checkbox" );
 
   useEffect(() => {
     getItemData();
   }, []);
+
 
   const onClick = (value: any) => {
     showModal()
@@ -45,6 +46,7 @@ const Item = () => {
       sku: value.sku,
       details: value.details,
       name: value.name,
+      stores: value.stores,
     })
   }
 
@@ -66,11 +68,15 @@ const Item = () => {
       title: "หมายเหตุ",
       dataIndex: "details",
     },
+    {
+      title: "ร้านค้า",
+      dataIndex: "stores",
+    },
     //------------------------------------------------------------edit modal----------------------------------------------------------------------------------------
     {
       title: "",
       key: "action",
-      render: (value: any, record) => (
+      render: (value: any, _record) => (
         <Space size="middle">
           <Col>
             <Button
@@ -84,7 +90,7 @@ const Item = () => {
             >
               Edit
             </Button>
-            <Button size="small" style={{ width: 60 }} >
+            <Button onClick={ () => deleteItem(_record)} size="small" style={{ width: 60 }} >
               Delete
             </Button>
           </Col>
@@ -108,17 +114,30 @@ const Item = () => {
     type: selectionType,
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      setSelectedRows(selectedRows);
     },
-    getCheckboxProps: (record: DataType) => ({
-      name: record.name,
-    }),
+    // getCheckboxProps: (record: DataType) => ({
+    //   name: record.name,
+    // }),
   };
 
   const getItemData = async () => {
-    const request = await axios.get('http://192.168.2.57:3000/items/')
-    console.log('request', request)
-    setItemData(request.data.data)
+    const request = await axios.get('http://192.168.2.57:3000/items')
+    const sortedData = request.data.data.sort((a: any, b: any) => {
+      if (a.id < b.id) return -1;
+      if (a.id > b.id) return 1;
+      return 0;
+    });
+    sortedData.stores = parseInt(sortedData.stores)
+    setItemData(sortedData)
   }
+
+  const deleteItem = async (value:any) => {
+    const request = await axios.delete('http://192.168.2.57:3000/items/' + value.id)
+    getItemData()
+  }
+
+  
   //------------------------------------------------------------Table----------------------------------------------------------------------------------------
   //------------------------------------------------------------Modal----------------------------------------------------------------------------------------
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -227,7 +246,7 @@ const Item = () => {
                 rowSelection={rowSelection}
                 columns={columns}
                 dataSource={itemData}
-                pagination={{ defaultCurrent: 1, total:50}}
+                pagination={{ defaultCurrent: 1}}
                 scroll={{ x: 400, y: 350 }}
                 style={{ backgroundColor: '#e4e5e5' }}
               />
