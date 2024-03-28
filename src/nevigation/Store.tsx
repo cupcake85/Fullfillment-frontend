@@ -1,28 +1,57 @@
 import React from "react";
-import { useState } from "react";
-import { Layout, Form, Button, theme, Card, Modal, Table, Input } from "antd";
+import { useState, useEffect } from "react";
+import {
+  Layout,
+  Form,
+  Button,
+  theme,
+  Card,
+  Modal,
+  Table,
+  Input,
+  TableColumnsType,
+} from "antd";
 import type { FormItemProps } from "antd";
 import { useForm } from "antd/es/form/Form";
+import InputStore from "../component/storeInput";
+import axios from "axios";
 
 const Store = () => {
-
   interface DataType {
-    id: React.Key;
-    sku: string;
     name: string;
-    shop: string;
-    details: string;
+    shipperCode: string;
+    shipperName: string;
+    zipCode: string;
+    phoneNumber: string;
+    email: string;
   }
 
   const { Content } = Layout;
   const [itemData, setItemData] = useState([]);
-
-  const [selectionType] = useState<"checkbox" | "radio">( "checkbox" );
   const [form] = useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReload, setIsReload] = useState(false);
+  const [isModalOpenAdd, setIsModalOpenAdd] = useState(false);
+
+  useEffect(() => {
+    getItemData();
+  }, []);
+
+  useEffect(() => {
+    if (isReload) {
+      getItemData();
+    }
+    setIsReload(false);
+  }, [isReload]);
 
   const showModal = () => {
     setIsModalOpen(true);
+  };
+  const showModalAdd = (value?: any) => {
+    if (value) {
+      form.setFieldsValue(value);
+    }
+    setIsModalOpenAdd(true);
   };
   const handleOk = () => {
     setIsModalOpen(false);
@@ -31,58 +60,92 @@ const Store = () => {
     setIsModalOpen(false);
   };
 
-  const onClick = (value: any) => {
+  const handleOkAdd = () => {
+    setIsModalOpenAdd(false);
+  };
+
+  const handleCancelAdd = () => {
+    setIsModalOpenAdd(false);
+  };
+
+  // const onClick = (value: any) => {
+  //   showModal();
+  //   form.setFieldsValue({
+  //     id: value.id,
+  //     sku: value.sku,
+  //     details: value.details,
+  //     name: value.name,
+  //     quantity: value.quantity,
+  //   });
+  // };
+
+  const editClick = (value: any) => {
     showModal();
     form.setFieldsValue({
-      id: value.id,
-      sku: value.sku,
-      details: value.details,
       name: value.name,
-      quantity: value.quantity,
+      shipperCode: value.shipperCode,
+      shipperName: value.shipperName,
+      zipCode: value.zipCode,
+      phoneNumber: value.phoneNumber,
+      email: value.email,
     });
   };
+  const historyClick = (value: any) => {};
 
-  const rowSelection = {
-    type: selectionType,
-    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    getCheckboxProps: (record: DataType) => ({
-      name: record.name,
-    }),
-  };
-
-  const columns = [
+  const columns: TableColumnsType<DataType> = [
     {
       title: "ชื่อลูกค้า",
-      dataIndex: "sku",
-    },
-    {
-      title: "รหัสผู้จัดส่ง",
       dataIndex: "name",
     },
     {
+      title: "รหัสผู้จัดส่ง",
+      dataIndex: "shipperCode",
+    },
+    {
       title: "ชื่อผู้จัดส่ง",
-      dataIndex: "details",
+      dataIndex: "shipperName",
     },
     {
       title: "รหัสไปรษณีย์ผู้จัดส่ง",
-      dataIndex: "quantity",
+      dataIndex: "zipCode",
     },
     {
       title: "เบอร์โทร",
-      dataIndex: "details",
+      dataIndex: "phoneNumber",
     },
     {
       title: "อีเมล",
-      dataIndex: "details",
+      dataIndex: "email",
     },
     {
       title: "จัดการ",
-      dataIndex: "details",
-      
+      render: (value: any, record: any) => {
+        console.log(value);
+        return (
+          <div>
+            <Button onClick={() => editClick(value)}>แก้ไข</Button>
+            <Button onClick={() => deleteStore(value)}>ลบ</Button>
+          </div>
+        );
+      },
     },
   ];
+
+  const getItemData = async () => {
+    const request = await axios.get("http://192.168.2.57:3000/stores/");
+    const sortedData = request.data.data.sort((a: any, b: any) => {
+      // เรียงลำดับตาม id จากน้อยไปหามาก
+      if (a.id < b.id) return -1;
+      if (a.id > b.id) return 1;
+      return 0;
+    });
+    setItemData(sortedData);
+  };
+
+  const deleteStore = async (value: any) => {
+    await axios.delete("http://192.168.2.57:3000/stores/" + value.id, value);
+    setIsReload(true);
+  };
 
   return (
     <Layout
@@ -111,51 +174,29 @@ const Store = () => {
         <div style={{ display: "flex", flexDirection: "row-reverse" }}>
           <Button
             type="primary"
-            onClick={showModal}
-            style={{backgroundColor: "gray"}}
+            onClick={showModalAdd}
+            style={{ backgroundColor: "gray", marginTop: "15px" }}
           >
             เพิ่มผู้ใช้งาน
           </Button>
         </div>
         <Modal
           title="เพิ่มผู้ใช้งาน"
-          open={isModalOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
+          open={isModalOpenAdd}
+          onOk={handleOkAdd}
+          onCancel={handleCancelAdd}
+          footer={null}
         >
-          <Form
-            name="basic"
-            form={form}
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
-            autoComplete="off"
-          >
-            <Form.Item label="ชื่อลูกค้า" name="">
-              <Input />
-            </Form.Item>
-            <Form.Item label="รหัสผู้จัดส่ง" name="">
-              <Input />
-            </Form.Item>
-            <Form.Item label="ชื่อผู้จัดส่ง" name="">
-              <Input />
-            </Form.Item>
-            <Form.Item label="รหัสไปรษณีย์" name="">
-              <Input />
-            </Form.Item>
-            <Form.Item label="เบอร์โทร" name="">
-              <Input />
-            </Form.Item>
-            <Form.Item label="อีเมล" name="">
-              <Input />
-            </Form.Item>
-          </Form>
+          <InputStore form={form} handleCancel={handleCancel} setIsReload={setIsReload}></InputStore>
         </Modal>
 
         <Table
-          rowSelection={rowSelection}
           dataSource={itemData}
-          style={{ backgroundColor: "#e4e5e5", borderRadius: "15px"}}
+          style={{
+            backgroundColor: "#e4e5e5",
+            borderRadius: "15px",
+            marginTop: "15px",
+          }}
           columns={columns}
           scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
         />
@@ -165,8 +206,3 @@ const Store = () => {
 };
 
 export default Store;
-
-
-// .ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper .ant-table-thead{
-//   background-color: #3B4248;
-// }
