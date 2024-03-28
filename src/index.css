@@ -17,7 +17,7 @@ body {
 }
 
 .ant-menu .ant-menu-item-selected {
-  background:  #272a2a;
+  background: #272a2a;
   border-radius: inherit;
 }
 
@@ -25,26 +25,37 @@ body {
   background-color: rgb(175, 175, 175);
 }
 
-.ant-menu .ant-menu-submenu-title .ant-menu-item-icon{
+.ant-menu .ant-menu-submenu-title .ant-menu-item-icon {
   /* color: red; */
   text-transform: none;
 }
 
-.ant-menu-dark.ant-menu-inline .ant-menu-sub.ant-menu-inline{
-  background-color: #2F353A;
+.ant-menu-dark.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+  background-color: #2f353a;
 }
 
 .ant-card .ant-card-head {
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
 }
 
 .ant-card .ant-card-head-title {
   font-size: x-large;
 }
-.ant-table-wrapper .ant-table-thead >tr>th{
-  background-color: #3B4248;
+.ant-table-wrapper .ant-table-thead > tr > th {
+  background-color: #3b4248;
   color: #fff;
 }
-:where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+:where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper
+  .ant-table-thead
+  > tr
+  > th:not(:last-child):not(.ant-table-selection-column):not(
+    .ant-table-row-expand-icon-cell
+  ):not([colspan])::before {
   width: 0px;
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th,
+:where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper
+  .ant-table-thead {
+  background-color: #3b4248;
 }
