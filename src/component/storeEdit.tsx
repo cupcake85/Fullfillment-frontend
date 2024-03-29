@@ -25,16 +25,14 @@ const editStore = ({
       "phoneNumber",
       "email",
     ]);
+    console.log('ข้อมูลที่ได้จาก getfield', value)
     updateStore(value.id, value);
     setIsReload(true);
   }
 
   const updateStore = async (id: number, value: any) => {
     try {
-      const request = await axios.put(
-        "http://192.168.2.57:3000/stores/" + id,
-        value
-      );
+      const request = await axios.put("http://192.168.2.57:3000/stores/" + id, value);
       console.log("request post", request);
       getItemData(); // เมื่อทำการส่งข้อมูลสำเร็จ ให้ดึงข้อมูลคลังสินค้าใหม่
     } catch (error) {

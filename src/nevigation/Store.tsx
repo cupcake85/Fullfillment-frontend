@@ -119,7 +119,7 @@ const Store = () => {
     {
       title: "จัดการ",
       render: (value: any, record: any) => {
-        console.log(value);
+        // console.log(value);
         return (
           <div>
             <div>
