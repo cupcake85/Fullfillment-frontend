@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Modal, Table, Input, Divider, Form, InputNumber } from 'antd';
+import { Button, Card, Modal, Table, Input, Divider, Form, InputNumber, Layout } from 'antd';
 import '../warehouse.css';
 import axios from 'axios';
 import { useForm } from 'antd/es/form/Form';
 import { CloseCircleFilled, ContainerFilled, FolderFilled, MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
-
-type FieldType = {
-  username?: string;
-  quantity?: string;
-  remember?: string;
-};
-
-interface EditData {
-  quantity: number,
-}
 
 interface DataType {
   key: React.Key;
@@ -22,19 +12,24 @@ interface DataType {
   stores: string;
   details: string;
   quantity: number;
-
 }
 
 const Warehouse = () => {
   const [warehousedata, setWarehouse] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [addModal, setAddmodal] = useState(false);
-  const [form] = useForm();
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]); // เพิ่ม state เก็บข้อมูลที่เลือกไว้
+  
+  // const [open, setOpen] = useState(false);
+  // const [value, setValue] = useState<{ type: TTypeModal; item?: any}>
+
+
+
+  const [form] = useForm();
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalHistory, setIsModalHistory] = useState(false);
   const [historyId, setHistoryId] = useState();
   const [getHistory, setHistory] = useState([]);
-  const [editData, setEditData] = useState<EditData>();
+  const [editData, setEditData] = useState();
 
   const showModal = () => { setIsModalVisible(true); };
   const handleCancel = () => { setIsModalVisible(false) };
@@ -175,9 +170,8 @@ const Warehouse = () => {
   }
 
   const updateWarehouse = async ( formData: any) => {
-    console.log('update ->', formData)
     const body = {
-      item: formData.id,
+      item: formData.id, //เลือกว่าจะเอาข้อมูลไหนจาก formData
       quantity: Number(formData.quantityEdit)
     }
     try {
@@ -217,17 +211,16 @@ const Warehouse = () => {
     }
   };
 
-  const onFinish = (values: any) => {
-    console.log('onfinish ทดสอบ', values);
-    setIsModalVisible(false);
-  };
-
 
   return (
-    <>
+    <Layout>
       {/* <ContainerFilled /> */}
       <Card
-        title='คลังสินค้า'
+        title= { 
+          <span>
+            <ContainerFilled style={{marginRight: 8}}/>
+            คลังสินค้า
+          </span>}
         bordered={false}
         style={{
           backgroundColor: 'white',
@@ -255,7 +248,7 @@ const Warehouse = () => {
         />
       </Card>
 
-      <Modal title="แก้ไขสินค้า" open={isModalVisible} footer={null} onCancel={handleCancel}>
+      <Modal title="แก้ไขสินค้า" open={isModalVisible} footer={null} onCancel={handleCancel} style={{width:"500px"}}>
         <Form
           name="basic"
           form={form}
@@ -322,7 +315,7 @@ const Warehouse = () => {
         />
       </Modal>
 
-    </>
+    </Layout>
   );
 };
 
