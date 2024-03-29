@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Modal, Table, Input, Divider, Form, InputNumber, Layout } from 'antd';
+import { Button, Card, Modal, Table, Input, Divider, Form, InputNumber, Layout, Alert } from 'antd';
 import '../warehouse.css';
 import axios from 'axios';
 import { useForm } from 'antd/es/form/Form';
-import { CloseCircleFilled, ContainerFilled, FolderFilled, MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { CloseCircleFilled, ContainerFilled, FolderFilled, PlusCircleOutlined } from '@ant-design/icons';
+import { TTypeModal } from '../component/warehouse/modal';
 
 interface DataType {
   key: React.Key;
@@ -19,10 +20,8 @@ const Warehouse = () => {
   const [addModal, setAddmodal] = useState(false);
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]); // เพิ่ม state เก็บข้อมูลที่เลือกไว้
   
-  // const [open, setOpen] = useState(false);
-  // const [value, setValue] = useState<{ type: TTypeModal; item?: any}>
-
-
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<{ type: TTypeModal; item?: any}>({ type: "edit", });
 
   const [form] = useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -73,7 +72,6 @@ const Warehouse = () => {
     {
       title: '',
       render: (value: any, record: any) => {
-        // console.log('value ที่ได้รับคือ: ',value);
         return <div>
           <Button onClick={() => editClick(value)} style={{ backgroundColor: '#3B4248', color: 'white' }}>แก้ไข</Button>
           <Button onClick={() => historyClick(value)} style={{ backgroundColor: 'white', }}>ประวัติ</Button>
@@ -110,8 +108,10 @@ const Warehouse = () => {
       render: (value: any, record: any) => {
         let quantity = record.quantity
         return <InputNumber
-          value={quantity}
-          onChange={(value) => quantity = value} />
+        
+          // value={quantity}
+          // onChange={(value) => quantity = value} 
+          />
       }
     }
   ];
@@ -149,12 +149,10 @@ const Warehouse = () => {
       if (a.id > b.id) return 1;
       return 0;
     });
-    console.log('เรียกรายการสินค้าทั้งหมดจาก item', request)
     setWarehouse(sortedData)
   }
 
   const editClick = (value: any) => {
-    console.log('value จากการคลิกคือ ', value)
     showModal()
     form.setFieldsValue({ //เซ็ทจาก value ในตารางที่เก็บมา
       id: value.id,
@@ -165,7 +163,8 @@ const Warehouse = () => {
 
   const editSubmit = () => {
     const formData = form.getFieldsValue(['id', 'quantityEdit']); //รับค่าที่กรอกในฟอร์มจากฟิลด์ที่กำหนดไว้
-    updateWarehouse(formData); // เรียกใช้ updateWarehouse() โดยส่งข้อมูล id และ formData เพื่ออัปเดตข้อมูลในคลังสินค้า
+    updateWarehouse(formData); // เรียกใช้ updateWarehouse() โดยส่งข้อมูล id และ formData เพื่ออัปเดตข้อมูลในคลังสินค้า  
+    form.resetFields();
     setIsModalVisible(false);
   }
 
@@ -175,11 +174,11 @@ const Warehouse = () => {
       quantity: Number(formData.quantityEdit)
     }
     try {
-      const request = await axios.post('http://192.168.2.57:3000/history/', body);
-      console.log('post history', request);
+      await axios.post('http://192.168.2.57:3000/history/', body);
       getWarehouse(); // เมื่อทำการส่งข้อมูลสำเร็จ ให้ดึงข้อมูลคลังสินค้าใหม่
-    } catch (error) {
-      console.error('เกิดข้อผิดพลาดในการส่งข้อมูล:', error);
+    } catch (error: any) {
+      
+      alert(error?.response?.data.message)
     }
   }
 
@@ -187,7 +186,6 @@ const Warehouse = () => {
   const historyClick = (value: any) => {
     showModalh();
     history(value.id); //เรียกฟังก์ชัน History ด้วย property id ของพารามิเตอร์ value
-    console.log('sku ของ history ที่กด', value.sku)
   };
 
   const history = async (id: number) => {
@@ -197,23 +195,22 @@ const Warehouse = () => {
       const history = request.data.data.filter((item: any) => {
         return item?.item?.id === id; //item อาจมี id หรือไม่ก็ได้ จึงเช็ค null ด้วย ?.
       })
-
       setHistory(history); //เรียกใช้ setHistory เพื่อทำการตั้งค่า state ของ component โดยให้เป็นค่าของ history
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      alert(err?.response?.data?.message);
     }
   };
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
       setSelectedRows(selectedRows); // เมื่อมีการเลือกแถวใหม่ให้เซ็ตค่า state
     }
   };
 
 
   return (
-    <Layout>
+    <Layout 
+    >
       {/* <ContainerFilled /> */}
       <Card
         title= { 
@@ -278,11 +275,11 @@ const Warehouse = () => {
           <Form.Item
             label="เพิ่มลดสินค้า"
             name="quantityEdit"
-            rules={[{ required: true, message: '+100' }]}
+            rules={[{ required: true, message: '*โปรดกรอกจำนวนที่ต้องการ' }]}
           >
             <Input
               type='number'
-              placeholder='+/-100'
+              placeholder='Ex. 100/-100'
               style={{ borderRadius: 100, border: 'solid 0.5px grey' }}
             />
           </Form.Item>
@@ -298,7 +295,7 @@ const Warehouse = () => {
           style={{ backgroundColor: '#e4e5e5' }}
           columns={addColumns}
           dataSource={selectedRows}
-          pagination={{defaultCurrent: 1, total:50}}
+          pagination={{defaultCurrent: 1}}
         />
       </Modal>
 
@@ -307,12 +304,13 @@ const Warehouse = () => {
         open={isModalHistory}
         onCancel={handleCancelh}
         footer={null}
-      >
-        <Table
-          style={{ backgroundColor: "#e4e5e5" }}
-          dataSource={getHistory}
-          columns={columnh}
-          scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
+        >
+          <Table
+            style={{ backgroundColor: "#e4e5e5" }}
+            dataSource={getHistory}
+            columns={columnh}
+            scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
+            pagination={{defaultCurrent: 1}}
         />
       </Modal>
 

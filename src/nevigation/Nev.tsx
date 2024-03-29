@@ -82,7 +82,6 @@ const App: React.FC = () => {
             style={{ background: "#2F353A", width: "100vw", height: "100vh" }}
           >
             <div className="demo-logo-vertical" /*สไลด์ด้านข้าง*/ />
-
             <Menu
               theme="dark"
               style={{ background: "#2F353A" }}
