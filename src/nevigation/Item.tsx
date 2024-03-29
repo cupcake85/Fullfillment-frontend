@@ -32,11 +32,18 @@ const Item = () => {
   const [form] = Form.useForm();
   const [itemData, setItemData] = useState([]);
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
-  const [selectionType] = useState<"checkbox" | "radio">( "checkbox" );
+  const [isReload, setIsReload] = useState(false);
 
   useEffect(() => {
     getItemData();
   }, []);
+
+  useEffect(() => {
+    if (isReload) {
+      getItemData();
+    }
+    setIsReload(false);
+  }, [isReload]);
 
 
   const onClick = (value: any) => {
@@ -51,10 +58,10 @@ const Item = () => {
   }
 
   const columns: TableColumnsType<DataType> = [
-    {
-      title: "#",
-      dataIndex: "id",
-    },
+    // {
+    //   title: "#",
+    //   dataIndex: "id",
+    // },
     {
       title: "SKU",
       dataIndex: "sku",
@@ -70,7 +77,12 @@ const Item = () => {
     },
     {
       title: "ร้านค้า",
-      dataIndex: "stores",
+      key: "stores",
+      render:(value:any,_record) =>{
+        const store = value?.stores?.name || "-";
+
+        return store;
+      }
     },
     //------------------------------------------------------------edit modal----------------------------------------------------------------------------------------
     {
@@ -98,8 +110,8 @@ const Item = () => {
             title="จัดการสินค้า"
             open={isModalOpen}
             centered
-            onOk={handleOk}
-            onCancel={handleCancel}
+            onOk={handleOkAdd}
+            onCancel={handleCancelAdd}
             width={600}
             footer={null}
           >
@@ -111,14 +123,10 @@ const Item = () => {
   ];
 
   const rowSelection = {
-    type: selectionType,
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-      setSelectedRows(selectedRows);
-    },
-    // getCheckboxProps: (record: DataType) => ({
-    //   name: record.name,
-    // }),
+      setSelectedRows(selectedRows); // เมื่อมีการเลือกแถวใหม่ให้เซ็ตค่า state
+    }
   };
 
   const getItemData = async () => {
@@ -128,13 +136,12 @@ const Item = () => {
       if (a.id > b.id) return 1;
       return 0;
     });
-    sortedData.stores = parseInt(sortedData.stores)
     setItemData(sortedData)
   }
 
   const deleteItem = async (value:any) => {
     const request = await axios.delete('http://192.168.2.57:3000/items/' + value.id)
-    getItemData()
+    setIsReload(true);
   }
 
   
@@ -148,17 +155,10 @@ const Item = () => {
   };
   const showModalAdd = (value?:any) => {
     if(value ){
-      form.setFieldsValue(value)
+      const formData = {...value,stores:value?.stores?.id}
+      form.setFieldsValue(formData)
     }
     setIsModalOpenAdd(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
   };
 
   const handleOkAdd = () => {
@@ -204,7 +204,7 @@ const Item = () => {
           {/* ---------------------------------------------------------------------------content-------------------------------------------------------------------------- */}
           <Row justify="end">
             <Col style={{ margin: 10 }}>
-              <Button
+              {/* <Button
                 style={{ backgroundColor: "#262626" }}
                 type="primary"
                 shape="round"
@@ -212,7 +212,7 @@ const Item = () => {
                 size={size}
               >
                 ลบ
-              </Button>{" "}
+              </Button>{" "} */}
               <Button
                 style={{ backgroundColor: "#262626" }}
                 type="primary"
@@ -233,7 +233,7 @@ const Item = () => {
                 footer={null}
                 width={600}
               >
-                <ItemInput form={form} handleCancel={handleCancel}></ItemInput>
+                <ItemInput form={form} handleCancel={handleCancelAdd} getItemData={getItemData}></ItemInput>
               </Modal>
               {/* ---------------------------------------------------------------------------Modal-------------------------------------------------------------------------- */}
             </Col>
@@ -243,7 +243,7 @@ const Item = () => {
             <Col span={20}>
               <br></br>
               <Table
-                rowSelection={rowSelection}
+                // rowSelection={rowSelection}
                 columns={columns}
                 dataSource={itemData}
                 pagination={{ defaultCurrent: 1}}
