@@ -25,10 +25,12 @@ const InputStore = ({
         api.error({
           message: "Error",
         });
-      } finally {
+      }
+       finally {
         form.resetFields();
         handleCancel();
       }
+
     } else {
       try {
         console.log(value);
@@ -43,7 +45,8 @@ const InputStore = ({
           message: "Error",
         });
         console.log(error);
-      } finally {
+      } 
+      finally {
         form.resetFields();
         handleCancel();
       }
