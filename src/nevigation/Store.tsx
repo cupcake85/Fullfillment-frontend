@@ -34,7 +34,7 @@ const Store = () => {
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isReload, setIsReload] = useState(false);
   const [isModalOpenAdd, setIsModalOpenAdd] = useState(false);
-  const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
+  // const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
 
   
 
@@ -49,9 +49,7 @@ const Store = () => {
     setIsReload(false);
   }, [isReload]);
 
-  // const showModal = () => {
-  //   setIsModalOpen(true);
-  // };
+
   const showModalAdd = (value?: any) => {
     if (value) {
       form.setFieldsValue(value);
@@ -65,12 +63,7 @@ const Store = () => {
     setIsModalEdit(false);
   };
 
-  const handleOkEdit = () => {
-    setIsModalOpenEdit(true);
-  };
-  const handleCancelEdit = () => {
-    setIsModalOpenEdit(true);
-  };
+
   const handleOkAdd = () => {
     setIsModalOpenAdd(false);
   };
@@ -82,6 +75,7 @@ const Store = () => {
   const editClick = (value: any) => {
     showModalEdit();
     form.setFieldsValue({
+      id: value.id,
       name: value.name,
       shipperCode: value.shipperCode,
       shipperName: value.shipperName,
@@ -140,13 +134,14 @@ const Store = () => {
 
   const getItemData = async () => {
     const request = await axios.get("http://192.168.2.57:3000/stores/");
-    const sortedData = request.data.data.sort((a: any, b: any) => {
-      // เรียงลำดับตาม id จากน้อยไปหามาก
-      if (a.id < b.id) return -1;
-      if (a.id > b.id) return 1;
-      return 0;
-    });
-    setItemData(sortedData);
+    // const sortedData = request.data.data.sort((a: any, b: any) => {
+    //   // เรียงลำดับตาม id จากน้อยไปหามาก
+    //   if (a.id > b.id) return -1;
+    //   if (a.id < b.id) return 1;
+    //   return 0;
+    // });
+    console.log('request', request)
+    setItemData(request.data.data)
   };
 
   const deleteStore = async (value: any) => {

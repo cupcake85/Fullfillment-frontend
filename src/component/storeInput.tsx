@@ -5,53 +5,42 @@ import axios from "axios";
 const InputStore = ({
   form,
   handleCancel,
-  setIsReload
+  setIsReload,
 }: {
   form: FormInstance;
   handleCancel: () => void;
-  setIsReload:(value:boolean)=>void
+  setIsReload: (value: boolean) => void;
 }) => {
   const [api, contextHolder] = notification.useNotification();
 
+  
+
   const handleSubmit = async (value: any) => {
-    if (value.id) {
-      try {
-        await axios.put("http://192.168.2.57:3000/stores/" + value.id , value);
+    try {
+      if(value.id){
+        await axios.put("http://192.168.2.57:3000/stores/" + value.id, value);
         api.success({
           message: "Success",
           description: "Item update successfully",
         });
-      } catch (error) {
-        api.error({
-          message: "Error",
-        });
-      }
-       finally {
-        form.resetFields();
-        handleCancel();
-      }
-
-    } else {
-      try {
+      } else {
         console.log(value);
-        await axios.post("http://192.168.2.57:3000/stores/" , value);
+        await axios.post("http://192.168.2.57:3000/stores/", value);
         api.success({
           message: "Success",
           description: "Item added successfully",
         });
-        // window.location.reload();  //รีเฟรชหน้า
-      } catch (error) {
-        api.error({
-          message: "Error",
-        });
-        console.log(error);
-      } 
-      finally {
-        form.resetFields();
-        handleCancel();
       }
+    } catch (error) {
+      api.error({
+        message: "Error",
+      });
+      console.log(error);
+    } finally {
+      form.resetFields();
+      handleCancel();
     }
-    setIsReload(true)
+    setIsReload(true);
   };
 
   return (
@@ -68,16 +57,34 @@ const InputStore = ({
       <Form.Item label="รหัสไปรษณีย์" name="zipCode">
         <Input />
       </Form.Item>
-      <Form.Item label="เบอร์โทร" name="phoneNumber" >
+      <Form.Item label="เบอร์โทร" name="phoneNumber">
         <Input />
       </Form.Item>
       <Form.Item label="อีเมล" name="email">
         <Input />
       </Form.Item>
-      <Button type="primary" htmlType="submit">
-        Submit
+      <Button
+        type="primary"
+        htmlType="submit"
+        style={{
+          backgroundColor: "#bc211c",
+          margin: 10,
+          color: "white",
+          borderRadius: 100,
+        }}
+      >
+        บันทึก
       </Button>
-      <Button onClick={handleCancel}>Cancel</Button>
+      <Button
+        onClick={handleCancel}
+        style={{
+          backgroundColor: "#2F353A",
+          color: "white",
+          borderRadius: 100,
+        }}
+      >
+        ยกเลิก
+      </Button>
       {contextHolder}
     </Form>
   );
