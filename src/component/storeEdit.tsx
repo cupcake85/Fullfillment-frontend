@@ -30,7 +30,7 @@ const editStore = ({
     setIsReload(true);
   }
 
-  const updateStore = async (id: number, value: any) => {
+  const updateStore = async (id: undefined, value: any) => {
     try {
       const request = await axios.put("http://192.168.2.57:3000/stores/" + id, value);
       console.log("request post", request);
