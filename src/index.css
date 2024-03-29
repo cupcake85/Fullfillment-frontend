@@ -64,3 +64,7 @@ body {
   background-color: rgba(175, 175, 175, 0);
   border-color: #d9d9d900;
 }
+
+.ant-modal-content{
+  width: 800px;
+}
