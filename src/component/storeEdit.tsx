@@ -16,8 +16,8 @@ const editStore = ({
   const [api, contextHolder] = notification.useNotification();
 
   function editOk() {
-    const value = form.getFieldValue([
-      "id",
+    const value = form.getFieldsValue([
+      "id", //เพิ่มไอดีมาใน getfiled นี้ด้วย เพื่อเก็บไปใช้ในฟังก์ชัน updateStore ได้
       "name",
       "shipperCode",
       "shipperName",
@@ -35,6 +35,7 @@ const editStore = ({
       const request = await axios.put("http://192.168.2.57:3000/stores/" + id, value);
       console.log("request post", request);
       getItemData(); // เมื่อทำการส่งข้อมูลสำเร็จ ให้ดึงข้อมูลคลังสินค้าใหม่
+      handleCancelEdit();
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการส่งข้อมูล:", error);
     }

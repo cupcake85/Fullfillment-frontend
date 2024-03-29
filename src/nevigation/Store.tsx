@@ -82,6 +82,7 @@ const Store = () => {
   const editClick = (value: any) => {
     showModalEdit();
     form.setFieldsValue({
+      id: value.id,
       name: value.name,
       shipperCode: value.shipperCode,
       shipperName: value.shipperName,
