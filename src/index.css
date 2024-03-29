@@ -59,3 +59,8 @@ body {
   .ant-table-thead {
   background-color: #3b4248;
 }
+
+.ant-btn-default{
+  background-color: rgba(175, 175, 175, 0);
+  border-color: #d9d9d900;
+}

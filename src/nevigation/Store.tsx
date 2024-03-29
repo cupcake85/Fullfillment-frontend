@@ -14,7 +14,9 @@ import {
 import type { FormItemProps } from "antd";
 import { useForm } from "antd/es/form/Form";
 import InputStore from "../component/storeInput";
+import EditStore from "../component/storeEdit";
 import axios from "axios";
+import { DeleteFilled, EditFilled, UserOutlined } from "@ant-design/icons";
 
 const Store = () => {
   interface DataType {
@@ -29,9 +31,12 @@ const Store = () => {
   const { Content } = Layout;
   const [itemData, setItemData] = useState([]);
   const [form] = useForm();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalEdit, setIsModalEdit] = useState(false);
   const [isReload, setIsReload] = useState(false);
   const [isModalOpenAdd, setIsModalOpenAdd] = useState(false);
+  const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
+
+  
 
   useEffect(() => {
     getItemData();
@@ -44,22 +49,28 @@ const Store = () => {
     setIsReload(false);
   }, [isReload]);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  // const showModal = () => {
+  //   setIsModalOpen(true);
+  // };
   const showModalAdd = (value?: any) => {
     if (value) {
       form.setFieldsValue(value);
     }
     setIsModalOpenAdd(true);
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
+  const showModalEdit = () => {
+    setIsModalEdit(true);
   };
-  const handleCancel = () => {
-    setIsModalOpen(false);
+  const cancelModalEdit = () => {
+    setIsModalEdit(false);
   };
 
+  const handleOkEdit = () => {
+    setIsModalOpenEdit(true);
+  };
+  const handleCancelEdit = () => {
+    setIsModalOpenEdit(true);
+  };
   const handleOkAdd = () => {
     setIsModalOpenAdd(false);
   };
@@ -68,19 +79,8 @@ const Store = () => {
     setIsModalOpenAdd(false);
   };
 
-  // const onClick = (value: any) => {
-  //   showModal();
-  //   form.setFieldsValue({
-  //     id: value.id,
-  //     sku: value.sku,
-  //     details: value.details,
-  //     name: value.name,
-  //     quantity: value.quantity,
-  //   });
-  // };
-
   const editClick = (value: any) => {
-    showModal();
+    showModalEdit();
     form.setFieldsValue({
       name: value.name,
       shipperCode: value.shipperCode,
@@ -90,7 +90,6 @@ const Store = () => {
       email: value.email,
     });
   };
-  const historyClick = (value: any) => {};
 
   const columns: TableColumnsType<DataType> = [
     {
@@ -120,11 +119,19 @@ const Store = () => {
     {
       title: "จัดการ",
       render: (value: any, record: any) => {
-        console.log(value);
+        // console.log(value);
         return (
           <div>
-            <Button onClick={() => editClick(value)}>แก้ไข</Button>
-            <Button onClick={() => deleteStore(value)}>ลบ</Button>
+            <div>
+              <Button onClick={() => editClick(value)}>
+                <EditFilled />
+              </Button>
+            </div>
+            <div>
+            <Button onClick={() => deleteStore(value)}>
+              <DeleteFilled />
+            </Button>
+            </div>
           </div>
         );
       },
@@ -165,11 +172,11 @@ const Store = () => {
       >
         <Card
           style={{
-            fontSize: 20,
+            fontSize: 22,
             fontWeight: "bold",
           }}
         >
-          ผู้ใช้งาน
+          <UserOutlined /> ผู้ใช้งาน
         </Card>
         <div style={{ display: "flex", flexDirection: "row-reverse" }}>
           <Button
@@ -187,7 +194,25 @@ const Store = () => {
           onCancel={handleCancelAdd}
           footer={null}
         >
-          <InputStore form={form} handleCancel={handleCancel} setIsReload={setIsReload}></InputStore>
+          <InputStore
+            form={form}
+            handleCancel={handleCancelAdd}
+            setIsReload={setIsReload}
+          ></InputStore>
+        </Modal>
+
+        <Modal
+          title="แก้ไข"
+          open={isModalEdit}
+          onCancel={cancelModalEdit}
+          footer={null}
+        >
+          <EditStore
+            form={form}
+            handleCancelEdit={cancelModalEdit}
+            setIsReload={setIsReload}
+            getItemData={getItemData}
+          ></EditStore>
         </Modal>
 
         <Table
