@@ -177,7 +177,6 @@ const Warehouse = () => {
       await axios.post('http://192.168.2.57:3000/history/', body);
       getWarehouse(); // เมื่อทำการส่งข้อมูลสำเร็จ ให้ดึงข้อมูลคลังสินค้าใหม่
     } catch (error: any) {
-      
       alert(error?.response?.data.message)
     }
   }
@@ -202,7 +201,7 @@ const Warehouse = () => {
   };
 
   const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+    onChange: (_: React.Key[], selectedRows: DataType[]) => { //onChange เอาไปใช้ใน table ได้เลย
       setSelectedRows(selectedRows); // เมื่อมีการเลือกแถวใหม่ให้เซ็ตค่า state
     }
   };

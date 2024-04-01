@@ -85,7 +85,7 @@ const InputStore = ({
       >
         ยกเลิก
       </Button>
-      {contextHolder}
+      {contextHolder} {/*มันคือ component*/}
     </Form>
   );
 };

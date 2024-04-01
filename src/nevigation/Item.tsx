@@ -131,11 +131,7 @@ const Item = () => {
 
   const getItemData = async () => {
     const request = await axios.get('http://192.168.2.57:3000/items')
-    const sortedData = request.data.data.sort((a: any, b: any) => {
-      if (a.id < b.id) return -1;
-      if (a.id > b.id) return 1;
-      return 0;
-    });
+    const sortedData = request.data.data
     setItemData(sortedData)
   }
 
@@ -154,7 +150,7 @@ const Item = () => {
     setIsModalOpen(true);
   };
   const showModalAdd = (value?:any) => {
-    if(value ){
+    if(value){
       const formData = {...value,stores:value?.stores?.id}
       form.setFieldsValue(formData)
     }

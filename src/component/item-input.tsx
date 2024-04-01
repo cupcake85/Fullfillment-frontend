@@ -68,11 +68,7 @@ const ItemInput = ({
 
   const getStore = async () => {
     const request = await axios.get('http://192.168.2.57:3000/stores');
-    const sortedData = request.data.data.sort((a: any, b: any) => {
-      if (a.id < b.id) return -1;
-      if (a.id > b.id) return 1;
-      return 0;
-    }).map((data:any) =>{
+    const sortedData = request.data.data.map((data:any) =>{
       return { label:data.name, value:data.id }
     });
     
