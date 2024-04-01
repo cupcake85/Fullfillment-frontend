@@ -78,7 +78,6 @@ const Warehouse = () => {
         </div>
       }
     },
-
   ];
 
   const addColumns = [
@@ -108,7 +107,6 @@ const Warehouse = () => {
       render: (value: any, record: any) => {
         let quantity = record.quantity
         return <InputNumber
-        
           // value={quantity}
           // onChange={(value) => quantity = value} 
           />
@@ -116,7 +114,7 @@ const Warehouse = () => {
     }
   ];
 
-  const columnh = [
+  const columnHistory = [
     {
       title: "Id",
       dataIndex: "id",
@@ -133,11 +131,6 @@ const Warehouse = () => {
     {
       title: "บันทึก",
       dataIndex: "remark",
-    },
-    {
-      title: "คงเหลือ",
-      key: "quantity",
-      dataIndex: "quantity",
     },
   ];
 
@@ -174,7 +167,7 @@ const Warehouse = () => {
       quantity: Number(formData.quantityEdit)
     }
     try {
-      await axios.post('http://192.168.2.57:3000/history/', body);
+      await axios.put('http://192.168.2.57:3000/items/update-quantity', body);
       getWarehouse(); // เมื่อทำการส่งข้อมูลสำเร็จ ให้ดึงข้อมูลคลังสินค้าใหม่
     } catch (error: any) {
       
@@ -190,12 +183,9 @@ const Warehouse = () => {
 
   const history = async (id: number) => {
     try {
-      const request = await axios.get("http://192.168.2.57:3000/history/");
-      //กรองข้อมูลที่ได้รับมาตามเงื่อนไขที่ item.id ตรงกับพารามิเตอร์ id, 
-      const history = request.data.data.filter((item: any) => {
-        return item?.item?.id === id; //item อาจมี id หรือไม่ก็ได้ จึงเช็ค null ด้วย ?.
-      })
-      setHistory(history); //เรียกใช้ setHistory เพื่อทำการตั้งค่า state ของ component โดยให้เป็นค่าของ history
+      const request = await axios.get("http://192.168.2.57:3000/history/" + id);
+      console.log('เป็นอะไร -> ',request)
+      setHistory(request.data.data); //\data.data => data แรกคือ data จาก axios, data ที่สองคือ data จากหลังบ้าน
     } catch (err: any) {
       alert(err?.response?.data?.message);
     }
@@ -308,7 +298,7 @@ const Warehouse = () => {
           <Table
             style={{ backgroundColor: "#e4e5e5" }}
             dataSource={getHistory}
-            columns={columnh}
+            columns={columnHistory}
             scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
             pagination={{defaultCurrent: 1}}
         />
