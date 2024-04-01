@@ -11,11 +11,7 @@ import {
   Space,
   Form,
 } from "antd";
-import {
-  DeleteFilled,
-  PlusCircleFilled,
-  ProfileFilled,
-} from "@ant-design/icons";
+import { DeleteFilled, PlusCircleFilled, ProfileFilled } from "@ant-design/icons";
 import ItemInput from "../component/item-input";
 import axios from "axios";
 
@@ -31,7 +27,6 @@ const Item = () => {
 
   const [form] = Form.useForm();
   const [itemData, setItemData] = useState([]);
-  const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
   const [isReload, setIsReload] = useState(false);
 
   useEffect(() => {
@@ -45,23 +40,11 @@ const Item = () => {
     setIsReload(false);
   }, [isReload]);
 
-
-  const onClick = (value: any) => {
-    showModal()
-    form.setFieldsValue({
-      id: value.id,
-      sku: value.sku,
-      details: value.details,
-      name: value.name,
-      stores: value.stores,
-    })
-  }
-
   const columns: TableColumnsType<DataType> = [
-    // {
-    //   title: "#",
-    //   dataIndex: "id",
-    // },
+    {
+      title: "#",
+      dataIndex: "id",
+    },
     {
       title: "SKU",
       dataIndex: "sku",
@@ -78,11 +61,11 @@ const Item = () => {
     {
       title: "ร้านค้า",
       key: "stores",
-      render:(value:any,_record) =>{
+      render: (value: any, _record) => {
         const store = value?.stores?.name || "-";
 
         return store;
-      }
+      },
     },
     //------------------------------------------------------------edit modal----------------------------------------------------------------------------------------
     {
@@ -102,20 +85,14 @@ const Item = () => {
             >
               Edit
             </Button>
-            <Button onClick={ () => deleteItem(_record)} size="small" style={{ width: 60 }} >
+            <Button
+              onClick={() => deleteItem(_record)}
+              size="small"
+              style={{ width: 60 }}
+            >
               Delete
             </Button>
           </Col>
-          <Modal
-            title="จัดการสินค้า"
-            open={isModalOpen}
-            centered
-            onOk={handleOkAdd}
-            onCancel={handleCancelAdd}
-            width={600}
-            footer={null}
-          >
-          </Modal>
         </Space>
       ),
     },
@@ -123,36 +100,33 @@ const Item = () => {
   ];
 
   const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-      setSelectedRows(selectedRows); // เมื่อมีการเลือกแถวใหม่ให้เซ็ตค่า state
-    }
+    onChange: (selectedRowKeys: React.Key[]) => {
+      console.log({ selectedRowKeys });
+    },
   };
 
   const getItemData = async () => {
-    const request = await axios.get('http://192.168.2.57:3000/items')
-    const sortedData = request.data.data
-    setItemData(sortedData)
-  }
+    const request = await axios.get("http://192.168.2.57:3000/items");
+    const sortedData = request.data.data;
+    setItemData(sortedData);
+  };
 
-  const deleteItem = async (value:any) => {
-    const request = await axios.delete('http://192.168.2.57:3000/items/' + value.id)
+  const deleteItem = async (value: any) => {
+    const request = await axios.delete(
+      "http://192.168.2.57:3000/items/" + value.id
+    );
     setIsReload(true);
-  }
+  };
 
-  
   //------------------------------------------------------------Table----------------------------------------------------------------------------------------
   //------------------------------------------------------------Modal----------------------------------------------------------------------------------------
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [isModalOpenAdd, setIsModalOpenAdd] = useState(false);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const showModalAdd = (value?:any) => {
-    if(value){
-      const formData = {...value,stores:value?.stores?.id}
-      form.setFieldsValue(formData)
+  const showModalAdd = (value?: any) => {
+    if (value) {
+      const formData = { ...value, stores: value?.stores?.id };
+      form.setFieldsValue(formData);
     }
     setIsModalOpenAdd(true);
   };
@@ -200,7 +174,7 @@ const Item = () => {
           {/* ---------------------------------------------------------------------------content-------------------------------------------------------------------------- */}
           <Row justify="end">
             <Col style={{ margin: 10 }}>
-              {/* <Button
+              <Button
                 style={{ backgroundColor: "#262626" }}
                 type="primary"
                 shape="round"
@@ -208,7 +182,7 @@ const Item = () => {
                 size={size}
               >
                 ลบ
-              </Button>{" "} */}
+              </Button>{" "}
               <Button
                 style={{ backgroundColor: "#262626" }}
                 type="primary"
@@ -229,7 +203,11 @@ const Item = () => {
                 footer={null}
                 width={600}
               >
-                <ItemInput form={form} handleCancel={handleCancelAdd} getItemData={getItemData}></ItemInput>
+                <ItemInput
+                  form={form}
+                  handleCancel={handleCancelAdd}
+                  getItemData={getItemData}
+                ></ItemInput>
               </Modal>
               {/* ---------------------------------------------------------------------------Modal-------------------------------------------------------------------------- */}
             </Col>
@@ -239,12 +217,15 @@ const Item = () => {
             <Col span={20}>
               <br></br>
               <Table
-                // rowSelection={rowSelection}
+                rowSelection={rowSelection}
+                rowKey={(record) => {
+                  return record.id;
+                }}
                 columns={columns}
                 dataSource={itemData}
-                pagination={{ defaultCurrent: 1}}
+                pagination={{ defaultCurrent: 1 }}
                 scroll={{ x: 400, y: 350 }}
-                style={{ backgroundColor: '#e4e5e5' }}
+                style={{ backgroundColor: "#e4e5e5" }}
               />
             </Col>
           </Row>
