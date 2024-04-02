@@ -1,77 +1,115 @@
 import form from "antd/es/form";
-import { Button, Form, FormInstance, Input, notification } from "antd";
+import { Button, Form, FormInstance, Input, Select, notification } from "antd";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const ItemInput = ({
   form,
   handleCancel,
-}: {
+  getItemData,
+}: // setIsModalOpenAdd,
+{
   form: FormInstance;
   handleCancel: () => void;
+  getItemData: () => Promise<void>;
+  // setIsModalOpenAdd: () => void;
 }) => {
   const [api, contextHolder] = notification.useNotification();
+  const [getStores, setStores] = useState();
+
+  useEffect(() => {
+    getStore();
+  }, []);
 
   const handleSubmit = async (value: any) => {
-    if(value.id){
+    if (value.id) {
       try {
-        await axios.put("http://192.168.2.57:3000/items/" + value.id, value );
+        console.log(value)
+        value.stores = parseInt(value.stores);
+        await axios.put("http://192.168.2.57:3000/items/" + value.id, value);
+        // console.log(value)
+        getItemData();
+        
+        // setIsModalOpenAdd(false);
         api.success({
-        message: "Success",
-        description: "Item update successfully",
+          message: "Success",
+          description: "Item updated successfully",
         });
-      } catch(error) {
+      } catch (error) {
         api.error({
           message: "Error",
-          // description: error.message ,
         });
       } finally {
         form.resetFields();
         handleCancel();
       }
-      
     } else {
-    try {
-        console.log(value)
-      await axios.post("http://192.168.2.57:3000/items/", value);
-      api.success({
-        message: "Success",
-        description: "Item added successfully",
-      });
-    } catch (error) {
-      api.error({
-        message: "Error",
-        // description: error.message ,
-      });
-      console.log(error)
-    } finally {
-      form.resetFields();
-      handleCancel();
+      try {
+        value.stores = parseInt(value.stores);
+        await axios.post("http://192.168.2.57:3000/items/", value);
+        // console.log(value)
+        getItemData();
+        api.success({
+          message: "Success",
+          description: "Item added successfully",
+        });
+      } catch (error) {
+        api.error({
+          message: "Error",
+          // description: error.message ,
+        });
+        console.log(error);
+      } finally {
+        form.resetFields();
+        handleCancel();
+      }
     }
-  }
   };
+
+  const getStore = async () => {
+    const request = await axios.get('http://192.168.2.57:3000/stores');
+    const sortedData = request.data.data.map((data:any) =>{
+      return { label:data.name, value:data.id }
+    });
+    
+    setStores(sortedData)
+  }
 
   return (
     <Form layout="vertical" onFinish={handleSubmit} form={form}>
-      <Form.Item name="sku" label="sku">
-        <Input></Input>
+      <Form.Item name="sku" label="sku" >
+        <Input style={{ width: 300 }}></Input>
       </Form.Item>
 
       <Form.Item name="name" label="name">
-        <Input></Input>
+        <Input style={{ width: 300 }}></Input>
+      </Form.Item>
+
+      <Form.Item name="stores" label="stores">
+        <Select
+          style={{ width: 120 }}
+          allowClear
+          options={getStores}
+          // key={"value"}
+        ></Select>
       </Form.Item>
 
       <Form.Item name="details" label="details">
-        <Input></Input>
+        <Input style={{ width: 300 }}></Input>
       </Form.Item>
 
       <Form.Item name="id" hidden>
         <Input></Input>
       </Form.Item>
 
-        <Button type="primary" htmlType="submit">
-            Submit
-        </Button>
-        <Button onClick={handleCancel}>Cancel</Button>
+      <Button
+        type="primary"
+        htmlType="submit"
+        style={{ backgroundColor: "#1677ff" }}
+      >
+        Submit
+      </Button>
+      <Button onClick={handleCancel}>Cancel</Button>
       {contextHolder}
     </Form>
   );
