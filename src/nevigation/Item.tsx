@@ -28,6 +28,7 @@ const Item = () => {
   const [form] = Form.useForm();
   const [itemData, setItemData] = useState([]);
   const [isReload, setIsReload] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   useEffect(() => {
     getItemData();
@@ -102,6 +103,7 @@ const Item = () => {
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[]) => {
       console.log({ selectedRowKeys });
+      setSelectedRowKeys(selectedRowKeys)
     },
   };
 
@@ -118,6 +120,15 @@ const Item = () => {
     setIsReload(true);
   };
 
+  const deleteMutiItem = async (selectedRowKeys:any) => {
+    const body:any = {ids:selectedRowKeys} /**สร้าง body รับ selectedRowkeys เข้า keys ids */
+    // console.log(body)
+    const request = await axios.delete(
+      "http://192.168.2.57:3000/items/remove-multiple",{data:body}
+    );
+    setIsReload(true);
+  }
+
   //------------------------------------------------------------Table----------------------------------------------------------------------------------------
   //------------------------------------------------------------Modal----------------------------------------------------------------------------------------
 
@@ -129,10 +140,6 @@ const Item = () => {
       form.setFieldsValue(formData);
     }
     setIsModalOpenAdd(true);
-  };
-
-  const handleOkAdd = () => {
-    setIsModalOpenAdd(false);
   };
 
   const handleCancelAdd = () => {
@@ -173,13 +180,14 @@ const Item = () => {
 
           {/* ---------------------------------------------------------------------------content-------------------------------------------------------------------------- */}
           <Row justify="end">
-            <Col style={{ margin: 10 }}>
+            <Col style={{ marginTop: 10 }}>
               <Button
                 style={{ backgroundColor: "#262626" }}
                 type="primary"
                 shape="round"
                 icon={<DeleteFilled />}
                 size={size}
+                onClick={() => deleteMutiItem(selectedRowKeys)}
               >
                 ลบ
               </Button>{" "}
@@ -198,7 +206,6 @@ const Item = () => {
                 title="เพิ่มสินค้า"
                 open={isModalOpenAdd}
                 centered
-                onOk={handleOkAdd}
                 onCancel={handleCancelAdd}
                 footer={null}
                 width={600}
