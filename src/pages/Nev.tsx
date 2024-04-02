@@ -17,6 +17,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   type MenuItem = Required<MenuProps>["items"][number];
   const [c, setC] = useState<string>("");
+  
   const items: MenuItem[] = [
     {
       key: "/warehouse",
