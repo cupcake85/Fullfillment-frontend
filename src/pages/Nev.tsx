@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { ProductOutlined, HomeOutlined, ShopOutlined } from "@ant-design/icons";
+import {
+  ProductOutlined,
+  HomeOutlined,
+  ShopOutlined,
+  DiffOutlined,
+} from "@ant-design/icons";
 import { Layout, Menu, Image, Row, Col } from "antd";
 import { useNavigate, Outlet } from "react-router-dom";
 import type { MenuProps } from "antd";
@@ -12,6 +17,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   type MenuItem = Required<MenuProps>["items"][number];
   const [c, setC] = useState<string>("");
+  
   const items: MenuItem[] = [
     {
       key: "/warehouse",
@@ -55,6 +61,59 @@ const App: React.FC = () => {
         },
       ],
     },
+    {
+      key: "/order",
+      icon: React.createElement(
+        DiffOutlined,
+        c === "/order" ? { style: { color: "red" } } : undefined
+      ),
+      label: "Order",
+      children: [
+        {
+          key: "/order",
+          label: "รายการ SOL",
+        },
+        {
+          key: "/order2",
+          label: "แพ็คสินค้า",
+        },
+        {
+          key: "/order3",
+          label: "สินค้ายังไม่ถูกตรวจสอบ",
+        },
+        {
+          key: "/order4",
+          label: "สินค้ากำลังดำเนินการ",
+        },
+        {
+          key: "/order5",
+          label: "กำลังแพ็คของออกจากคลัง",
+        },
+        {
+          key: "/order6",
+          label: "จัดส่งสินค้าเรียบร้อย",
+        },
+        {
+          key: "/order7",
+          label: "สินค้าถูกนำกลับ",
+        },
+      ],
+    },
+
+    {
+      key: "/test",
+      icon: React.createElement(
+        ShopOutlined,
+        c === "/test" ? { style: { color: "red" } } : undefined
+      ),
+      label: "Test",
+      children: [
+        {
+          key: "/test",
+          label: "เทมเพลส",
+        },
+      ],
+    },
   ];
 
   const onClick = (e: string) => {
@@ -91,7 +150,7 @@ const App: React.FC = () => {
               onClick={(e) => onClick(e.key)}
             />
           </Sider>
-          <div style={{ width: "100vw", height: "100vh" ,overflow:'scroll'}}>
+          <div style={{ width: "100vw", height: "100vh", overflow: "scroll" }}>
             <Outlet />
           </div>
         </Layout>
