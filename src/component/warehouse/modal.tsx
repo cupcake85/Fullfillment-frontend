@@ -3,6 +3,7 @@ import { Button, Form, Input, Modal, Table, TableColumnsType } from "antd";
 import { FormInstance, useForm } from "antd/es/form/Form";
 import axios from "axios";
 import dayjs from "dayjs";
+import React from "react";
 import { FC, useEffect, useState } from "react";
 
 export type TTypeModal = "history" | "edit" | "action";
