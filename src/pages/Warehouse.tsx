@@ -284,6 +284,15 @@ const Warehouse = () => {
               style={{ borderRadius: 100, border: 'solid 0.5px grey' }}
             />
           </Form.Item>
+          <Form.Item
+            label="หมายเหตุ"
+          >
+            <Input
+              type='text'
+              placeholder='Ex. 100/-100'
+              style={{ borderRadius: 100, border: 'solid 0.5px grey' }}
+            />
+          </Form.Item>
           <div style={{ textAlign: 'center', }}>
             <Button icon={<FolderFilled />} onClick={editSubmit} style={{ backgroundColor: '#bc211c', margin: 10, color: 'white', borderRadius: 100 }}>บันทึก</Button>
             <Button icon={<CloseCircleFilled />} onClick={handleCancel} style={{ backgroundColor: '#2F353A', color: 'white', borderRadius: 100 }}>ยกเลิก</Button>
