@@ -12,6 +12,7 @@ import OutPage from './pages/order/OutPage.tsx'
 import FinishPage from './pages/order/FinishPage.tsx'
 import ReturnPage from './pages/order/ReturnPage.tsx'
 import Table from './component/index.tsx'
+import AddOrderPage from "./pages/FormOrder/AddOrderPage.tsx";
 
 
 
@@ -31,6 +32,7 @@ function Fullfill() {
           <Route path="/FinishPage" element={<FinishPage />} />
           <Route path="/ReturnPage" element={<ReturnPage />} />
           <Route path="/table" element={<Table />} />
+          <Route path="/AddOrderPage" element={<AddOrderPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

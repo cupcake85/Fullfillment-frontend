@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Card, Layout } from "antd";
 import Table from "./table";
 import axios from "axios";
-import Button from '../component/button'
 
 const App = () => {
   const [current, setCurrent] = useState(1);
