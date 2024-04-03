@@ -1,4 +1,4 @@
-import form from "antd/es/form";
+
 import { Button, Form, FormInstance, Input, Select, notification } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -7,12 +7,11 @@ const ItemInput = ({
   form,
   handleCancel,
   getItemData,
-}: // setIsModalOpenAdd,
+}:
 {
   form: FormInstance;
   handleCancel: () => void;
   getItemData: () => Promise<void>;
-  // setIsModalOpenAdd: () => void;
 }) => {
   const [api, contextHolder] = notification.useNotification();
   const [getStores, setStores] = useState();
@@ -24,13 +23,10 @@ const ItemInput = ({
   const handleSubmit = async (value: any) => {
     if (value.id) {
       try {
-        console.log(value)
+        // console.log(value)
         value.stores = parseInt(value.stores);
         await axios.put("http://192.168.2.57:3000/items/" + value.id, value);
-        // console.log(value)
         getItemData();
-        
-        // setIsModalOpenAdd(false);
         api.success({
           message: "Success",
           description: "Item updated successfully",
@@ -47,7 +43,6 @@ const ItemInput = ({
       try {
         value.stores = parseInt(value.stores);
         await axios.post("http://192.168.2.57:3000/items/", value);
-        // console.log(value)
         getItemData();
         api.success({
           message: "Success",
@@ -56,7 +51,6 @@ const ItemInput = ({
       } catch (error) {
         api.error({
           message: "Error",
-          // description: error.message ,
         });
         console.log(error);
       } finally {
@@ -90,7 +84,6 @@ const ItemInput = ({
           style={{ width: 120 }}
           allowClear
           options={getStores}
-          // key={"value"}
         ></Select>
       </Form.Item>
 
