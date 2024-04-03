@@ -7,6 +7,7 @@ import { CloseCircleFilled, ContainerFilled, FolderFilled, PlusCircleOutlined } 
 import { TTypeModal } from '../component/warehouse/modal';
 import dayjs from "dayjs";
 import { IResult, Iitem } from '../interface/item.interface';
+import CustomTable from '../component/table';
 
 const Warehouse = () => {
   const [warehousedata, setWarehouse] = useState<Iitem[]>([]);
@@ -196,6 +197,7 @@ const Warehouse = () => {
       
     }); console.log("Rowdata ได้อะไร -> ",rowData)
     updateMultiple(rowData);
+    form.resetFields();
     setAddmodal(false);
   }
 
