@@ -28,13 +28,7 @@ const TableStatus = () => {
     },
   ];
 
-  return (
-    <Layout>
-      <Card>
-        <TableComponent data={data} />
-      </Card>
-    </Layout>
-  );
+  return <TableComponent data={data} />;
 };
 
 export default TableStatus;

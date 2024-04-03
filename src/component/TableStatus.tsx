@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, TableProps } from "antd";
+import { Card, Layout, Table, TableProps } from "antd";
 
 interface DataType {
   details: string;
@@ -52,7 +52,15 @@ const TableComponent: React.FC<Props> = ({ data }) => {
   ];
 
   return (
-    <Table columns={columns} dataSource={data} rowSelection={rowSelection} />
+    <Layout style={{ backgroundColor: "gray" }}>
+      <Card style={{ margin: "70px" }}>
+        <Table
+          columns={columns}
+          dataSource={data}
+          rowSelection={rowSelection}
+        />
+      </Card>
+    </Layout>
   );
 };
 
