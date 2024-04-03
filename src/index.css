@@ -26,7 +26,7 @@ body {
 }
 
 .ant-menu .ant-menu-submenu-title .ant-menu-item-icon {
-  /* color: red; */
+  
   text-transform: none;
 }
 
@@ -65,17 +65,17 @@ body {
   border-color: #d9d9d900;
 }
 
-.ant-modal-content {
+/* .ant-modal-content {
   width: 800px;
-}
+} */
 
 /* .ant-layout .ant-layout-sider-children{
   width: 250px;
   height: 708px;
 } */
 
-.element.style .ant-layout .ant-layout-sider {
+/* .element.style .ant-layout .ant-layout-sider {
   background:#2F353A;
   width: 300px;
   height: 200vh;
-}
+} */

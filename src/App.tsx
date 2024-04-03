@@ -1,6 +1,6 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Full from "./pages/Nev.tsx";
+import Full from "./nevigation/Nev.tsx";
 import Warehouse from './pages/Warehouse.tsx'
 import Item from './pages/Item.tsx'
 import StoreU from './pages/Store.tsx'
@@ -11,7 +11,7 @@ import Order4 from './pages/order/Order4.tsx'
 import Order5 from './pages/order/Order5.tsx'
 import Order6 from './pages/order/Order6.tsx'
 import Order7 from './pages/order/Order7.tsx'
-// import Testt from './pages/content.tsx'
+import Table from './component/index.tsx'
 
 
 
@@ -30,7 +30,7 @@ function Fullfill() {
           <Route path="/order5" element={<Order5 />} />
           <Route path="/order6" element={<Order6 />} />
           <Route path="/order7" element={<Order7 />} />
-          {/* <Route path="/test" element={<Testt />} /> */}
+          <Route path="/table" element={<Table />} />
         </Route>
       </Routes>
     </BrowserRouter>

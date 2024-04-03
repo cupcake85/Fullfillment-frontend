@@ -13,8 +13,6 @@ const InputStore = ({
 }) => {
   const [api, contextHolder] = notification.useNotification();
 
-  
-
   const handleSubmit = async (value: any) => {
     try {
       if(value.id){
