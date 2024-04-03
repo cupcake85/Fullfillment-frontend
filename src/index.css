@@ -65,9 +65,9 @@ body {
   border-color: #d9d9d900;
 }
 
-/* .ant-modal-content {
+.ant-modal-content {
   width: 800px;
-} */
+}
 
 /* .ant-layout .ant-layout-sider-children{
   width: 250px;
