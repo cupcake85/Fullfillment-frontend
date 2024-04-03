@@ -25,8 +25,8 @@ const App = () => {
       },
     });
     if (res.status === 200) {
-      setData(res.data.results);
-      setTotal(res.data.count);
+      setData(res.data.results || []);
+      setTotal(res.data.count || 0);
     }
   };
 

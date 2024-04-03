@@ -44,7 +44,7 @@ const CustomTable: React.FC<TableProps> = ({
         pagination={false}
         size={"middle"}
       />
-      ;
+
       <Pagination
         current={pagination.current}
         total={total}

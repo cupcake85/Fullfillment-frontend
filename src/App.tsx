@@ -1,19 +1,16 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Full from "./nevigation/Nev.tsx";
-import Warehouse from './pages/Warehouse.tsx'
-import Item from './pages/Item.tsx'
-import StoreU from './pages/Store.tsx'
-import Order from './pages/order/Order1.tsx'
-import Order2 from './pages/order/Order2.tsx'
-import Order3 from './pages/order/Order3.tsx'
-import Order4 from './pages/order/Order4.tsx'
-import Order5 from './pages/order/Order5.tsx'
-import Order6 from './pages/order/Order6.tsx'
-import Order7 from './pages/order/Order7.tsx'
-import Table from './component/index.tsx'
-
-
+import Full from "./nevigation/Nav.tsx";
+import Warehouse from "./pages/Warehouse.tsx";
+import Item from "./pages/Item.tsx";
+import StoreU from "./pages/Store.tsx";
+import Order from "./pages/order/Order1.tsx";
+import Order2 from "./pages/order/Order2.tsx";
+import Order3 from "./pages/order/Order3.tsx";
+import Order4 from "./pages/order/Order4.tsx";
+import Order5 from "./pages/order/Order5.tsx";
+import Order6 from "./pages/order/Order6.tsx";
+import Order7 from "./pages/order/Order7.tsx";
+import Table from "./component/index.tsx";
 
 function Fullfill() {
   return (
