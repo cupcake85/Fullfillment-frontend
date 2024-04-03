@@ -1,6 +1,8 @@
 import React from "react";
 import TableComponent from "./TableStatus";
 import { Card, Layout } from "antd";
+import Table from "./table";
+import axios from "axios";
 
 const TableStatus = () => {
   const data = [
