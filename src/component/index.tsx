@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Layout } from "antd";
+import { Card, Layout } from "antd";
 import Table from "./table";
 import axios from "axios";
+import Button from '../component/button'
 
 const App = () => {
   const [current, setCurrent] = useState(1);
@@ -46,6 +47,7 @@ const App = () => {
   return (
     <Layout>
       <Card>
+        
         <Table
           data={data}
           columns={columns}
