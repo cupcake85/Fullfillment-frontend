@@ -70,31 +70,31 @@ const App: React.FC = () => {
       label: "Order",
       children: [
         {
-          key: "/order",
+          key: "/SOLPage",
           label: "รายการ SOL",
         },
         {
-          key: "/order2",
+          key: "/PackPage",
           label: "แพ็คสินค้า",
         },
         {
-          key: "/order3",
+          key: "/Uncheck",
           label: "สินค้ายังไม่ถูกตรวจสอบ",
         },
         {
-          key: "/order4",
+          key: "/ProgressPage",
           label: "สินค้ากำลังดำเนินการ",
         },
         {
-          key: "/order5",
+          key: "/OutPage",
           label: "กำลังแพ็คของออกจากคลัง",
         },
         {
-          key: "/order6",
+          key: "/FinishPage",
           label: "จัดส่งสินค้าเรียบร้อย",
         },
         {
-          key: "/order7",
+          key: "/ReturnPage",
           label: "สินค้าถูกนำกลับ",
         },
       ],

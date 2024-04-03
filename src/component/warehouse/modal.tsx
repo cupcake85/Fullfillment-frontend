@@ -3,11 +3,12 @@ import { Button, Form, Input, Modal, Table, TableColumnsType } from "antd";
 import { FormInstance, useForm } from "antd/es/form/Form";
 import axios from "axios";
 import dayjs from "dayjs";
+import React from "react";
 import { FC, useEffect, useState } from "react";
 
 export type TTypeModal = "history" | "edit" | "action";
 
-interface IModalWarehouse {
+interface IModalWarehouse { //interface ที่ใช้กับฟังก์ชัน 
   open: boolean;
   onClose: () => void;
   type: TTypeModal;
@@ -182,7 +183,7 @@ const ContentEdit: FC<IContentEdit> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  const editOk = () => {
+  const editSubmit = () => {
     const formData = form.getFieldsValue([
       "id",
       "sku",
@@ -191,8 +192,16 @@ const ContentEdit: FC<IContentEdit> = ({
       "quantity",
     ]);
     onSubmit?.(formData.id, formData);
+    form.resetFields();
     onClose;
   };
+
+  // const editSubmit = () => {
+  //   const formData = form.getFieldsValue(['id', 'quantityEdit']); //รับค่าที่กรอกในฟอร์มจากฟิลด์ที่กำหนดไว้
+  //   updateWarehouse(formData); // เรียกใช้ updateWarehouse() โดยส่งข้อมูล id และ formData เพื่ออัปเดตข้อมูลในคลังสินค้า  
+  //   form.resetFields();
+  //   setOpen(false);
+  // }
 
   return (
     <div className="flex justify-center w-full">
@@ -226,7 +235,7 @@ const ContentEdit: FC<IContentEdit> = ({
         <div style={{ textAlign: "center" }}>
           <Button
             icon={<FolderFilled />}
-            onClick={editOk}
+            onClick={editSubmit}
             style={{
               backgroundColor: "#bc211c",
               margin: 10,

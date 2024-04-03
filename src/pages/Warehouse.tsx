@@ -1,34 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Modal, Table, Input, Divider, Form, InputNumber, Layout, Alert } from 'antd';
 import '../warehouse.css';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useForm } from 'antd/es/form/Form';
 import { CloseCircleFilled, ContainerFilled, FolderFilled, PlusCircleOutlined } from '@ant-design/icons';
 import { TTypeModal } from '../component/warehouse/modal';
-
-interface DataType {
-  key: React.Key;
-  sku: string;
-  name: string;
-  stores: string;
-  details: string;
-  quantity: number;
-}
+import dayjs from "dayjs";
+import { IResult, Iitem } from '../interface/item.interface';
+import CustomTable from '../component/table';
 
 const Warehouse = () => {
-  const [warehousedata, setWarehouse] = useState([]);
+  const [warehousedata, setWarehouse] = useState<Iitem[]>([]);
   const [addModal, setAddmodal] = useState(false);
-  const [selectedRows, setSelectedRows] = useState<DataType[]>([]); // เพิ่ม state เก็บข้อมูลที่เลือกไว้
-  
+  const [selectedRows, setSelectedRows] = useState<Iitem[]>([]); // เพิ่ม state เก็บข้อมูลที่เลือกไว้
+
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<{ type: TTypeModal; item?: any}>({ type: "edit", });
+  const [value, setValue] = useState<{ type: TTypeModal; item?: any }>({ type: "edit", });
 
   const [form] = useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalHistory, setIsModalHistory] = useState(false);
-  const [historyId, setHistoryId] = useState();
   const [getHistory, setHistory] = useState([]);
-  const [editData, setEditData] = useState();
+  const [sku, setSku] = useState();
 
   const showModal = () => { setIsModalVisible(true); };
   const handleCancel = () => { setIsModalVisible(false) };
@@ -78,7 +71,6 @@ const Warehouse = () => {
         </div>
       }
     },
-
   ];
 
   const addColumns = [
@@ -106,24 +98,23 @@ const Warehouse = () => {
     {
       tilte: 'เพิ่ม/ลด',
       render: (value: any, record: any) => {
-        let quantity = record.quantity
-        return <InputNumber
-        
-          // value={quantity}
-          // onChange={(value) => quantity = value} 
-          />
+        return <Form.Item name={record.id}
+          initialValue={0}>
+          <InputNumber />
+        </Form.Item>
+
       }
     }
   ];
 
-  const columnh = [
-    {
-      title: "Id",
-      dataIndex: "id",
-    },
+  const columnHistory = [
     {
       title: "วันที่",
       dataIndex: "outDate",
+      render: (rc:any) => {
+        const date = dayjs(rc.outDate).format("DD/MM/YYYY HH:mm");
+        return <>{date}</>;
+      },
     },
     {
       title: "ปริมาณ",
@@ -134,22 +125,17 @@ const Warehouse = () => {
       title: "บันทึก",
       dataIndex: "remark",
     },
-    {
-      title: "คงเหลือ",
-      key: "quantity",
-      dataIndex: "quantity",
-    },
   ];
 
+  const retrieveAllItems = async (): Promise<AxiosResponse<IResult<Iitem[]>>> => {
+    const request: AxiosResponse<IResult<Iitem[]>> = await axios.get('http://192.168.2.57:3000/items/');
+    console.log("🚀 ~ retrieveAllItems ~ request:", request)
+    return request;
+};
+
   const getWarehouse = async () => {
-    const request = await axios.get('http://192.168.2.57:3000/items/')
-    const sortedData = request.data.data.sort((a: any, b: any) => {
-      // เรียงลำดับตาม id จากน้อยไปหามาก
-      if (a.id < b.id) return -1;
-      if (a.id > b.id) return 1;
-      return 0;
-    });
-    setWarehouse(sortedData)
+    const request = await retrieveAllItems()
+    setWarehouse(request.data.data)
   }
 
   const editClick = (value: any) => {
@@ -168,13 +154,13 @@ const Warehouse = () => {
     setIsModalVisible(false);
   }
 
-  const updateWarehouse = async ( formData: any) => {
+  const updateWarehouse = async (formData: any) => {
     const body = {
       item: formData.id, //เลือกว่าจะเอาข้อมูลไหนจาก formData
       quantity: Number(formData.quantityEdit)
     }
     try {
-      await axios.post('http://192.168.2.57:3000/history/', body);
+      await axios.put('http://192.168.2.57:3000/items/update-quantity', body);
       getWarehouse(); // เมื่อทำการส่งข้อมูลสำเร็จ ให้ดึงข้อมูลคลังสินค้าใหม่
     } catch (error: any) {
       alert(error?.response?.data.message)
@@ -184,37 +170,55 @@ const Warehouse = () => {
   //คลิปกปุ่มแสดง modal ประวัติ
   const historyClick = (value: any) => {
     showModalh();
-    history(value.id); //เรียกฟังก์ชัน History ด้วย property id ของพารามิเตอร์ value
+    history(value.id);
+    setSku(value.sku)
   };
 
   const history = async (id: number) => {
     try {
-      const request = await axios.get("http://192.168.2.57:3000/history/");
-      //กรองข้อมูลที่ได้รับมาตามเงื่อนไขที่ item.id ตรงกับพารามิเตอร์ id, 
-      const history = request.data.data.filter((item: any) => {
-        return item?.item?.id === id; //item อาจมี id หรือไม่ก็ได้ จึงเช็ค null ด้วย ?.
-      })
-      setHistory(history); //เรียกใช้ setHistory เพื่อทำการตั้งค่า state ของ component โดยให้เป็นค่าของ history
+      const request = await axios.get("http://192.168.2.57:3000/history/" + id);
+      console.log('เป็นอะไร -> ', request)
+      setHistory(request.data.data); //data.data => data แรกคือ data จาก axios, data ที่สองคือ data จากหลังบ้าน
     } catch (err: any) {
       alert(err?.response?.data?.message);
     }
   };
 
   const rowSelection = {
-    onChange: (_: React.Key[], selectedRows: DataType[]) => { //onChange เอาไปใช้ใน table ได้เลย
+    onChange: (_: React.Key[], selectedRows: Iitem[]) => { //onChange เอาไปใช้ใน table ได้เลย
       setSelectedRows(selectedRows); // เมื่อมีการเลือกแถวใหม่ให้เซ็ตค่า state
     }
   };
 
+  const multipleSubmit = (rowValue: any) => {
+    console.log('rowValue ได้อะไร -> ', rowValue)
+    const rowData = selectedRows.map((item: any) => {
+      return {item:item.id, quantity:rowValue[item.id] }
+      
+    }); console.log("Rowdata ได้อะไร -> ",rowData)
+    updateMultiple(rowData);
+    form.resetFields();
+    setAddmodal(false);
+  }
+
+  const updateMultiple = async (selectedRows: any) => {
+    try {
+      await axios.put("http://192.168.2.57:3000/items/update-quantity-multiple", selectedRows);
+      getWarehouse();
+    } catch (err: any) {
+      alert(err?.response?.data?.message);
+    }
+  }
+
 
   return (
-    <Layout 
+    <Layout
     >
       {/* <ContainerFilled /> */}
       <Card
-        title= { 
+        title={
           <span>
-            <ContainerFilled style={{marginRight: 8}}/>
+            <ContainerFilled style={{ marginRight: 8 }} />
             คลังสินค้า
           </span>}
         bordered={false}
@@ -244,7 +248,7 @@ const Warehouse = () => {
         />
       </Card>
 
-      <Modal title="แก้ไขสินค้า" open={isModalVisible} footer={null} onCancel={handleCancel} style={{width:"500px"}}>
+      <Modal title="แก้ไขสินค้า" open={isModalVisible} footer={null} onCancel={handleCancel} style={{ width: "500px" }}>
         <Form
           name="basic"
           form={form}
@@ -282,6 +286,15 @@ const Warehouse = () => {
               style={{ borderRadius: 100, border: 'solid 0.5px grey' }}
             />
           </Form.Item>
+          <Form.Item
+            label="หมายเหตุ"
+          >
+            <Input
+              type='text'
+              placeholder='Ex. 100/-100'
+              style={{ borderRadius: 100, border: 'solid 0.5px grey' }}
+            />
+          </Form.Item>
           <div style={{ textAlign: 'center', }}>
             <Button icon={<FolderFilled />} onClick={editSubmit} style={{ backgroundColor: '#bc211c', margin: 10, color: 'white', borderRadius: 100 }}>บันทึก</Button>
             <Button icon={<CloseCircleFilled />} onClick={handleCancel} style={{ backgroundColor: '#2F353A', color: 'white', borderRadius: 100 }}>ยกเลิก</Button>
@@ -290,26 +303,32 @@ const Warehouse = () => {
       </Modal>
 
       <Modal title="จัดการสินค้า" open={addModal} onCancel={addCancel} footer={null} >
-        <Table
-          style={{ backgroundColor: '#e4e5e5' }}
-          columns={addColumns}
-          dataSource={selectedRows}
-          pagination={{defaultCurrent: 1}}
-        />
+        <Form form={form} onFinish={multipleSubmit}>
+          <Table
+            style={{ backgroundColor: '#e4e5e5' }}
+            columns={addColumns}
+            dataSource={selectedRows}
+            pagination={{ defaultCurrent: 1 }}
+          />
+          <div style={{ textAlign: 'center', }}>
+            <Button htmlType='submit' icon={<FolderFilled />} style={{ backgroundColor: '#bc211c', margin: 10, color: 'white', borderRadius: 100 }}>บันทึก</Button>
+            <Button icon={<CloseCircleFilled />} onClick={handleCancel} style={{ backgroundColor: '#2F353A', color: 'white', borderRadius: 100 }}>ยกเลิก</Button>
+          </div>
+        </Form>
       </Modal>
 
       <Modal
-        title={"รหัส SKU"}
+        title={sku}
         open={isModalHistory}
         onCancel={handleCancelh}
         footer={null}
-        >
-          <Table
-            style={{ backgroundColor: "#e4e5e5" }}
-            dataSource={getHistory}
-            columns={columnh}
-            scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
-            pagination={{defaultCurrent: 1}}
+      >
+        <Table
+          style={{ backgroundColor: "#e4e5e5" }}
+          dataSource={getHistory}
+          columns={columnHistory}
+          scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
+          pagination={{ defaultCurrent: 1 }}
         />
       </Modal>
 
