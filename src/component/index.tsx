@@ -1,63 +1,38 @@
-import { useEffect, useState } from "react";
-import { Button, Card, Layout } from "antd";
-import Table from "./table";
-import axios from "axios";
+import React from "react";
+import TableComponent from "./TableStatus";
+import { Card, Layout } from "antd";
 
-const App = () => {
-  const [current, setCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [total, setTotal] = useState(1);
-  const [data, setData] = useState<Record<string, unknown>[]>([]);
-
-  useEffect(() => {
-    getPokamom();
-  }, []);
-
-  useEffect(() => {
-    getPokamom();
-  }, [current, pageSize]);
-
-  const getPokamom = async () => {
-    const res = await axios.get("https://pokeapi.co/api/v2/ability/", {
-      params: {
-        limit: pageSize,
-        offset: current,
-      },
-    });
-    if (res.status === 200) {
-      setData(res.data.results || []);
-      setTotal(res.data.count || 0);
-    }
-  };
-
-  const columns = [
-    { title: "ID", dataIndex: "id" },
-    { title: "Name", dataIndex: "name" },
+const TableStatus = () => {
+  const data = [
     {
-      title: "Age",
-      dataIndex: "age",
+      key: "1",
+      details: "Details 1",
+      date: "2024-04-01",
+      address: "Address 1",
+      zipCode: "10000",
+      cod: "COD 1",
+      email: "email1@example.com",
+      status: "Pending",
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      key: "2",
+      details: "Details 2",
+      date: "2024-04-02",
+      address: "Address 2",
+      zipCode: "20000",
+      cod: "COD 2",
+      email: "email2@example.com",
+      status: "Completed",
     },
   ];
 
   return (
     <Layout>
       <Card>
-        <Table
-          data={data}
-          columns={columns}
-          pagination={{ current: current, setCurrent: setCurrent }}
-          pageSize={{ pageSize: pageSize, setPageSize: setPageSize }}
-          total={total}
-        />
+        <TableComponent data={data} />
       </Card>
     </Layout>
   );
 };
 
-export default App;
-
-//ตัวอย่างการใช้
+export default TableStatus;
