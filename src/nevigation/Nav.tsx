@@ -17,7 +17,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   type MenuItem = Required<MenuProps>["items"][number];
   const [c, setC] = useState<string>("");
-  
+
   const items: MenuItem[] = [
     {
       key: "/warehouse",
@@ -101,15 +101,15 @@ const App: React.FC = () => {
     },
 
     {
-      key: "/test",
+      key: "/table",
       icon: React.createElement(
         ShopOutlined,
-        c === "/test" ? { style: { color: "red" } } : undefined
+        c === "/table" ? { style: { color: "red" } } : undefined
       ),
       label: "Test",
       children: [
         {
-          key: "/test",
+          key: "/table",
           label: "เทมเพลส",
         },
       ],
@@ -138,7 +138,7 @@ const App: React.FC = () => {
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            style={{ background: "#2F353A", width: "100vw", height: "100vh" }}
+            style={{ background: "#2F353A" }}
           >
             <div className="demo-logo-vertical" /*สไลด์ด้านข้าง*/ />
             <Menu
@@ -150,9 +150,7 @@ const App: React.FC = () => {
               onClick={(e) => onClick(e.key)}
             />
           </Sider>
-          <div style={{ width: "100vw", height: "100vh", overflow: "scroll" }}>
-            <Outlet />
-          </div>
+          <Outlet />
         </Layout>
       </Layout>
     </>

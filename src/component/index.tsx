@@ -8,12 +8,15 @@ const App = () => {
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(1);
   const [data, setData] = useState<Record<string, unknown>[]>([]);
+
   useEffect(() => {
     getPokamom();
   }, []);
+
   useEffect(() => {
     getPokamom();
   }, [current, pageSize]);
+
   const getPokamom = async () => {
     const res = await axios.get("https://pokeapi.co/api/v2/ability/", {
       params: {
