@@ -87,7 +87,7 @@ function Order5() {
             ลบ
           </span>
         </Button>
-        <TableStatus status={"Packing"} />
+        <TableStatus status={"OutOfStock"} />
       </Card>
     </Layout>
   );
