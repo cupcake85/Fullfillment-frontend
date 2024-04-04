@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { Table, TableProps } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Table, TableProps } from "antd";
+import Layout from "antd/es/layout/layout";
+import EditTable from "./OrderAction/EditTable";
+import EditPage from "./OrderAction/EditPage";
+import axios from "axios";
 
 interface DataType {
   details: string;
@@ -9,19 +13,33 @@ interface DataType {
   cod: string;
   email: string;
 }
-
 interface Props {
-  data: DataType[];
+  status: string;
 }
 
-const TableComponent: React.FC<Props> = ({ data }) => {
+const TableStatus: React.FC<Props> = ({ status }) => {
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
+  const [itemData, setItemData] = useState([]);
+
+  useEffect(() => {
+    getItemData();
+  }, []);
 
   const rowSelection = {
     onChange: (_: React.Key[], selectedRow: DataType[]) => {
       //onChange เอาไปใช้ใน table ได้เลย
       setSelectedRows(selectedRow); // เมื่อมีการเลือกแถวใหม่ให้เซ็ตค่า state
     },
+  };
+
+  const getItemData = async () => {
+    // const request = await axios.get("http://192.168.2.57:3000/stores/");
+    const request = await axios.get(
+      "http://192.168.2.57:3000/order/search/status",
+      { params: { status: status } }
+    );
+    console.log("request", request);
+    setItemData(request.data.data);
   };
 
   const columns: TableProps<DataType>["columns"] = [
@@ -49,11 +67,54 @@ const TableComponent: React.FC<Props> = ({ data }) => {
       title: "สถานะ",
       dataIndex: "status",
     },
+    {
+      title: "",
+      width: "100px",
+
+      render: (value: any) => {
+        // return <EditTable />;
+        return (
+          <div style={{ textAlign: "center" }}>
+            <div
+              onClick={EditPage}
+              style={{
+                // backgroundColor: "red",
+                fontSize: "12px",
+                borderRadius: "5px 5px 0px 0px",
+              }}
+            >
+              แก้ไข
+            </div>
+            <div
+              style={{
+                // backgroundColor: "pink",
+                fontSize: "12px",
+              }}
+            >
+              รายละเอียด
+            </div>
+            <div
+              style={{
+                // backgroundColor: "green",
+                fontSize: "12px",
+                borderRadius: "0px 0px 5px 5px",
+              }}
+            >
+              ประวัติ
+            </div>
+          </div>
+        );
+      },
+    },
   ];
 
   return (
-    <Table columns={columns} dataSource={data} rowSelection={rowSelection} />
+    <Table
+      columns={columns}
+      dataSource={itemData}
+      rowSelection={rowSelection}
+    />
   );
 };
 
-export default TableComponent;
+export default TableStatus;

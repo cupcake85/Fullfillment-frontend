@@ -36,8 +36,6 @@ const Store = () => {
   const [isModalOpenAdd, setIsModalOpenAdd] = useState(false);
   // const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
 
-  
-
   useEffect(() => {
     getItemData();
   }, []);
@@ -48,7 +46,6 @@ const Store = () => {
     }
     setIsReload(false);
   }, [isReload]);
-
 
   const showModalAdd = (value?: any) => {
     if (value) {
@@ -63,7 +60,6 @@ const Store = () => {
     setIsModalEdit(false);
   };
 
-
   const handleOkAdd = () => {
     setIsModalOpenAdd(false);
   };
@@ -73,7 +69,7 @@ const Store = () => {
   };
 
   const editClick = (value: any) => {
-    console.log("ตรงนี้นะ",value);
+    console.log("ตรงนี้นะ", value);
     showModalEdit();
     form.setFieldsValue({
       id: value.id,
@@ -84,7 +80,6 @@ const Store = () => {
       phoneNumber: value.phoneNumber,
       email: value.email,
     });
-
   };
 
   const columns: TableColumnsType<DataType> = [
@@ -124,9 +119,9 @@ const Store = () => {
               </Button>
             </div>
             <div>
-            <Button onClick={() => deleteStore(record)}>
-              <DeleteFilled />
-            </Button>
+              <Button onClick={() => deleteStore(record)}>
+                <DeleteFilled />
+              </Button>
             </div>
           </div>
         );
@@ -136,8 +131,8 @@ const Store = () => {
 
   const getItemData = async () => {
     const request = await axios.get("http://192.168.2.57:3000/stores/");
-    console.log('request', request)
-    setItemData(request.data.data)
+    console.log("request", request);
+    setItemData(request.data.data);
   };
 
   const deleteStore = async (value: any) => {
@@ -151,6 +146,7 @@ const Store = () => {
         margin: "15px 80px",
         padding: 10,
         minHeight: 220,
+        // backgroundColor: "gray",
       }}
     >
       <Content
@@ -168,54 +164,52 @@ const Store = () => {
           }}
         >
           <UserOutlined /> ผู้ใช้งาน
-        </Card>
-        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-          <Button
-            type="primary"
-            onClick={showModalAdd}
-            style={{ backgroundColor: "gray", marginTop: "15px" }}
+          <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+            <Button
+              type="primary"
+              onClick={showModalAdd}
+              style={{ backgroundColor: "gray", marginTop: "15px" }}
+            >
+              เพิ่มผู้ใช้งาน
+            </Button>
+          </div>
+          <Modal
+            title="เพิ่มผู้ใช้งาน"
+            open={isModalOpenAdd}
+            onOk={handleOkAdd}
+            onCancel={handleCancelAdd}
+            footer={null}
           >
-            เพิ่มผู้ใช้งาน
-          </Button>
-        </div>
-        <Modal
-          title="เพิ่มผู้ใช้งาน"
-          open={isModalOpenAdd}
-          onOk={handleOkAdd}
-          onCancel={handleCancelAdd}
-          footer={null}
-        >
-          <InputStore
-            form={form}
-            handleCancel={handleCancelAdd}
-            setIsReload={setIsReload}
-          ></InputStore>
-        </Modal>
-
-        <Modal
-          title="แก้ไข"
-          open={isModalEdit}
-          onCancel={cancelModalEdit}
-          footer={null}
-        >
-          <EditStore
-            form={form}
-            handleCancelEdit={cancelModalEdit}
-            setIsReload={setIsReload}
-            getItemData={getItemData}
-          ></EditStore>
-        </Modal>
-
-        <Table
-          dataSource={itemData}
-          style={{
-            backgroundColor: "#e4e5e5",
-            borderRadius: "15px",
-            marginTop: "15px",
-          }}
-          columns={columns}
-          scroll={{ x: 700 , y:300}} // ถ้าหน้าจอกว้างน้อยกว่า 700 จะขึ้น scroll
-        />
+            <InputStore
+              form={form}
+              handleCancel={handleCancelAdd}
+              setIsReload={setIsReload}
+            ></InputStore>
+          </Modal>
+          <Modal
+            title="แก้ไข"
+            open={isModalEdit}
+            onCancel={cancelModalEdit}
+            footer={null}
+          >
+            <EditStore
+              form={form}
+              handleCancelEdit={cancelModalEdit}
+              setIsReload={setIsReload}
+              getItemData={getItemData}
+            ></EditStore>
+          </Modal>
+          <Table
+            dataSource={itemData}
+            style={{
+              backgroundColor: "#e4e5e5",
+              borderRadius: "15px",
+              marginTop: "15px",
+            }}
+            columns={columns}
+            scroll={{ x: 700, y: 300 }} // ถ้าหน้าจอกว้างน้อยกว่า 700 จะขึ้น scroll
+          />
+        </Card>
       </Content>
     </Layout>
   );
