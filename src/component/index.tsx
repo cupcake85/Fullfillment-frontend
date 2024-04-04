@@ -28,7 +28,7 @@ const TableStatus = () => {
     },
   ];
 
-  return <TableComponent data={data} />;
+  return <TableComponent status={""} />;
 };
 
 export default TableStatus;
