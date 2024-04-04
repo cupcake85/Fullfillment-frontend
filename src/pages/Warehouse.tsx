@@ -7,6 +7,7 @@ import { CloseCircleFilled, ContainerFilled, FolderFilled, PlusCircleOutlined } 
 import { TTypeModal } from '../component/warehouse/modal';
 import dayjs from "dayjs";
 import { IResult, Iitem } from '../interface/item.interface';
+import CustomTable from '../component/table';
 
 const Warehouse = () => {
   const [warehousedata, setWarehouse] = useState<Iitem[]>([]);
@@ -238,12 +239,12 @@ const Warehouse = () => {
 
         <Table
           rowSelection={rowSelection}
-          rowKey={"id"} //ใช้ id แยกข้อมูลที่มาจาก array แล้ว
+          rowKey="id" //ใช้ id แยกข้อมูลที่มาจาก array แล้ว
           pagination={{ defaultCurrent: 1 }}
           style={{ backgroundColor: '#e4e5e5', }}
           dataSource={warehousedata}
           columns={warehouseColumns}
-          scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
+          scroll={{ x: 400, y: 350 }} //ความกว้าง scroll ได้ 1200
         />
       </Card>
 

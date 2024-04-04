@@ -14,6 +14,7 @@ interface TableProps {
     setPageSize: (value: number) => void;
   };
   total: number;
+  key: string;
 }
 
 const CustomTable: React.FC<TableProps> = ({
@@ -43,6 +44,7 @@ const CustomTable: React.FC<TableProps> = ({
         columns={formatCol}
         pagination={false}
         size={"middle"}
+        rowKey={(record, index: any) => index.toString()} // เพิ่ม key ด้วย index
       />
 
       <Pagination

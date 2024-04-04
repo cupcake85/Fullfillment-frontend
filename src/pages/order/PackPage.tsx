@@ -1,12 +1,18 @@
 import { Button, Card, Layout } from "antd";
 import Table from "../../component/table";
 import { InboxOutlined } from "@ant-design/icons";
-import OrderForm from "../../component/OrderForm";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function PackPage() {
+  const navigate = useNavigate();
+  const [recordItem, setRecordItem] = useState([]);
+  
 
-    const navigate = useNavigate();
+  useEffect(() => {
+    getRecordItem();
+  }, []);
 
   const columns = [
     {
@@ -15,44 +21,54 @@ function PackPage() {
     },
     {
       title: "SKU",
-      dataIndex: "sku",
+      dataIndex: "item",
+      render: (value: any, record: any) => {
+        return <p>{record.details}</p>
+      }
     },
     {
       title: "ร้านค้า",
-      dataIndex: "age",
-    },
-    {
-      title: "รายละเอียด",
-      dataIndex: "email",
+      dataIndex: "stores",
+      render: (value: any, record: any) => {
+        return <p>{value?.name}</p>
+      }
     },
     {
       title: "จำนวน",
-      dataIndex: "email",
+      dataIndex: "quantity",
     },
     {
       title: "คงเหลือ",
-      dataIndex: "email",
+      dataIndex: "item",
+      render: (value: any, record: any) => {
+        return <p>{value?.quantity}</p>
+      }
     },
   ];
 
+  const getRecordItem = async () => {
+    try {
+      const res = await axios.get("http://192.168.2.57:3000/record/item");
+      setRecordItem(res.data.data);
+      console.log('recordItem axios -> ',res);
+    } catch (error: any) {
+      alert(error?.response?.data.message);
+    }
+  };
+
   return (
-    
     <Layout className=" bg-cyan-200">
-
- <Button className=" bg-teal-600" onClick={() => navigate('/AddOrderPage')}>เพิ่มรายการสั่งของ</Button>
-
-      <Card title={
-        <span>
-            <InboxOutlined className=" text-3xl font-bold mr-3"/>
+      <Card
+        title={
+          <span>
+            <InboxOutlined className=" text-3xl font-bold mr-3" />
             แพ็คสินค้า
-        </span>
-      }
-      className=" m-[70px]">
-
-       
-
+          </span>
+        }
+        className=" m-[70px]"
+      >
         <Table
-          data={[]}
+          data={recordItem}
           columns={columns}
           pagination={{
             current: 0,
@@ -66,7 +82,7 @@ function PackPage() {
               throw new Error("Function not implemented.");
             },
           }}
-          total={0}
+          total={0} key={""}       
         />
       </Card>
     </Layout>
