@@ -10,7 +10,9 @@ import {
 } from "@ant-design/icons";
 import axios from "axios";
 
-function Order4() {
+function ProgressPage() {
+  const [statuschange, setStatusChange] = useState<string>("");
+
   const data = [
     {
       key: "1",
@@ -22,40 +24,40 @@ function Order4() {
       email: "email1@example.com",
       status: "Pending",
     },
-    {
-      key: "2",
-      details: "Details 2",
-      date: "2024-04-02",
-      address: "Address 2",
-      zipCode: "20000",
-      cod: "COD 2",
-      email: "email2@example.com",
-      status: "Completed",
-    },
   ];
+
+  const onClick: MenuProps["onClick"] = ({ key }) => {
+    setStatusChange(key);
+    console.log(`Click on item ${key}`);
+  };
 
   const items: MenuProps["items"] = [
     {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
-      key: "0",
+      label: "สินค้ายังไม่ถูกตรวจสอบ",
+      key: "NotChecked",
     },
     {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
-      key: "1",
+      label: "กำลังแพ็คของออกจากคลัง",
+      key: "OutOfStock",
     },
     {
-      type: "divider",
+      label: "สินค้ากำลังดำเนินการ",
+      key: "Inprogress",
     },
     {
-      label: "3rd menu item",
-      key: "3",
+      label: "จัดส่งสินค้าเรียบร้อย",
+      key: "Delivered",
+    },
+    {
+      label: "สินค้าถูกนำกลับ",
+      key: "Returned",
     },
   ];
 
   return (
     <Layout style={{ backgroundColor: "gray" }}>
       <Card
-        title={<span>สินค้ากำลังดำเนินการ</span>}
+        title={<span>กำลังดำเนินการ</span>}
         style={{ backgroundColor: "pink", margin: "70px" }}
       >
         <Button
@@ -66,7 +68,11 @@ function Order4() {
             color: "#fff",
           }}
         >
-          <Dropdown menu={{ items }} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            menu={{ items, onClick }}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <a onClick={(e) => e.preventDefault()}>
               <Space>
                 เปลี่ยนแปลงสถานะ
@@ -87,9 +93,13 @@ function Order4() {
             ลบ
           </span>
         </Button>
-        <TableStatus status={"InProgress"} />
+        <TableStatus
+          status={"InProgress"}
+          statuschange={statuschange}
+          setStatusChange={setStatusChange}
+        />
       </Card>
     </Layout>
   );
 }
-export default Order4;
+export default ProgressPage;
