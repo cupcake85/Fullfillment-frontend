@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Layout, Table, TableProps } from "antd";
+import axios from "axios";
+import EditPage from "./OrderAction/EditPage";
 
 interface DataType {
   details: string;
