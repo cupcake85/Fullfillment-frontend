@@ -1,6 +1,6 @@
-import { Button, Card, Layout } from "antd";
+import { Button, Card, Form, Input, Layout } from "antd";
 import Table from "../../component/table";
-import { InboxOutlined } from "@ant-design/icons";
+import { InboxOutlined, SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 function PackPage() {
   const navigate = useNavigate();
   const [recordItem, setRecordItem] = useState([]);
-  
 
   useEffect(() => {
     getRecordItem();
@@ -17,21 +16,21 @@ function PackPage() {
   const columns = [
     {
       title: "#",
-      dataIndex: "id",
+      dataIndex: "id", //แสดงเลขตามลำดับ
     },
     {
       title: "SKU",
       dataIndex: "item",
       render: (value: any, record: any) => {
-        return <p>{record.details}</p>
-      }
+        return <p>{value?.sku}</p>;
+      },
     },
     {
       title: "ร้านค้า",
-      dataIndex: "stores",
+      dataIndex: "item",
       render: (value: any, record: any) => {
-        return <p>{value?.name}</p>
-      }
+        return <p>{value?.stores.name}</p>;
+      },
     },
     {
       title: "จำนวน",
@@ -41,8 +40,8 @@ function PackPage() {
       title: "คงเหลือ",
       dataIndex: "item",
       render: (value: any, record: any) => {
-        return <p>{value?.quantity}</p>
-      }
+        return <p>{value?.quantity}</p>;
+      },
     },
   ];
 
@@ -50,14 +49,14 @@ function PackPage() {
     try {
       const res = await axios.get("http://192.168.2.57:3000/record/item");
       setRecordItem(res.data.data);
-      console.log('recordItem axios -> ',res);
+      console.log(res);
     } catch (error: any) {
       alert(error?.response?.data.message);
     }
   };
 
   return (
-    <Layout className=" bg-cyan-200">
+    <Layout className=" bg-[#EDEDED]">
       <Card
         title={
           <span>
@@ -66,7 +65,25 @@ function PackPage() {
           </span>
         }
         className=" m-[70px]"
+        
       >
+        {/* กลุ่ม Form Filter */}
+
+        <Form className=" m-5 text-center">
+          <Form.Item label="รหัสสินค้า">
+            <Input className=" rounded-3xl w-[250px]" />
+          </Form.Item>
+          <Form.Item label="ร้านค้า">
+            <Input className=" rounded-3xl w-[250px]" />
+          </Form.Item>
+          <Form.Item>
+            <Button style={{backgroundColor:'#2F353A', color:'white'}} icon={<SearchOutlined />}>
+              ค้นหา
+            </Button>
+          </Form.Item>
+        </Form>
+
+        {/* กลุ่ม Form Filter */}
         <Table
           data={recordItem}
           columns={columns}
@@ -82,7 +99,8 @@ function PackPage() {
               throw new Error("Function not implemented.");
             },
           }}
-          total={0} key={""}       
+          total={0}
+          key={"id"}
         />
       </Card>
     </Layout>
