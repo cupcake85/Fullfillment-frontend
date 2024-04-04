@@ -3,38 +3,39 @@ import { Button, Form, Input, Modal, Table, TableColumnsType } from "antd";
 import { FormInstance, useForm } from "antd/es/form/Form";
 import axios from "axios";
 import dayjs from "dayjs";
-import React from "react";
 import { FC, useEffect, useState } from "react";
 
 export type TTypeModal = "history" | "edit" | "action";
 
-interface IModalWarehouse { //interface ที่ใช้กับฟังก์ชัน 
+// Interface ใน TypeScript ถูกใช้เพื่อระบุโครงสร้างข้อมูลที่คาดหวังและมักจะใช้ในการตรวจสอบชนิดข้อมูล
+interface IModalWarehouse {
   open: boolean;
-  onClose: () => void;
+  onClose: () => void; //ฟังก์ชันที่จะถูกเรียกเมื่อโมดัลถูกปิด
   type: TTypeModal;
   item?: IItem;
   updateWarehouse: (id: number, formData: any) => void;
 }
 
-export interface IItem {
+export interface IItem { //ข้อมูลในตารางคลังสินค้า
   details: string;
   id: number;
   name: string;
   quantity: number;
   sku: string;
+  stores: string; //เพิ่มร้านค้า
 }
 
-export interface IHistory {
+export interface IHistory { //ข้อมูลในตารางประวัติสินค้า
   id: number;
   lot: string;
   order: string;
   outDate: string;
   quantity: number;
   remark: string;
-  item: IHistoryItem;
+  item: IHistoryItem; // ข้อมูลของสินค้าในประวัติสินค้า (IHistoryItem)
 }
 
-interface IHistoryItem {
+interface IHistoryItem { //รายการสินค้าในประวัติ
   details: string;
   id: number;
   name: string;
@@ -42,7 +43,8 @@ interface IHistoryItem {
   sku: string;
 }
 
-const ModalWarehouse: FC<IModalWarehouse> = ({
+//component ชื่อ ModalWarehouse ซึ่งใช้สำหรับแสดงโมดัลที่เกี่ยวข้องกับคลังสินค้า
+const ModalWarehouse: FC<IModalWarehouse> = ({ //รับ props จาก interface IModalWarehouse
   onClose,
   open,
   type,
@@ -71,9 +73,9 @@ const ModalWarehouse: FC<IModalWarehouse> = ({
     >
       <div className="mt-4">
         {type === "history" ? (
-          <ContentHistory open={open} id={item?.id} />
+          <ContentHistory open={open} id={item?.id} /> //component ที่ถูกใช้ในการแสดงข้อมูลประวัติหรือฟอร์มแก้ไขข้อมูลตามลำดับ
         ) : type === "edit" ? (
-          <ContentEdit
+          <ContentEdit 
             item={item}
             open={open}
             onSubmit={updateWarehouse}
@@ -99,7 +101,7 @@ const ContentHistory: FC<IContentHis> = ({ id, open }) => {
   useEffect(() => {
     getHistory(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]); 
+  }, [open]);
 
   const getHistory = async (id?: number) => {
     try {
@@ -183,7 +185,7 @@ const ContentEdit: FC<IContentEdit> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  const editSubmit = () => {
+  const editOk = () => {
     const formData = form.getFieldsValue([
       "id",
       "sku",
@@ -192,16 +194,8 @@ const ContentEdit: FC<IContentEdit> = ({
       "quantity",
     ]);
     onSubmit?.(formData.id, formData);
-    form.resetFields();
     onClose;
   };
-
-  // const editSubmit = () => {
-  //   const formData = form.getFieldsValue(['id', 'quantityEdit']); //รับค่าที่กรอกในฟอร์มจากฟิลด์ที่กำหนดไว้
-  //   updateWarehouse(formData); // เรียกใช้ updateWarehouse() โดยส่งข้อมูล id และ formData เพื่ออัปเดตข้อมูลในคลังสินค้า  
-  //   form.resetFields();
-  //   setOpen(false);
-  // }
 
   return (
     <div className="flex justify-center w-full">
@@ -235,7 +229,7 @@ const ContentEdit: FC<IContentEdit> = ({
         <div style={{ textAlign: "center" }}>
           <Button
             icon={<FolderFilled />}
-            onClick={editSubmit}
+            onClick={editOk}
             style={{
               backgroundColor: "#bc211c",
               margin: 10,

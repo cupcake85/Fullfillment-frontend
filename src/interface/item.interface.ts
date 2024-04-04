@@ -32,3 +32,9 @@ export interface IHistory {
   remark: string;
   item: Iitem;
 }
+
+export interface IPack {
+  id: number;
+  item: Iitem;
+  quantity: number;
+}

@@ -14,7 +14,6 @@ import Column from "antd/es/table/Column";
 import React, { useState } from "react";
 import CustomTable from "../../component/table";
 import axios from "axios";
-import CustomButton from "../../component/button";
 
 function Order() {
   const [orderData, setOrderData] = useState([]);
