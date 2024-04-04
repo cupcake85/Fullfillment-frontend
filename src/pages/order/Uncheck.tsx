@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 
 function Order3() {
+  const [statuschange, setStatusChange] = useState<string>("");
+
   const data = [
     {
       key: "1",
@@ -24,21 +26,31 @@ function Order3() {
     },
   ];
 
+  const onClick: MenuProps["onClick"] = ({ key }) => {
+    setStatusChange(key);
+    console.log(`Click on item ${key}`);
+  };
+
   const items: MenuProps["items"] = [
     {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
-      key: "0",
+      label: "สินค้ายังไม่ถูกตรวจสอบ",
+      key: "NotChecked",
     },
     {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
-      key: "1",
+      label: "กำลังแพ็คของออกจากคลัง",
+      key: "OutOfStock",
     },
     {
-      type: "divider",
+      label: "สินค้ากำลังดำเนินการ",
+      key: "Inprogress",
     },
     {
-      label: "3rd menu item",
-      key: "3",
+      label: "จัดส่งสินค้าเรียบร้อย",
+      key: "Delivered",
+    },
+    {
+      label: "สินค้าถูกนำกลับ",
+      key: "Returned",
     },
   ];
 
@@ -56,7 +68,11 @@ function Order3() {
             color: "#fff",
           }}
         >
-          <Dropdown menu={{ items }} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            menu={{ items, onClick }}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <a onClick={(e) => e.preventDefault()}>
               <Space>
                 เปลี่ยนแปลงสถานะ
@@ -77,7 +93,11 @@ function Order3() {
             ลบ
           </span>
         </Button>
-        <TableStatus status={"NotChecked"} />
+        <TableStatus
+          status={"NotChecked"}
+          statuschange={statuschange}
+          setStatusChange={setStatusChange}
+        />
       </Card>
     </Layout>
   );

@@ -48,6 +48,7 @@ function Order7() {
               },
             }}
             total={0}
+            key={""}
           ></Table>
         </Card>
       </Layout>

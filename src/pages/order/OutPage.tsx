@@ -10,7 +10,9 @@ import {
 } from "@ant-design/icons";
 import axios from "axios";
 
-function Order5() {
+function OutPage() {
+  const [statuschange, setStatusChange] = useState<string>("");
+
   const data = [
     {
       key: "1",
@@ -22,33 +24,33 @@ function Order5() {
       email: "email1@example.com",
       status: "Pending",
     },
-    {
-      key: "2",
-      details: "Details 2",
-      date: "2024-04-02",
-      address: "Address 2",
-      zipCode: "20000",
-      cod: "COD 2",
-      email: "email2@example.com",
-      status: "Completed",
-    },
   ];
+
+  const onClick: MenuProps["onClick"] = ({ key }) => {
+    setStatusChange(key);
+    console.log(`Click on item ${key}`);
+  };
 
   const items: MenuProps["items"] = [
     {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
-      key: "0",
+      label: "สินค้ายังไม่ถูกตรวจสอบ",
+      key: "NotChecked",
     },
     {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
-      key: "1",
+      label: "กำลังแพ็คของออกจากคลัง",
+      key: "OutOfStock",
     },
     {
-      type: "divider",
+      label: "สินค้ากำลังดำเนินการ",
+      key: "Inprogress",
     },
     {
-      label: "3rd menu item",
-      key: "3",
+      label: "จัดส่งสินค้าเรียบร้อย",
+      key: "Delivered",
+    },
+    {
+      label: "สินค้าถูกนำกลับ",
+      key: "Returned",
     },
   ];
 
@@ -66,7 +68,11 @@ function Order5() {
             color: "#fff",
           }}
         >
-          <Dropdown menu={{ items }} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            menu={{ items, onClick }}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <a onClick={(e) => e.preventDefault()}>
               <Space>
                 เปลี่ยนแปลงสถานะ
@@ -87,9 +93,13 @@ function Order5() {
             ลบ
           </span>
         </Button>
-        <TableStatus status={"Packing"} />
+        <TableStatus
+          status={"OutOfStock"}
+          statuschange={statuschange}
+          setStatusChange={setStatusChange}
+        />
       </Card>
     </Layout>
   );
 }
-export default Order5;
+export default OutPage;
