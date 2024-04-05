@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import axios from "axios";
 
-function Order3() {
+function Uncheck() {
   const [statuschange, setStatusChange] = useState<string>("");
 
   const data = [
@@ -102,4 +102,4 @@ function Order3() {
     </Layout>
   );
 }
-export default Order3;
+export default Uncheck;
