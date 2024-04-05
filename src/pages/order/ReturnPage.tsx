@@ -1,30 +1,43 @@
-import { Card, Layout } from "antd";
+import { Button, Card, Layout, TableProps } from "antd";
 import React, { useState } from "react";
 import Table from "../../component/table";
 import { RetweetOutlined } from "@ant-design/icons";
+import TableStatus from "../../component/TableStatus";
+import axios from "axios";
 
 interface DataType {
   details: string;
-  date: string;
-  address: string;
   zipCode: string;
-  cod: string;
-  email: string;
+  customerName: string;
 }
 
 function ReturnPage() {
-  const columns = [
-    { title: "รายละเอียด", dataIndex: "details" },
-    { title: "ลูกค้า", dataIndex: "name" },
+  const columns: TableProps<DataType>["columns"] = [
+    {
+      title: "รายละเอียด",
+      dataIndex: "quantity",
+      render: (rc: any) => {
+        return (
+          <div className=" border-[1px] border-slate-200 rounded-[10px] p-2 text-center">
+            จำนวน : {rc}
+          </div>
+        );
+      },
+    },
+
+    {
+      title: "ลูกค้า",
+      dataIndex: "customerName",
+    },
     {
       title: "รหัสไปรษณีย์",
-      dataIndex: "age",
+      dataIndex: "zipCode",
     },
   ];
 
   return (
     <>
-      <Layout style={{ backgroundColor: "gray" }}>
+      <Layout>
         <Card
           title={
             <span>
@@ -39,26 +52,15 @@ function ReturnPage() {
           }
           style={{
             margin: "70px",
+            height: "570px",
+            // backgroundColor: "red",
           }}
         >
-          <Table
-            data={[]}
-            columns={columns}
-            pagination={{
-              current: 0,
-              setCurrent: function (value: number): void {
-                throw new Error("Function not implemented.");
-              },
-            }}
-            pageSize={{
-              pageSize: 0,
-              setPageSize: function (value: number): void {
-                throw new Error("Function not implemented.");
-              },
-            }}
-            total={0}
-            key={""}
-          ></Table>
+          <TableStatus
+            status="RETURNED"
+            customColumns={columns}
+            statusReturn={true}
+          />
         </Card>
       </Layout>
     </>
