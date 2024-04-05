@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import axios from "axios";
 
-function Order3() {
+function Uncheck() {
   const [statuschange, setStatusChange] = useState<string>("");
 
   const data = [
@@ -55,10 +55,10 @@ function Order3() {
   ];
 
   return (
-    <Layout style={{ backgroundColor: "gray" }}>
+    <Layout style={{ backgroundColor: 'EDEDED' }}>
       <Card
         title={<span>สินค้ายังไม่ถูกตรวจสอบ</span>}
-        style={{ backgroundColor: "pink", margin: "70px" }}
+        style={{  margin: "70px" }}
       >
         <Button
           style={{
@@ -94,7 +94,7 @@ function Order3() {
           </span>
         </Button>
         <TableStatus
-          status={"NotChecked"}
+          status={"NOTCHECKED"}
           statuschange={statuschange}
           setStatusChange={setStatusChange}
         />
@@ -102,4 +102,4 @@ function Order3() {
     </Layout>
   );
 }
-export default Order3;
+export default Uncheck;

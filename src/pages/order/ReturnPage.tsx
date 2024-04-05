@@ -3,9 +3,18 @@ import React, { useState } from "react";
 import Table from "../../component/table";
 import { RetweetOutlined } from "@ant-design/icons";
 
-function Order7() {
+interface DataType {
+  details: string;
+  date: string;
+  address: string;
+  zipCode: string;
+  cod: string;
+  email: string;
+}
+
+function ReturnPage() {
   const columns = [
-    { title: "รายละเอียด", dataIndex: "id" },
+    { title: "รายละเอียด", dataIndex: "details" },
     { title: "ลูกค้า", dataIndex: "name" },
     {
       title: "รหัสไปรษณีย์",
@@ -55,4 +64,4 @@ function Order7() {
     </>
   );
 }
-export default Order7;
+export default ReturnPage;

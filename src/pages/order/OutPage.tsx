@@ -94,7 +94,7 @@ function OutPage() {
           </span>
         </Button>
         <TableStatus
-          status={"OutOfStock"}
+          status={"OUTOFSTOCK"}
           statuschange={statuschange}
           setStatusChange={setStatusChange}
         />

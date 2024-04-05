@@ -94,7 +94,7 @@ function ProgressPage() {
           </span>
         </Button>
         <TableStatus
-          status={"InProgress"}
+          status={"INPROGRESS"}
           statuschange={statuschange}
           setStatusChange={setStatusChange}
         />

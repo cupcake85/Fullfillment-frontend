@@ -6,6 +6,7 @@ import {
   Col,
   Card,
   Modal,
+  Layout,
   TableColumnsType,
   Table,
   Space,
@@ -159,85 +160,88 @@ const Item = () => {
   const [size] = useState<SizeType>("large");
 
   return (
-    <div>
-      <Row justify="center" align="middle">
-        <Card
-          title={
-            <span>
-              <ProfileFilled style={{ marginRight: 8 }} /> จัดการ
-            </span>
-          }
-          bordered={false}
-          style={{
-            backgroundColor: "white",
-            margin: 65,
-            borderRadius: 20,
-          }}
+    <Layout>
+      <Card
+        title={
+          <span>
+            <ProfileFilled style={{ marginRight: 8 }} /> จัดการ
+          </span>
+        }
+        bordered={false}
+        style={{
+          backgroundColor: "white",
+          margin: 65,
+          borderRadius: 20,
+        }}
+      >
+        {/* ---------------------------------------------------------------------------content-------------------------------------------------------------------------- */}
+        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+          <Button
+            style={{
+              backgroundColor: "#979A9C",
+              color: "white",
+              borderRadius: "20px",
+              marginBottom: "15px",
+            }}
+            type="primary"
+            shape="round"
+            icon={<DeleteFilled />}
+            size={size}
+            onClick={() => deleteMutiItem(selectedRowKeys)}
+          >
+            ลบ
+          </Button>{" "}
+          <Button
+            style={{
+              backgroundColor: "#979A9C",
+              color: "white",
+              borderRadius: "20px",
+              marginBottom: "15px",
+              marginRight: "10px",
+            }}
+            type="primary"
+            shape="round"
+            icon={<PlusCircleFilled />}
+            size={size}
+            onClick={showModalAdd}
+          >
+            สินค้า
+          </Button>
+        </div>
+        {/* ---------------------------------------------------------------------------modal-------------------------------------------------------------------------- */}
+        <Modal
+          title="เพิ่มสินค้า"
+          open={isModalOpenAdd}
+          centered
+          onCancel={handleCancelAdd}
+          footer={null}
+          width={600}
         >
-          
-          {/* ---------------------------------------------------------------------------content-------------------------------------------------------------------------- */}
-          <Row justify="end">
-            <Col style={{ marginTop: 10 }}>
-              <Button
-                style={{ backgroundColor: "#262626" }}
-                type="primary"
-                shape="round"
-                icon={<DeleteFilled />}
-                size={size}
-                onClick={() => deleteMutiItem(selectedRowKeys)}
-              >
-                ลบ
-              </Button>{" "}
-              <Button
-                style={{ backgroundColor: "#262626" }}
-                type="primary"
-                shape="round"
-                icon={<PlusCircleFilled />}
-                size={size}
-                onClick={showModalAdd}
-              >
-                สินค้า
-              </Button>
-              {/* ---------------------------------------------------------------------------modal-------------------------------------------------------------------------- */}
-              <Modal
-                title="เพิ่มสินค้า"
-                open={isModalOpenAdd}
-                centered
-                onCancel={handleCancelAdd}
-                footer={null}
-                width={600}
-              >
-                <ItemInput
-                  form={form}
-                  handleCancel={handleCancelAdd}
-                  getItemData={getItemData}
-                ></ItemInput>
-              </Modal>
-              {/* ---------------------------------------------------------------------------Modal-------------------------------------------------------------------------- */}
-            </Col>
-          </Row>
-          {/* ---------------------------------------------------------------------------Table-------------------------------------------------------------------------- */}
-          <Row justify="center">
-            <Col span={20}>
-              <br></br>
-              <Table
-                rowSelection={rowSelection}
-                rowKey={(record) => {
-                  return record.id;
-                }}
-                columns={columns}
-                dataSource={itemData}
-                pagination={{ defaultCurrent: 1 }}
-                scroll={{ x: 700, y: 350 }}
-                style={{ backgroundColor: "#e4e5e5" }}
-              />
-            </Col>
-          </Row>
-          {/* ---------------------------------------------------------------------------Table-------------------------------------------------------------------------- */}
-          {/* ---------------------------------------------------------------------------content-------------------------------------------------------------------------- */}
-        </Card>
-      </Row>
-    </div>
+          <ItemInput
+            form={form}
+            handleCancel={handleCancelAdd}
+            getItemData={getItemData}
+          ></ItemInput>
+        </Modal>
+        {/* ---------------------------------------------------------------------------Modal-------------------------------------------------------------------------- */}
+        {/* ---------------------------------------------------------------------------Table-------------------------------------------------------------------------- */}
+
+        <Table
+          rowSelection={rowSelection}
+          rowKey={(record) => {
+            return record.id;
+          }}
+          columns={columns}
+          dataSource={itemData}
+          pagination={{ defaultCurrent: 1 }}
+          scroll={{ x: 700, y: 350 }}
+          style={{ backgroundColor: "#e4e5e5" }}
+        />
+
+        {/* ---------------------------------------------------------------------------Table-------------------------------------------------------------------------- */}
+        {/* ---------------------------------------------------------------------------content-------------------------------------------------------------------------- */}
+      </Card>
+    </Layout>
   );
 };
 

@@ -25,7 +25,7 @@ export interface IItem { //ข้อมูลในตารางคลัง�
   stores: string; //เพิ่มร้านค้า
 }
 
-export interface IHistory { //ข้อมูลในตารางประวัติสินค้า
+export interface IHistory { //Interface ของตารางประวัติ
   id: number;
   lot: string;
   order: string;
@@ -73,7 +73,7 @@ const ModalWarehouse: FC<IModalWarehouse> = ({ //รับ props จาก inter
     >
       <div className="mt-4">
         {type === "history" ? (
-          <ContentHistory open={open} id={item?.id} /> //component ที่ถูกใช้ในการแสดงข้อมูลประวัติหรือฟอร์มแก้ไขข้อมูลตามลำดับ
+          <ContentHistory open={open} id={item?.id} /> //component ที่ถูกใช้ในการแสดงข้อมูลประวัติหรือฟอร์มแก้ไขข้อมูล ตามลำดับ
         ) : type === "edit" ? (
           <ContentEdit 
             item={item}
@@ -95,8 +95,8 @@ interface IContentHis {
   open: boolean;
 }
 
-const ContentHistory: FC<IContentHis> = ({ id, open }) => {
-  const [dataHistory, setHistory] = useState<IHistory[]>([]);
+const ContentHistory: FC<IContentHis> = ({ id, open }) => { //คอมโพเนนท์ข้อมูลของประวัติ
+  const [dataHistory, setHistory] = useState<IHistory[]>([]); //สร้าง State เก็บข้อมูลทีได้จากการ get โดยใช้ Interface IContentHis
 
   useEffect(() => {
     getHistory(id);
