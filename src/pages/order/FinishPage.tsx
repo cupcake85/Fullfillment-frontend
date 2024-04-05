@@ -6,15 +6,12 @@ function FinishPage() {
   const [statuschange, setStatusChange] = useState<string>("");
 
   return (
-    <Layout style={{ backgroundColor: "gray" }}>
+    <Layout>
       <Card
         title={<span>จัดส่งสินค้าเรียบร้อย</span>}
-        style={{ backgroundColor: "pink", margin: "70px" }}
+        style={{ margin: "70px" }}
       >
-        <TableStatus
-          status={"DELIVERED"}
-          changestatus={true}
-        />
+        <TableStatus status={"DELIVERED"} changestatus={true} />
       </Card>
     </Layout>
   );

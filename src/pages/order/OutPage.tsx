@@ -6,15 +6,12 @@ function OutPage() {
   const [statuschange, setStatusChange] = useState<string>("");
 
   return (
-    <Layout style={{ backgroundColor: "gray" }}>
+    <Layout>
       <Card
         title={<span>กำลังแพ็คของออกจากคลัง</span>}
-        style={{ backgroundColor: "pink", margin: "70px" }}
+        style={{ margin: "70px" }}
       >
-        <TableStatus
-          status={"OUTOFSTOCK"}
-          changestatus={true}
-        />
+        <TableStatus status={"OUTOFSTOCK"} changestatus={true} />
       </Card>
     </Layout>
   );
