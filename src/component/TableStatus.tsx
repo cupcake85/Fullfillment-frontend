@@ -60,21 +60,10 @@ const TableStatus: React.FC<Props> = ({
 
   const multipleSubmit = () => {
     //จัด format เตรียมส่งให้หลังบ้าน
-    const body = selectedRows.map((item: any) => {
-      return {
-        orderId: item[item.id],
-        status: {
-          sataus: statuschange,
-        },
-      };
-      //body ที่หลังบ้านต้องการ
-      // {
-      //   "orderId": [71,72],
-      //   "status": {
-      //     "status": "RETURNED"
-      //   }
-      // }
+    const orderId = selectedRows.map((item: any) => {
+      return item.id;
     });
+    const body = { orderId, status: { status: statuschange } };
     console.log("body ได้อะไร -> ", body);
     updateMultiple(body);
   };

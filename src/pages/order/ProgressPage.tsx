@@ -34,23 +34,23 @@ function ProgressPage() {
   const items: MenuProps["items"] = [
     {
       label: "สินค้ายังไม่ถูกตรวจสอบ",
-      key: "NotChecked",
+      key: "NOTCHECK",
     },
     {
       label: "กำลังแพ็คของออกจากคลัง",
-      key: "OutOfStock",
+      key: "OUTOFSTOCK",
     },
     {
       label: "สินค้ากำลังดำเนินการ",
-      key: "Inprogress",
+      key: "INPROGRESS",
     },
     {
       label: "จัดส่งสินค้าเรียบร้อย",
-      key: "Delivered",
+      key: "DELIVERED",
     },
     {
       label: "สินค้าถูกนำกลับ",
-      key: "Returned",
+      key: "RETURNED",
     },
   ];
 
