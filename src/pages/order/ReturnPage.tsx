@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Table from "../../component/table";
 import { RetweetOutlined } from "@ant-design/icons";
 import TableStatus from "../../component/TableStatus";
+import axios from "axios";
 
 interface DataType {
   details: string;
@@ -54,7 +55,7 @@ function ReturnPage() {
           style={{
             margin: "70px",
             height: "570px",
-            backgroundColor: "red",
+            // backgroundColor: "red",
           }}
         >
           <div>
@@ -73,6 +74,9 @@ function ReturnPage() {
                   }}
                 />
               }
+              onClick={() => {
+                setStatusChange("RETURNEDITEM");
+              }}
             >
               นำกลับเข้าคลังสินค้า
             </Button>
