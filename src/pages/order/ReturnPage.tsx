@@ -1,4 +1,4 @@
-import { Card, Layout } from "antd";
+import { Button, Card, Layout } from "antd";
 import React, { useState } from "react";
 import Table from "../../component/table";
 import { RetweetOutlined } from "@ant-design/icons";
@@ -41,6 +41,26 @@ function ReturnPage() {
             margin: "70px",
           }}
         >
+          <div>
+            <Button
+              style={{
+                backgroundColor: "#979A9C",
+                color: "white",
+                borderRadius: "17px",
+                marginBottom: "15px",
+              }}
+              icon={
+                <RetweetOutlined
+                  style={{
+                    fontSize: "20px",
+                    marginRight: "10px",
+                  }}
+                />
+              }
+            >
+              นำกลับเข้าคลังสินค้า
+            </Button>
+          </div>
           <Table
             data={[]}
             columns={columns}
