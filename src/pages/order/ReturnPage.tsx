@@ -12,8 +12,6 @@ interface DataType {
 }
 
 function ReturnPage() {
-  const [statuschange, setStatusChange] = useState<string>("");
-
   const columns: TableProps<DataType>["columns"] = [
     {
       title: "รายละเอียด",
@@ -39,7 +37,7 @@ function ReturnPage() {
 
   return (
     <>
-      <Layout style={{ backgroundColor: "gray" }}>
+      <Layout>
         <Card
           title={
             <span>
@@ -58,34 +56,10 @@ function ReturnPage() {
             // backgroundColor: "red",
           }}
         >
-          <div>
-            <Button
-              style={{
-                backgroundColor: "#979A9C",
-                color: "white",
-                borderRadius: "17px",
-                marginBottom: "15px",
-              }}
-              icon={
-                <RetweetOutlined
-                  style={{
-                    fontSize: "20px",
-                    marginRight: "10px",
-                  }}
-                />
-              }
-              onClick={() => {
-                setStatusChange("RETURNEDITEM");
-              }}
-            >
-              นำกลับเข้าคลังสินค้า
-            </Button>
-          </div>
           <TableStatus
             status="RETURNED"
-            statuschange={statuschange}
-            setStatusChange={setStatusChange}
             customColumns={columns}
+            statusReturn={true}
           />
         </Card>
       </Layout>
