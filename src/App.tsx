@@ -12,6 +12,7 @@ import FinishPage from "./pages/order/FinishPage.tsx";
 import ReturnPage from "./pages/order/ReturnPage.tsx";
 import Table from "./component/index.tsx";
 import AddOrderPage from "./pages/FormOrder/AddOrderPage.tsx";
+import EditPage from './component/OrderAction/EditPage.tsx';
 
 function Fullfill() {
   return (
