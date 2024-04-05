@@ -4,6 +4,7 @@ import Layout from "antd/es/layout/layout";
 import EditTable from "./OrderAction/EditTable";
 import EditPage from "./OrderAction/EditPage";
 import axios from "axios";
+import dayjs from "dayjs";
 
 interface DataType {
   details: string;
@@ -52,7 +53,7 @@ const TableStatus: React.FC<Props> = ({
       "http://192.168.2.57:3000/order",
       { params: { status: status } }
     );
-    console.log("request", request);
+    console.log("request ",{status}, request);
     setItemData(request.data.data);
   };
 
@@ -80,11 +81,19 @@ const TableStatus: React.FC<Props> = ({
   const columns: TableProps<DataType>["columns"] = [
     {
       title: "รายละเอียด",
-      dataIndex: "details",
+      dataIndex: "quantity",
+      render: (rc: any) => {
+        return <div className=" border-[1px] border-slate-200 rounded-[10px] p-2 text-center">จำนวน : {rc}</div>
+      },
     },
     {
       title: "วันที่",
-      dataIndex: "date",
+      dataIndex: "orderDate",
+      render: (rc: any) => {
+        console.log('rc ในการเรนเดอร์วันที่ -> ',rc)
+        const date = dayjs(rc.outDate).format("DD/MM/YYYY");
+        return <>{date}</>;
+      },
     },
     {
       title: "ที่อยู่",
@@ -101,11 +110,13 @@ const TableStatus: React.FC<Props> = ({
     {
       title: "สถานะ",
       dataIndex: "status",
+      render: (rc: any) => {
+        return<>{rc}</>
+      },
     },
     {
       title: "",
       width: "100px",
-
       render: (value: any) => {
         // return <EditTable />;
         return (

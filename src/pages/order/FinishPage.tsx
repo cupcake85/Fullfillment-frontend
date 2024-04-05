@@ -94,7 +94,7 @@ function FinishPage() {
           </span>
         </Button>
         <TableStatus
-          status={"Delivered"}
+          status={"DELIVERED"}
           statuschange={statuschange}
           setStatusChange={setStatusChange}
         />
