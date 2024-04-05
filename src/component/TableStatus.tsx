@@ -32,7 +32,7 @@ interface Props {
 
 const TableStatus: React.FC<Props> = ({
   status,
-  changestatus,
+  changestatus = false,
   customColumns,
   statusReturn,
 }) => {
@@ -93,7 +93,7 @@ const TableStatus: React.FC<Props> = ({
       params: { status: status },
     });
     console.log("request ", { status }, request);
-    setItemData(request.data.data);
+    setItemData(request.data);
   };
 
   const multipleSubmit = () => {
