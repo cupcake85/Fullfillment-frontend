@@ -1,4 +1,3 @@
-
 import { Button, Form, FormInstance, Input, Select, notification } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -7,8 +6,7 @@ const ItemInput = ({
   form,
   handleCancel,
   getItemData,
-}:
-{
+}: {
   form: FormInstance;
   handleCancel: () => void;
   getItemData: () => Promise<void>;
@@ -61,17 +59,17 @@ const ItemInput = ({
   };
 
   const getStore = async () => {
-    const request = await axios.get('http://192.168.2.57:3000/stores');
-    const sortedData = request.data.data.map((data:any) =>{
-      return { label:data.name, value:data.id }
+    const request = await axios.get("http://192.168.2.57:3000/stores");
+    const sortedData = request.data.data.map((data: any) => {
+      return { label: data.name, value: data.id };
     });
-    
-    setStores(sortedData)
-  }
+
+    setStores(sortedData);
+  };
 
   return (
     <Form layout="vertical" onFinish={handleSubmit} form={form}>
-      <Form.Item name="sku" label="sku" >
+      <Form.Item name="sku" label="sku">
         <Input style={{ width: 300 }}></Input>
       </Form.Item>
 
@@ -80,11 +78,7 @@ const ItemInput = ({
       </Form.Item>
 
       <Form.Item name="stores" label="stores">
-        <Select
-          style={{ width: 120 }}
-          allowClear
-          options={getStores}
-        ></Select>
+        <Select style={{ width: 120 }} allowClear options={getStores}></Select>
       </Form.Item>
 
       <Form.Item name="details" label="details">
@@ -98,11 +92,25 @@ const ItemInput = ({
       <Button
         type="primary"
         htmlType="submit"
-        style={{ backgroundColor: "#1677ff" }}
+        style={{
+          backgroundColor: "#bc211c",
+          margin: 10,
+          color: "white",
+          borderRadius: 100,
+        }}
       >
-        Submit
+        บันทึก
       </Button>
-      <Button onClick={handleCancel}>Cancel</Button>
+      <Button
+        onClick={handleCancel}
+        style={{
+          backgroundColor: "#2F353A",
+          color: "white",
+          borderRadius: 100,
+        }}
+      >
+        ยกเลิก
+      </Button>
       {contextHolder}
     </Form>
   );

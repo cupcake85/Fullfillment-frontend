@@ -98,6 +98,7 @@ const Store = () => {
     {
       title: "รหัสไปรษณีย์ผู้จัดส่ง",
       dataIndex: "zipCode",
+      width: "200px",
     },
     {
       title: "เบอร์โทร",
@@ -141,76 +142,69 @@ const Store = () => {
   };
 
   return (
-    <Layout
-      style={{
-        margin: "15px 80px",
-        padding: 10,
-        minHeight: 220,
-        // backgroundColor: "gray",
-      }}
-    >
-      <Content
+    <Layout>
+      <Card
+        title={
+          <span>
+            <UserOutlined style={{ marginRight: 8 }} />
+            ร้านค้า
+          </span>
+        }
+        bordered={false}
         style={{
-          margin: "15px 10px",
-          padding: 20,
-          minHeight: 250,
-          // backgroundColor: "pink",
+          backgroundColor: "white",
+          margin: 65,
+          borderRadius: 20,
         }}
       >
-        <Card
-          style={{
-            fontSize: 22,
-            fontWeight: "bold",
-          }}
-        >
-          <UserOutlined /> ผู้ใช้งาน
-          <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-            <Button
-              type="primary"
-              onClick={showModalAdd}
-              style={{ backgroundColor: "gray", marginTop: "15px" }}
-            >
-              เพิ่มผู้ใช้งาน
-            </Button>
-          </div>
-          <Modal
-            title="เพิ่มผู้ใช้งาน"
-            open={isModalOpenAdd}
-            onOk={handleOkAdd}
-            onCancel={handleCancelAdd}
-            footer={null}
-          >
-            <InputStore
-              form={form}
-              handleCancel={handleCancelAdd}
-              setIsReload={setIsReload}
-            ></InputStore>
-          </Modal>
-          <Modal
-            title="แก้ไข"
-            open={isModalEdit}
-            onCancel={cancelModalEdit}
-            footer={null}
-          >
-            <EditStore
-              form={form}
-              handleCancelEdit={cancelModalEdit}
-              setIsReload={setIsReload}
-              getItemData={getItemData}
-            ></EditStore>
-          </Modal>
-          <Table
-            dataSource={itemData}
+        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+          <Button
+            type="primary"
+            onClick={showModalAdd}
             style={{
-              backgroundColor: "#e4e5e5",
-              borderRadius: "15px",
-              marginTop: "15px",
+              backgroundColor: "#979A9C",
+              color: "white",
+              borderRadius: "17px",
+              marginBottom: "15px",
             }}
-            columns={columns}
-            scroll={{ x: 700, y: 300 }} // ถ้าหน้าจอกว้างน้อยกว่า 700 จะขึ้น scroll
-          />
-        </Card>
-      </Content>
+          >
+            เพิ่มผู้ใช้งาน
+          </Button>
+        </div>
+        <Modal
+          title="เพิ่มผู้ใช้งาน"
+          open={isModalOpenAdd}
+          onOk={handleOkAdd}
+          onCancel={handleCancelAdd}
+          footer={null}
+        >
+          <InputStore
+            form={form}
+            handleCancel={handleCancelAdd}
+            setIsReload={setIsReload}
+          ></InputStore>
+        </Modal>
+        <Modal
+          title="แก้ไข"
+          open={isModalEdit}
+          onCancel={cancelModalEdit}
+          footer={null}
+        >
+          <EditStore
+            form={form}
+            handleCancelEdit={cancelModalEdit}
+            setIsReload={setIsReload}
+            getItemData={getItemData}
+          ></EditStore>
+        </Modal>
+        <Table
+          dataSource={itemData}
+          style={{ backgroundColor: "#e4e5e5" }}
+          pagination={{ defaultCurrent: 1 }}
+          columns={columns}
+          scroll={{ x: 400, y: 350 }} // ถ้าหน้าจอกว้างน้อยกว่า 700 จะขึ้น scroll
+        />
+      </Card>
     </Layout>
   );
 };

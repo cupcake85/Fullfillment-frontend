@@ -35,7 +35,7 @@ const TableStatus: React.FC<Props> = ({
     }
     setStatusChange(""); //เพื่อให้ state ใน [] เกิดการเปลี่ยนแปลงให้สามารถใช้ useEffect ได้
   }, [statuschange]);
-  console.log('statuschange',statuschange)
+  console.log("statuschange", statuschange);
 
   const rowSelection = {
     onChange: (_: React.Key[], selectedRow: DataType[]) => {
@@ -46,15 +46,15 @@ const TableStatus: React.FC<Props> = ({
 
   const getItemData = async () => {
     // const request = await axios.get("http://192.168.2.57:3000/stores/");
-    const request = await axios.get(
-      "http://192.168.2.57:3000/order",
-      { params: { status: status } }
-    );
+    const request = await axios.get("http://192.168.2.57:3000/order", {
+      params: { status: status },
+    });
     console.log("request", request);
     setItemData(request.data.data);
   };
 
-  const multipleSubmit = () => { //จัด format เตรียมส่งให้หลังบ้าน
+  const multipleSubmit = () => {
+    //จัด format เตรียมส่งให้หลังบ้าน
     const rowData = selectedRows.map((item: any) => {
       return { id: item.id, status: statuschange };
     });
