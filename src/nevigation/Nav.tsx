@@ -65,7 +65,17 @@ const App: React.FC = () => {
       key: "/order",
       icon: React.createElement(
         DiffOutlined,
-        c === "/order" ? { style: { color: "red" } } : undefined
+        [
+          "/SOLPage",
+          "/PackPage",
+          "/Uncheck",
+          "/OutPage",
+          "/ProgressPage",
+          "/FinishPage",
+          "/ReturnPage",
+        ].includes(c)
+          ? { style: { color: "red" } }
+          : undefined
       ),
       label: "Order",
       children: [
@@ -123,7 +133,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Layout style={{ width: "100vw", height: "100vh" }}>
+      <Layout style={{ width: "100vw", height: "100vh", overflow: "hidden" }}>
         <Header
           style={{
             position: "sticky",
@@ -138,7 +148,7 @@ const App: React.FC = () => {
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            style={{ background: "#2F353A" }}
+            style={{ background: "#2F353A", overflowY: "auto" }}
           >
             <div className="demo-logo-vertical" /*สไลด์ด้านข้าง*/ />
             <Menu
@@ -150,7 +160,9 @@ const App: React.FC = () => {
               onClick={(e) => onClick(e.key)}
             />
           </Sider>
-          <Outlet />
+          <Layout.Content style={{ overflowY: "auto" }}>
+            <Outlet />
+          </Layout.Content>
         </Layout>
       </Layout>
     </>

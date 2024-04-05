@@ -10,10 +10,10 @@ import {
   TableProps,
 } from "antd";
 import axios from "axios";
+
 import dayjs from "dayjs";
-import EditPage from "./OrderAction/EditPage";
 import { useNavigate } from "react-router-dom";
-import { DeleteFilled, DownOutlined } from "@ant-design/icons";
+import { DeleteFilled, DownOutlined, RetweetOutlined } from "@ant-design/icons";
 
 interface DataType {
   details: string;
@@ -25,13 +25,16 @@ interface DataType {
 }
 interface Props {
   status: string;
-  changestatus: boolean;
+  changestatus?: boolean;
+  customColumns?: any;
+  statusReturn?: boolean;
 }
 
 const TableStatus: React.FC<Props> = ({
   status,
   changestatus,
-  // setStatusChange,
+  customColumns,
+  statusReturn,
 }) => {
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
   const [itemData, setItemData] = useState([]);
@@ -43,7 +46,7 @@ const TableStatus: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    if (selectedRows.length > 0) {
+    if (selectedRows.length > 0 && statuschange.length > 0) {
       multipleSubmit();
     }
     setStatusChange(""); //เพื่อให้ state ใน [] เกิดการเปลี่ยนแปลงให้สามารถใช้ useEffect ได้
@@ -213,42 +216,68 @@ const TableStatus: React.FC<Props> = ({
 
   return (
     <>
-      <Button
-        style={{
-          backgroundColor: "#2F353A",
-          margin: "5px",
-          borderRadius: "20px",
-          color: "#fff",
-        }}
-      >
-        <Dropdown
-          menu={{ items, onClick }}
-          placement="bottom"
-          trigger={["click"]}
+      <div hidden={!changestatus}>
+        <Button
+          style={{
+            backgroundColor: "#2F353A",
+            margin: "5px",
+            borderRadius: "20px",
+            color: "#fff",
+          }}
         >
-          <a onClick={(e) => e.preventDefault()}>
-            <Space>
-              เปลี่ยนแปลงสถานะ
-              <DownOutlined />
-            </Space>
-          </a>
-        </Dropdown>
-      </Button>
-      <Button
-        onClick={() => deleteMutiItem(selectedRows)}
-        type="primary"
-        style={{
-          backgroundColor: "#2F353A",
-          borderRadius: "20px",
-        }}
-      >
-        <span>
-          <DeleteFilled style={{ margin: "5px" }} />
-          ลบ
-        </span>
-      </Button>
+          <Dropdown
+            menu={{ items, onClick }}
+            placement="bottom"
+            trigger={["click"]}
+          >
+            <a onClick={(e) => e.preventDefault()}>
+              <Space>
+                เปลี่ยนแปลงสถานะ
+                <DownOutlined />
+              </Space>
+            </a>
+          </Dropdown>
+        </Button>
+        <Button
+          onClick={() => deleteMutiItem(selectedRows)}
+          type="primary"
+          style={{
+            backgroundColor: "#2F353A",
+            borderRadius: "20px",
+          }}
+        >
+          <span>
+            <DeleteFilled style={{ margin: "5px" }} />
+            ลบ
+          </span>
+        </Button>
+      </div>
+      <div hidden={!statusReturn}>
+        <Button
+          style={{
+            backgroundColor: "#979A9C",
+            color: "white",
+            borderRadius: "17px",
+            marginBottom: "15px",
+          }}
+          icon={
+            <RetweetOutlined
+              style={{
+                fontSize: "20px",
+                marginRight: "10px",
+              }}
+            />
+          }
+          onClick={() => {
+            setStatusChange("RETURNEDITEM");
+          }}
+        >
+          นำกลับเข้าคลังสินค้า
+        </Button>
+      </div>
+
       <Table
-        columns={columns}
+        columns={customColumns ? customColumns : columns}
         dataSource={itemData}
         rowSelection={rowSelection}
         rowKey="id"
