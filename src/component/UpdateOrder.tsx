@@ -8,15 +8,20 @@ import {
   InputNumber,
   Input,
 } from "antd";
+import form, { FormInstance } from "antd/es/form";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-const OrderForm = () => {
+
+const UpdateOrder = ({form}:{
+    form: FormInstance;
+}) => {
   const [getItem, setItem] = useState([]);
   const [api, contextHolder] = notification.useNotification();
   const [selectItem, setSelectItem] = useState([]);
   const navigate = useNavigate();
+
   const getItems = async () => {
     const request = await axios.get("http://192.168.2.57:3000/items");
     const sortedData = request.data.data.map((data: any) => {
@@ -38,27 +43,27 @@ const OrderForm = () => {
 
   const handleSubmit = async (orderValue: any) => {
     console.log(orderValue);
-    const item = orderValue.item.map((id: any) => {
-      return { itemId: id, qty: orderValue[id] };
-    });
-    console.log({ ...orderValue, item });
-    try {
-      console.log(orderValue);
-      await axios.post("http://192.168.2.57:3000/order", {
-        ...orderValue,
-        item,
-      });
-      api.success({
-        message: "Success",
-        description: "Item added successfully",
-      });
-    } catch (error) {
-      api.error({
-        message: "Error",
-      });
-    } finally {
-      navigate("/SOLPage");
-    }
+    // const item = orderValue.item.map((id: any) => {
+    //   return { itemId: id, qty: orderValue[id] };
+    // });
+    // console.log({ ...orderValue, item });
+    // try {
+    //   console.log(orderValue);
+    //   await axios.post("http://192.168.2.57:3000/order", {
+    //     ...orderValue,
+    //     item,
+    //   });
+    //   api.success({
+    //     message: "Success",
+    //     description: "Item added successfully",
+    //   });
+    // } catch (error) {
+    //   api.error({
+    //     message: "Error",
+    //   });
+    // } finally {
+    //   navigate("/SOLPage");
+    // }
   };
 
   const columns: TableColumnsType = [
@@ -85,7 +90,7 @@ const OrderForm = () => {
   ];
 
   return (
-    <Form onFinish={handleSubmit}>
+    <Form onFinish={handleSubmit} form={form}>
       <Form.Item name="uom" label="UOM">
         <Input />
       </Form.Item>
@@ -156,4 +161,4 @@ const OrderForm = () => {
   );
 };
 
-export default OrderForm;
+export default UpdateOrder;

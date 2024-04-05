@@ -19,13 +19,14 @@ import React, { useEffect, useState } from "react";
 import CustomTable from "../../component/table";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import form from "antd/es/form";
 
 function Order() {
 
-  
   const [orderData, setOrderData] = useState([]);
   const [getStores, setStores] = useState();
   const navigate = useNavigate();
+  // const [form] = Form.useForm();
 
   useEffect(() => {
     getOrder();
@@ -34,6 +35,14 @@ function Order() {
   useEffect(() => {
     getStore();
   }, []);
+
+  const onClick = () => {
+    // if (value) {
+    //   const orderFormData = {...orderData};
+    //   form.setFieldsValue(orderFormData);
+    // }
+    navigate("/UpdateOrderPage")
+  };
 
   const getOrder = async () => {
     const request = await axios.get("http://192.168.2.57:3000/order");
@@ -70,9 +79,37 @@ function Order() {
       title: "สถานะ",
       dataIndex: "status",
     },
+    {
+      title: "",
+      key: "action",
+      render: () => (
+        <Space size="middle">
+          <Col>
+            <Button
+              // onClick={}
+              size="small"
+              style={{
+                width: 60,
+                backgroundColor: "#262626",
+                color: "#ffffff",
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              // onClick={}
+              size="small"
+              style={{ width: 60 }}
+            >
+              Delete
+            </Button>
+          </Col>
+        </Space>
+      ),
+    },
   ];
   return (
-    <Form> 
+    <Form>
       <Layout>
         <Card title={<div>SOL</div>} style={{ margin: 70 }}>
           <Row justify={"center"}>
@@ -164,6 +201,12 @@ function Order() {
             onClick={() => navigate("/AddOrderPage")}
           >
             เพิ่มรายการสั่งของ
+          </Button>
+          <Button
+            className=" bg-teal-600"
+            onClick={onClick}
+          >
+            แก้ไขรายการสั่งของ
           </Button>
           <CustomTable
             data={orderData}
