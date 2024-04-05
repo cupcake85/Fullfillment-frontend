@@ -14,6 +14,7 @@ interface TableProps {
     setPageSize: (value: number) => void;
   };
   total: number;
+  key: string;
 }
 
 const CustomTable: React.FC<TableProps> = ({
@@ -24,9 +25,10 @@ const CustomTable: React.FC<TableProps> = ({
   total,
 }) => {
   const formatCol = columns.map((item) => ({
-    title: item.title,
-    dataIndex: item.dataIndex,
-    key: item.dataIndex,
+    // title: item.title,
+    // dataIndex: item.dataIndex,
+    // key: item.dataIndex,
+    ...item, 
     align: "center",
     width: "100vw",
   })) as ColumnsType<Record<string, unknown>>;
@@ -43,6 +45,7 @@ const CustomTable: React.FC<TableProps> = ({
         columns={formatCol}
         pagination={false}
         size={"middle"}
+        rowKey="id" //กำหนด unique key ให้เป็น id
       />
 
       <Pagination

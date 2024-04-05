@@ -82,12 +82,12 @@ const App: React.FC = () => {
           label: "สินค้ายังไม่ถูกตรวจสอบ",
         },
         {
-          key: "/ProgressPage",
-          label: "สินค้ากำลังดำเนินการ",
-        },
-        {
           key: "/OutPage",
           label: "กำลังแพ็คของออกจากคลัง",
+        },
+        {
+          key: "/ProgressPage",
+          label: "สินค้ากำลังดำเนินการ",
         },
         {
           key: "/FinishPage",
