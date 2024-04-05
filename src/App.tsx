@@ -31,7 +31,6 @@ function Fullfill() {
           <Route path="/ReturnPage" element={<ReturnPage />} />
           <Route path="/table" element={<Table />} />
           <Route path="/AddOrderPage" element={<AddOrderPage />} />
-          <Route path="/EditPage" element={<EditPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

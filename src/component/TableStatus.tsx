@@ -135,7 +135,7 @@ const TableStatus: React.FC<Props> = ({
         return (
           <div style={{ textAlign: "center"}}>
             <Button
-              onClick={() => navigate("/EditPage")}
+              onClick={() => navigate("/EditPage")} //แก้ไข path ให้ไปหน้า edit ที่ต้องการ
               style={{
                 // backgroundColor: "white",
                 fontSize: "12px",
