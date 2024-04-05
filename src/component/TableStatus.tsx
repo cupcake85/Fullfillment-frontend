@@ -3,6 +3,8 @@ import { Card, Layout, Table, TableProps } from "antd";
 import axios from "axios";
 import EditPage from "./OrderAction/EditPage";
 
+import dayjs from "dayjs";
+
 interface DataType {
   details: string;
   date: string;
@@ -78,11 +80,23 @@ const TableStatus: React.FC<Props> = ({
   const columns: TableProps<DataType>["columns"] = [
     {
       title: "รายละเอียด",
-      dataIndex: "details",
+      dataIndex: "quantity",
+      render: (rc: any) => {
+        return (
+          <div className=" border-[1px] border-slate-200 rounded-[10px] p-2 text-center">
+            จำนวน : {rc}
+          </div>
+        );
+      },
     },
     {
       title: "วันที่",
-      dataIndex: "date",
+      dataIndex: "orderDate",
+      render: (rc: any) => {
+        console.log("rc ในการเรนเดอร์วันที่ -> ", rc);
+        const date = dayjs(rc.outDate).format("DD/MM/YYYY");
+        return <>{date}</>;
+      },
     },
     {
       title: "ที่อยู่",
@@ -99,11 +113,13 @@ const TableStatus: React.FC<Props> = ({
     {
       title: "สถานะ",
       dataIndex: "status",
+      render: (rc: any) => {
+        return <>{rc}</>;
+      },
     },
     {
       title: "",
       width: "100px",
-
       render: (value: any) => {
         // return <EditTable />;
         return (
