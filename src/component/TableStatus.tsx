@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Table, TableProps } from "antd";
-import Layout from "antd/es/layout/layout";
-import EditTable from "./OrderAction/EditTable";
-import EditPage from "./OrderAction/EditPage";
+import { Card, Layout, Table, TableProps } from "antd";
 import axios from "axios";
 import dayjs from "dayjs";
+import EditPage from "./OrderAction/EditPage";
 
 interface DataType {
   details: string;
@@ -38,7 +36,7 @@ const TableStatus: React.FC<Props> = ({
     }
     setStatusChange(""); //เพื่อให้ state ใน [] เกิดการเปลี่ยนแปลงให้สามารถใช้ useEffect ได้
   }, [statuschange]);
-  console.log('statuschange',statuschange)
+  console.log("statuschange", statuschange);
 
   const rowSelection = {
     onChange: (_: React.Key[], selectedRow: DataType[]) => {
@@ -57,7 +55,8 @@ const TableStatus: React.FC<Props> = ({
     setItemData(request.data.data);
   };
 
-  const multipleSubmit = () => { //จัด format เตรียมส่งให้หลังบ้าน
+  const multipleSubmit = () => {
+    //จัด format เตรียมส่งให้หลังบ้าน
     const rowData = selectedRows.map((item: any) => {
       return { id: item.id, status: statuschange };
     });
