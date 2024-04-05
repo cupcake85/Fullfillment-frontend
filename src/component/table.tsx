@@ -4,7 +4,7 @@ import { useState } from "react";
 
 interface TableProps {
   data: Record<string, unknown>[]; // ปรับตามโครงสร้างข้อมูลที่จะแสดงในตาราง
-  columns: { title: string; dataIndex: string }[]; // ชื่อคอลัมน์ของตารางและชื่อฟิลด์ข้อมูล
+  columns:ColumnsType<Record<string, unknown>>; // ชื่อคอลัมน์ของตารางและชื่อฟิลด์ข้อมูล
   pagination: {
     current: number;
     setCurrent: (value: number) => void;

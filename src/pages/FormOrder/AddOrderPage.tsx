@@ -32,9 +32,7 @@ const AddOrderPage = () => {
   }, []);
 
   const handleChange = (value: number[]) => {
-    // console.log(value);
     const filter = getItem.filter((item: any) => value.includes(item.value)); //include เช็คทีละตัวว่า ใน value มีเหมือนกันกับ item.value
-    // console.log(filter);
     setSelectItem(filter);
   };
 
@@ -54,12 +52,11 @@ const AddOrderPage = () => {
         message: "Success",
         description: "Item added successfully",
       });
+      navigate("/SOLPage");
     } catch (error) {
       api.error({
         message: "Error",
       });
-    } finally {
-      navigate("/SOLPage");
     }
   };
 

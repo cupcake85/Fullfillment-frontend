@@ -22,11 +22,10 @@ import { useNavigate } from "react-router";
 import form from "antd/es/form";
 
 function Order() {
-
   const [orderData, setOrderData] = useState([]);
   const [getStores, setStores] = useState();
   const navigate = useNavigate();
-  // const [form] = Form.useForm();
+  const [form] = Form.useForm();
 
   useEffect(() => {
     getOrder();
@@ -36,12 +35,16 @@ function Order() {
     getStore();
   }, []);
 
-  const onClick = () => {
+  const onClick = (value?: any) => {
+    console.log(value);
+    
     // if (value) {
-    //   const orderFormData = {...orderData};
+    //   const orderFormData = value;
     //   form.setFieldsValue(orderFormData);
     // }
-    navigate("/UpdateOrderPage")
+    navigate("/UpdateOrderPage",{state:{
+      id:value.id
+    }});
   };
 
   const getOrder = async () => {
@@ -51,13 +54,13 @@ function Order() {
   };
 
   const getStore = async () => {
-    const request = await axios.get('http://192.168.2.57:3000/stores');
-    const sortedData = request.data.data.map((data:any) =>{
-      return { label:data.name, value:data.id }
+    const request = await axios.get("http://192.168.2.57:3000/stores");
+    const sortedData = request.data.data.map((data: any) => {
+      return { label: data.name, value: data.id };
     });
-    
-    setStores(sortedData)
-  }
+
+    setStores(sortedData);
+  };
 
   const columns = [
     { title: "ID", dataIndex: "id" },
@@ -82,44 +85,36 @@ function Order() {
     {
       title: "",
       key: "action",
-      render: () => (
-        <Space size="middle">
-          <Col>
-            <Button
-              // onClick={}
-              size="small"
-              style={{
-                width: 60,
-                backgroundColor: "#262626",
-                color: "#ffffff",
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              // onClick={}
-              size="small"
-              style={{ width: 60 }}
-            >
-              Delete
-            </Button>
-          </Col>
-        </Space>
-      ),
+      render: (value: any) => {
+        console.log("test",value)
+        return (
+          <Space size="middle">
+            <Col>
+              <Button
+                onClick={() => onClick(value)}
+                size="small"
+                style={{
+                  width: 60,
+                  backgroundColor: "#262626",
+                  color: "#ffffff",
+                }}
+              >
+                Edit
+              </Button>
+            </Col>
+          </Space>
+        );
+      },
     },
   ];
   return (
-    <Form>
+    <Form form={form}>
       <Layout>
         <Card title={<div>SOL</div>} style={{ margin: 70 }}>
           <Row justify={"center"}>
             <Col span={10} style={{ margin: 10 }}>
               <Form.Item name="stores" label="ร้านค้า">
-                <Select
-                  style={{ width: 120 }}
-                  allowClear
-                  options={getStores}
-                />
+                <Select style={{ width: 120 }} allowClear options={getStores} />
               </Form.Item>
               <Form.Item name="" label="รหัสใบสั่งของ">
                 <Input></Input>
@@ -128,7 +123,7 @@ function Order() {
                 <Input></Input>
               </Form.Item>
               <Form.Item name="" label="ระยะเวลา">
-                <DatePicker/> <DatePicker/>
+                <DatePicker /> <DatePicker />
               </Form.Item>
               <Form.Item name="" label="แขวง/ตำบล">
                 <Input></Input>
@@ -140,10 +135,7 @@ function Order() {
                 <Input></Input>
               </Form.Item>
               <Form.Item name="" label="เรียงค่าส่งปลายทาง">
-                <Select
-                  style={{ width: 120 }}
-                  options={[]}
-                />
+                <Select style={{ width: 120 }} options={[]} />
               </Form.Item>
             </Col>
 
@@ -152,10 +144,7 @@ function Order() {
                 <Input></Input>
               </Form.Item>
               <Form.Item name="" label="สถานะใบสั่งของ">
-                <Select
-                  style={{ width: 120 }}
-                  options={[]}
-                />
+                <Select style={{ width: 120 }} options={[]} />
               </Form.Item>
               <Form.Item name="" label="เบอร์โทรศัพท์">
                 <Input></Input>
@@ -167,10 +156,7 @@ function Order() {
                 <Input></Input>
               </Form.Item>
               <Form.Item name="" label="เก็บเงินปลายทาง">
-                <Select
-                  style={{ width: 120 }}
-                  options={[]}
-                />
+                <Select style={{ width: 120 }} options={[]} />
               </Form.Item>
               <Form.Item name="" label="ค่าเก็บเงินปลายทางสูงสุด">
                 <Input></Input>
@@ -202,12 +188,6 @@ function Order() {
           >
             เพิ่มรายการสั่งของ
           </Button>
-          <Button
-            className=" bg-teal-600"
-            onClick={onClick}
-          >
-            แก้ไขรายการสั่งของ
-          </Button>
           <CustomTable
             data={orderData}
             columns={columns}
@@ -223,8 +203,7 @@ function Order() {
                 throw new Error("Function not implemented.");
               },
             }}
-            total={0}
-          ></CustomTable>
+            total={0} key={""}          />
         </Card>
       </Layout>
     </Form>
