@@ -1,24 +1,38 @@
-import { Button, Card, Layout } from "antd";
+import { Button, Card, Layout, TableProps } from "antd";
 import React, { useState } from "react";
 import Table from "../../component/table";
 import { RetweetOutlined } from "@ant-design/icons";
+import TableStatus from "../../component/TableStatus";
 
 interface DataType {
   details: string;
-  date: string;
-  address: string;
   zipCode: string;
-  cod: string;
-  email: string;
+  customerName: string;
 }
 
 function ReturnPage() {
-  const columns = [
-    { title: "รายละเอียด", dataIndex: "details" },
-    { title: "ลูกค้า", dataIndex: "name" },
+  const [statuschange, setStatusChange] = useState<string>("");
+
+  const columns: TableProps<DataType>["columns"] = [
+    {
+      title: "รายละเอียด",
+      dataIndex: "quantity",
+      render: (rc: any) => {
+        return (
+          <div className=" border-[1px] border-slate-200 rounded-[10px] p-2 text-center">
+            จำนวน : {rc}
+          </div>
+        );
+      },
+    },
+
+    {
+      title: "ลูกค้า",
+      dataIndex: "customerName",
+    },
     {
       title: "รหัสไปรษณีย์",
-      dataIndex: "age",
+      dataIndex: "zipCode",
     },
   ];
 
@@ -61,24 +75,12 @@ function ReturnPage() {
               นำกลับเข้าคลังสินค้า
             </Button>
           </div>
-          <Table
-            data={[]}
-            columns={columns}
-            pagination={{
-              current: 0,
-              setCurrent: function (value: number): void {
-                throw new Error("Function not implemented.");
-              },
-            }}
-            pageSize={{
-              pageSize: 0,
-              setPageSize: function (value: number): void {
-                throw new Error("Function not implemented.");
-              },
-            }}
-            total={0}
-            key={""}
-          ></Table>
+          <TableStatus
+            status="RETURNED"
+            statuschange={statuschange}
+            setStatusChange={setStatusChange}
+            customColumns={columns}
+          />
         </Card>
       </Layout>
     </>

@@ -4,6 +4,7 @@ import axios from "axios";
 import EditPage from "./OrderAction/EditPage";
 
 import dayjs from "dayjs";
+import { ColumnType } from "antd/es/table";
 
 interface DataType {
   details: string;
@@ -17,12 +18,14 @@ interface Props {
   status: string;
   statuschange: string;
   setStatusChange: (value: string) => void;
+  customColumns?: any;
 }
 
 const TableStatus: React.FC<Props> = ({
   status,
   statuschange,
   setStatusChange,
+  customColumns,
 }) => {
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
   const [itemData, setItemData] = useState([]);
@@ -159,7 +162,7 @@ const TableStatus: React.FC<Props> = ({
 
   return (
     <Table
-      columns={columns}
+      columns={customColumns ? customColumns : columns}
       dataSource={itemData}
       rowSelection={rowSelection}
       rowKey="id"
