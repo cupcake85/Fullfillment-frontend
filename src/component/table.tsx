@@ -51,7 +51,7 @@ const CustomTable: React.FC<TableProps> = ({
       <Pagination
         current={pagination.current}
         total={total}
-        onChange={(pv , s) => onChange(p, s)}
+        onChange={(p, s) => onChange(p, s)}
         pageSize={pageSize.pageSize}
       />
     </>
