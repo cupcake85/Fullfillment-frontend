@@ -349,13 +349,7 @@ const Warehouse = () => {
               style={{ borderRadius: 100, border: "solid 0.5px grey" }}
             />
           </Form.Item>
-          <Form.Item label="หมายเหตุ">
-            <Input
-              type="text"
-              placeholder="Ex. 100/-100"
-              style={{ borderRadius: 100, border: "solid 0.5px grey" }}
-            />
-          </Form.Item>
+         
           <div style={{ textAlign: "center" }}>
             <Button
               icon={<FolderFilled />}
