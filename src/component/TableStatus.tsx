@@ -109,7 +109,7 @@ const TableStatus: React.FC<Props> = ({
     console.log("ได้อะไร", JSON.stringify(body));
     try {
       await axios.put(
-        "http://192.168.2.57:3000/order/update-status-multiple",
+        "http://192.168.2.57:3000/orders/update-status-multiple",
         body
       );
       getItemData();
