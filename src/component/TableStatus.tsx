@@ -89,7 +89,7 @@ const TableStatus: React.FC<Props> = ({
   };
 
   const getItemData = async () => {
-    const request = await axios.get("http://192.168.2.57:3000/order", {
+    const request = await axios.get("http://192.168.2.57:3000/orders", {
       params: { status: status },
     });
     console.log("request ", { status }, request);
