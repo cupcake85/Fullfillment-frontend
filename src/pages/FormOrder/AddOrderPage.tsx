@@ -51,12 +51,12 @@ const AddOrderPage = () => {
       });
       api.success({
         message: "Success",
-        description: "Item added successfully",
+        description: "บันทึกสำเร็จ",
       });
       navigate("/SOLPage");
     } catch (error) {
       api.error({
-        message: "Error",
+        message: "เกิดข้อผิดพลาด",
       });
     }
   };
