@@ -108,53 +108,53 @@ const UpdateOrderPage = () => {
       <Card className=" m-[70px]" title="แก้ไขรายการ order">
         <Form onFinish={handleSubmit} form={form}>
           <Form.Item name="uom" label="UOM">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="cod" label="COD">
-            <InputNumber />
+            <InputNumber className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="item" label="Item">
             <Select
               mode="multiple"
-              style={{ width: 500 }}
+              style={{ width: 300 }}
               options={getItem}
               onChange={handleChange}
             />
           </Form.Item>
           <Form.Item>
-            <Table dataSource={selectItem} columns={columns}></Table>
+            <Table style={{ width: 300 }} dataSource={selectItem} columns={columns}></Table>
           </Form.Item>
           <Form.Item name="customerName" label="ชื่อลูกค้า">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
 
           <Form.Item name="phoneNumber" label="เบอร์โทรศัพท์">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="address" label="ที่อยู่">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="alley" label="ซอย">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="road" label="ถนน">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="zipCode" label="รหัสไปรษณีย์">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="province" label="จังหวัด">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="district" label="เขต/อำเภอ">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="parish" label="แขวง/ตำบล">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="country" label="ประเทศ">
             <Select
-              style={{ width: 500 }}
+              style={{ width: 300 }}
               options={[
                 { value: "ThaiLand", label: "ThaiLand" },
                 { value: "Japan", label: "Japan" },
