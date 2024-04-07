@@ -16,7 +16,14 @@ import { useForm } from "antd/es/form/Form";
 import InputStore from "../component/storeInput";
 import EditStore from "../component/storeEdit";
 import axios from "axios";
-import { DeleteFilled, EditFilled, UserOutlined } from "@ant-design/icons";
+import {
+  DeleteFilled,
+  EditFilled,
+  PlusCircleFilled,
+  PlusCircleOutlined,
+  SearchOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 const Store = () => {
   interface DataType {
@@ -34,7 +41,7 @@ const Store = () => {
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isReload, setIsReload] = useState(false);
   const [isModalOpenAdd, setIsModalOpenAdd] = useState(false);
-  // const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
+  const [getHistory, setHistory] = useState([]);
 
   useEffect(() => {
     getItemData();
@@ -115,13 +122,24 @@ const Store = () => {
         return (
           <div>
             <div>
-              <Button onClick={() => editClick(record)}>
-                <EditFilled />
+              <Button
+                onClick={() => editClick(record)}
+                style={{
+                  width: 60,
+                  backgroundColor: "#3B4248",
+                  color: "#ffffff",
+                  borderRadius: "5px 5px 0px 0px",
+                }}
+              >
+                แก้ไข
               </Button>
             </div>
             <div>
-              <Button onClick={() => deleteStore(record)}>
-                <DeleteFilled />
+              <Button
+                onClick={() => deleteStore(record)}
+                style={{ width: 60, borderRadius: "0px 0px 5px 5px" }}
+              >
+                ลบ
               </Button>
             </div>
           </div>
@@ -146,7 +164,7 @@ const Store = () => {
       <Card
         title={
           <span>
-            <UserOutlined style={{ marginRight: 8 }} />
+            <UserOutlined style={{ marginRight: 8, fontSize: "50px" }} />
             ร้านค้า
           </span>
         }
@@ -157,19 +175,92 @@ const Store = () => {
           borderRadius: 20,
         }}
       >
-        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-          <Button
-            type="primary"
-            onClick={showModalAdd}
-            style={{
-              backgroundColor: "#979A9C",
-              color: "white",
-              borderRadius: "17px",
-              marginBottom: "15px",
-            }}
-          >
-            เพิ่มผู้ใช้งาน
-          </Button>
+        <div className="flex items-baseline">
+          <div className="flex items-baseline">
+            <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+              รหัสผู้จัดส่ง
+            </div>
+            <Form.Item>
+              <Input
+                style={{
+                  width: "250px",
+                  borderRadius: "25px",
+                  marginBottom: "15px",
+                  height: "35px",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  border: "solid 1px",
+                }}
+                placeholder="รหัสผู้จัดส่ง"
+              />
+            </Form.Item>
+          </div>
+          <div className="flex items-baseline">
+            <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+              ชื่อผู้จัดส่ง
+            </div>
+            <Form.Item>
+              <Input
+                style={{
+                  width: "250px",
+                  borderRadius: "25px",
+                  marginBottom: "15px",
+                  height: "35px",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  border: "solid 1px",
+                }}
+                placeholder="ชื่อผู้จัดส่ง"
+              />
+            </Form.Item>
+          </div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <div className="flex items-baseline">
+            <div style={{ fontSize: "20px", fontWeight: "bold" }}>ร้านค้า</div>
+            <Form.Item>
+              <Input
+                style={{
+                  width: "250px",
+                  borderRadius: "25px",
+                  marginBottom: "15px",
+                  height: "35px",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  border: "solid 1px",
+                }}
+                placeholder="ร้านค้า"
+              />
+              <Button
+                style={{
+                  backgroundColor: "#2F353A",
+                  borderRadius: "25px",
+                  marginBottom: "15px",
+                  height: "40px",
+                  width: "40px",
+
+                  color: "#fff",
+                }}
+                icon={<SearchOutlined />}
+              ></Button>
+            </Form.Item>
+          </div>
+          <div style={{ marginLeft: "570px" }}>
+            <Button
+              type="primary"
+              onClick={showModalAdd}
+              icon={<PlusCircleFilled />}
+              style={{
+                backgroundColor: "#979A9C",
+                color: "white",
+                borderRadius: "25px",
+                marginBottom: "15px",
+                height: "35px",
+              }}
+            >
+              เพิ่มผู้ใช้งาน
+            </Button>
+          </div>
         </div>
         <Modal
           title="เพิ่มผู้ใช้งาน"
@@ -200,9 +291,13 @@ const Store = () => {
         <Table
           dataSource={itemData}
           style={{ backgroundColor: "#e4e5e5" }}
-          pagination={{ defaultCurrent: 1 }}
+          pagination={{
+            total: getHistory.length,
+            showSizeChanger: true,
+            pageSize: 10,
+          }}
           columns={columns}
-          scroll={{ x: 400, y: 350 }} // ถ้าหน้าจอกว้างน้อยกว่า 700 จะขึ้น scroll
+          // scroll={{ x: 400, y: 350 }} // ถ้าหน้าจอกว้างน้อยกว่า 700 จะขึ้น scroll
         />
       </Card>
     </Layout>
