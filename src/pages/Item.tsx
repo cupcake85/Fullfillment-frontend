@@ -11,11 +11,13 @@ import {
   Table,
   Space,
   Form,
+  Input,
 } from "antd";
 import {
   DeleteFilled,
   PlusCircleFilled,
   ProfileFilled,
+  SearchOutlined,
 } from "@ant-design/icons";
 import ItemInput from "../component/item-input";
 import axios from "axios";
@@ -34,6 +36,7 @@ const Item = () => {
   const [itemData, setItemData] = useState([]);
   const [isReload, setIsReload] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [getHistory, setHistory] = useState([]);
 
   useEffect(() => {
     getItemData();
@@ -49,7 +52,9 @@ const Item = () => {
   const columns: TableColumnsType<DataType> = [
     {
       title: "#",
-      dataIndex: "id",
+      render: (_: any, __: any, index: number) => {
+        return index + 1;
+      },
     },
     {
       title: "SKU",
@@ -79,26 +84,29 @@ const Item = () => {
       key: "action",
       render: (value: any, _record) => (
         <Space size="middle">
-          <Col>
-            <Button
-              onClick={() => showModalAdd(value)}
-              size="small"
-              style={{
-                width: 60,
-                backgroundColor: "#262626",
-                color: "#ffffff",
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              onClick={() => deleteItem(_record)}
-              size="small"
-              style={{ width: 60 }}
-            >
-              Delete
-            </Button>
-          </Col>
+          <div>
+            <div>
+              <Button
+                onClick={() => showModalAdd(value)}
+                style={{
+                  width: 70,
+                  backgroundColor: "#3B4248",
+                  color: "#ffffff",
+                  borderRadius: "5px 5px 0px 0px",
+                }}
+              >
+                แก้ไข
+              </Button>
+            </div>
+            <div>
+              <Button
+                onClick={() => deleteItem(_record)}
+                style={{ width: 70, borderRadius: "0px 0px 5px 5px" }}
+              >
+                ลบ
+              </Button>
+            </div>
+          </div>
         </Space>
       ),
     },
@@ -164,7 +172,8 @@ const Item = () => {
       <Card
         title={
           <span>
-            <ProfileFilled style={{ marginRight: 8 }} /> จัดการ
+            <ProfileFilled style={{ marginRight: 8, fontSize: "50px" }} />{" "}
+            จัดการ
           </span>
         }
         bordered={false}
@@ -175,38 +184,134 @@ const Item = () => {
         }}
       >
         {/* ---------------------------------------------------------------------------content-------------------------------------------------------------------------- */}
-        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-          <Button
+        <div className="flex items-baseline">
+          <div className="flex items-baseline">
+            <div style={{ fontSize: "20px", fontWeight: "bold" }}>SKU</div>
+            <Form.Item>
+              <Input
+                style={{
+                  width: "150px",
+                  borderRadius: "25px",
+                  marginBottom: "15px",
+                  height: "35px",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  border: "solid 1px",
+                }}
+                placeholder="SKU"
+              />
+            </Form.Item>
+          </div>
+          <div className="flex items-baseline">
+            <div style={{ fontSize: "20px", fontWeight: "bold" }}>ร้านค้า</div>
+            <Form.Item>
+              <Input
+                style={{
+                  width: "280px",
+                  borderRadius: "25px",
+                  marginBottom: "15px",
+                  height: "35px",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  border: "solid 1px",
+                }}
+                placeholder="ร้านค้า"
+              />
+            </Form.Item>
+          </div>
+          <div className="flex items-baseline">
+            <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+              ชื่อสินค้า
+            </div>
+            <Form.Item>
+              <Input
+                style={{
+                  width: "200px",
+                  borderRadius: "25px",
+                  marginBottom: "15px",
+                  height: "35px",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  border: "solid 1px",
+                }}
+                placeholder="ชื่อสินค้า"
+              />
+            </Form.Item>
+          </div>
+        </div>
+        <div className="flex items-baseline">
+          <div className="flex items-baseline">
+            <div className="flex items-baseline">
+              <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+                รายละเอียด
+              </div>
+              <Form.Item>
+                <Input
+                  style={{
+                    width: "500px",
+                    borderRadius: "25px",
+                    marginBottom: "15px",
+                    height: "35px",
+                    marginLeft: "15px",
+                    marginRight: "15px",
+                    border: "solid 1px",
+                  }}
+                  placeholder="รายละเอียด"
+                />
+                <Button
+                  style={{
+                    backgroundColor: "#2F353A",
+                    borderRadius: "25px",
+                    marginBottom: "15px",
+                    height: "40px",
+                    width: "40px",
+
+                    color: "#fff",
+                  }}
+                  icon={<SearchOutlined />}
+                ></Button>
+              </Form.Item>
+            </div>
+          </div>
+          <div
             style={{
-              backgroundColor: "#979A9C",
-              color: "white",
-              borderRadius: "20px",
-              marginBottom: "15px",
+              flexDirection: "row-reverse",
+              marginLeft: "220px",
+              display: "flex",
             }}
-            type="primary"
-            shape="round"
-            icon={<DeleteFilled />}
-            size={size}
-            onClick={() => deleteMutiItem(selectedRowKeys)}
           >
-            ลบ
-          </Button>{" "}
-          <Button
-            style={{
-              backgroundColor: "#979A9C",
-              color: "white",
-              borderRadius: "20px",
-              marginBottom: "15px",
-              marginRight: "10px",
-            }}
-            type="primary"
-            shape="round"
-            icon={<PlusCircleFilled />}
-            size={size}
-            onClick={showModalAdd}
-          >
-            สินค้า
-          </Button>
+            <Button
+              style={{
+                backgroundColor: "#979A9C",
+                color: "white",
+                borderRadius: "20px",
+                marginBottom: "15px",
+              }}
+              type="primary"
+              shape="round"
+              icon={<DeleteFilled />}
+              size={size}
+              onClick={() => deleteMutiItem(selectedRowKeys)}
+            >
+              ลบ
+            </Button>{" "}
+            <Button
+              style={{
+                backgroundColor: "#979A9C",
+                color: "white",
+                borderRadius: "20px",
+                marginBottom: "15px",
+                marginRight: "10px",
+              }}
+              type="primary"
+              shape="round"
+              icon={<PlusCircleFilled />}
+              size={size}
+              onClick={showModalAdd}
+            >
+              สินค้า
+            </Button>
+          </div>
         </div>
         {/* ---------------------------------------------------------------------------modal-------------------------------------------------------------------------- */}
         <Modal
@@ -233,8 +338,12 @@ const Item = () => {
           }}
           columns={columns}
           dataSource={itemData}
-          pagination={{ defaultCurrent: 1 }}
-          scroll={{ x: 700, y: 350 }}
+          pagination={{
+            total: getHistory.length,
+            showSizeChanger: true,
+            pageSize: 10,
+          }}
+          // scroll={{ x: 700, y: 350 }}
           style={{ backgroundColor: "#e4e5e5" }}
         />
 

@@ -10,6 +10,8 @@ import {
   InputNumber,
   Layout,
   Alert,
+  Dropdown,
+  Space,
 } from "antd";
 import "../warehouse.css";
 import axios, { AxiosResponse } from "axios";
@@ -17,13 +19,17 @@ import { useForm } from "antd/es/form/Form";
 import {
   CloseCircleFilled,
   ContainerFilled,
+  DownOutlined,
   FolderFilled,
+  PlusCircleFilled,
   PlusCircleOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 import { TTypeModal } from "../component/warehouse/modal";
 import dayjs from "dayjs";
 import { IResult, Iitem } from "../interface/item.interface";
 import CustomTable from "../component/table";
+import { render } from "react-dom";
 
 const Warehouse = () => {
   const [warehousedata, setWarehouse] = useState<Iitem[]>([]);
@@ -70,7 +76,9 @@ const Warehouse = () => {
   const warehouseColumns = [
     {
       title: "#",
-      dataIndex: "id",
+      render: (_: any, __: any, index: number) => {
+        return index + 1;
+      },
     },
     {
       title: "SKU",
@@ -102,18 +110,31 @@ const Warehouse = () => {
       render: (value: any, record: any) => {
         return (
           <div>
-            <Button
-              onClick={() => editClick(value)}
-              style={{ backgroundColor: "#3B4248", color: "white" }}
-            >
-              แก้ไข
-            </Button>
-            <Button
-              onClick={() => historyClick(value)}
-              style={{ backgroundColor: "white" }}
-            >
-              ประวัติ
-            </Button>
+            <div>
+              <Button
+                onClick={() => editClick(value)}
+                style={{
+                  backgroundColor: "#3B4248",
+                  color: "white",
+                  borderRadius: "5px 5px 0px 0px",
+                  width: 70,
+                }}
+              >
+                แก้ไข
+              </Button>
+            </div>
+            <div>
+              <Button
+                onClick={() => historyClick(value)}
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: "0px 0px 5px 5px",
+                  width: 70,
+                }}
+              >
+                ประวัติ
+              </Button>
+            </div>
           </div>
         );
       },
@@ -270,7 +291,7 @@ const Warehouse = () => {
       <Card
         title={
           <span>
-            <ContainerFilled style={{ marginRight: 8 }} />
+            <ContainerFilled style={{ marginRight: 8, fontSize: "50px" }} />
             คลังสินค้า
           </span>
         }
@@ -283,13 +304,66 @@ const Warehouse = () => {
       >
         <div>
           <Button
-            icon={<PlusCircleOutlined />}
+            style={{
+              backgroundColor: "#2F353A",
+              borderRadius: "25px",
+              marginBottom: "15px",
+              height: "35px",
+              width: "200px",
+              color: "#fff",
+            }}
+          >
+            <Dropdown placement="bottom" trigger={["click"]}>
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  SOL 10 รายการ
+                  <DownOutlined
+                    style={{
+                      backgroundColor: "#fff",
+                      color: "#2F353A",
+                      borderRadius: "7px 7px 7px 7px",
+                    }}
+                  />
+                </Space>
+              </a>
+            </Dropdown>
+          </Button>{" "}
+          <Input
+            style={{
+              width: "350px",
+              borderRadius: "25px",
+              marginBottom: "15px",
+              height: "35px",
+              marginLeft: "15px",
+              marginRight: "15px",
+              border: "solid 1px",
+            }}
+            placeholder="พิมพ์คำค้นหา"
+          />
+          <Button
+            style={{
+              backgroundColor: "#2F353A",
+              borderRadius: "25px",
+              marginBottom: "15px",
+              height: "40px",
+              width: "40px",
+
+              color: "#fff",
+            }}
+            icon={<SearchOutlined />}
+          ></Button>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+          <Button
+            icon={<PlusCircleFilled />}
             onClick={() => clickManage()}
             style={{
               backgroundColor: "#979A9C",
               color: "white",
-              borderRadius: "17px",
+              borderRadius: "25px",
               marginBottom: "15px",
+              height: "35px",
             }}
           >
             จัดการเพิ่ม/ลด
@@ -299,11 +373,15 @@ const Warehouse = () => {
         <Table
           rowSelection={rowSelection}
           rowKey="id" //ใช้ id แยกข้อมูลที่มาจาก array แล้ว
-          pagination={{ defaultCurrent: 1 }}
+          pagination={{
+            total: getHistory.length,
+            showSizeChanger: true,
+            pageSize: 10,
+          }}
           style={{ backgroundColor: "#e4e5e5" }}
           dataSource={warehousedata}
           columns={warehouseColumns}
-          scroll={{ x: 400, y: 350 }} //ความกว้าง scroll ได้ 1200
+          // scroll={{ x: 400, y: 350 }} //ความกว้าง scroll ได้ 1200
         />
       </Card>
       {/* Mo */}
@@ -322,13 +400,10 @@ const Warehouse = () => {
           style={{ maxWidth: 600 }}
           autoComplete="off"
         >
-          <Form.Item name="id" hidden>
-            <Input />
-          </Form.Item>
           <Form.Item label="SKU" name="sku">
             <Input
               disabled
-              style={{ borderRadius: 100, border: "solid 0.5px grey" }}
+              style={{ borderRadius: 100, border: "solid 1px grey" }}
             />
           </Form.Item>
 
@@ -349,13 +424,7 @@ const Warehouse = () => {
               style={{ borderRadius: 100, border: "solid 0.5px grey" }}
             />
           </Form.Item>
-          <Form.Item label="หมายเหตุ">
-            <Input
-              type="text"
-              placeholder="Ex. 100/-100"
-              style={{ borderRadius: 100, border: "solid 0.5px grey" }}
-            />
-          </Form.Item>
+
           <div style={{ textAlign: "center" }}>
             <Button
               icon={<FolderFilled />}
@@ -436,7 +505,6 @@ const Warehouse = () => {
           dataSource={getHistory}
           columns={columnHistory}
           scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
-          pagination={{ defaultCurrent: 1 }}
         />
       </Modal>
     </Layout>
