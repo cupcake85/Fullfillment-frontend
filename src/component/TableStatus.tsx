@@ -32,7 +32,7 @@ interface Props {
 
 const TableStatus: React.FC<Props> = ({
   status,
-  changestatus,
+  changestatus = false,
   customColumns,
   statusReturn,
 }) => {
@@ -147,7 +147,7 @@ const TableStatus: React.FC<Props> = ({
       title: "วันที่",
       dataIndex: "orderDate",
       render: (rc: any) => {
-        const date = dayjs(rc.outDate).format("DD/MM/YYYY");
+        const date = dayjs(rc).format("DD/MMMM/YYYY");
         return <>{date}</>;
       },
     },
