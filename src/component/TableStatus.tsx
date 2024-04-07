@@ -93,7 +93,7 @@ const TableStatus: React.FC<Props> = ({
       params: { status: status },
     });
     console.log("request ", { status }, request);
-    setItemData(request.data);
+    setItemData(request.data.data);
   };
 
   const multipleSubmit = () => {
