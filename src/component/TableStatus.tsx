@@ -93,7 +93,7 @@ const TableStatus: React.FC<Props> = ({
       params: { status: status },
     });
     console.log("request ", { status }, request);
-    setItemData(request.data);
+    setItemData(request.data.data);
   };
 
   const multipleSubmit = () => {
@@ -147,7 +147,7 @@ const TableStatus: React.FC<Props> = ({
       title: "วันที่",
       dataIndex: "orderDate",
       render: (rc: any) => {
-        const date = dayjs(rc.outDate).format("DD/MM/YYYY");
+        const date = dayjs(rc).format("DD/MMMM/YYYY");
         return <>{date}</>;
       },
     },

@@ -102,7 +102,7 @@ const AddOrderPage = () => {
             />
           </Form.Item>
           <Form.Item>
-            <Table dataSource={selectItem} columns={columns}></Table>
+            <Table dataSource={selectItem}></Table>
           </Form.Item>
           <Form.Item name="customerName" label="ชื่อลูกค้า">
             <Input />
