@@ -47,7 +47,7 @@ function PackPage() {
 
   const getRecordItem = async () => {
     try {
-      const res = await axios.get("http://192.168.2.57:3000/record/item");
+      const res = await axios.get("http://192.168.2.57:3000/records/item");
       setRecordItem(res.data.data);
       console.log(res);
     } catch (error: any) {
