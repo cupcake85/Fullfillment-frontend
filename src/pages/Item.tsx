@@ -52,7 +52,9 @@ const Item = () => {
   const columns: TableColumnsType<DataType> = [
     {
       title: "#",
-      dataIndex: "id",
+      render: (_: any, __: any, index: number) => {
+        return index + 1;
+      },
     },
     {
       title: "SKU",

@@ -29,6 +29,7 @@ import { TTypeModal } from "../component/warehouse/modal";
 import dayjs from "dayjs";
 import { IResult, Iitem } from "../interface/item.interface";
 import CustomTable from "../component/table";
+import { render } from "react-dom";
 
 const Warehouse = () => {
   const [warehousedata, setWarehouse] = useState<Iitem[]>([]);
@@ -75,7 +76,9 @@ const Warehouse = () => {
   const warehouseColumns = [
     {
       title: "#",
-      dataIndex: "id",
+      render: (_: any, __: any, index: number) => {
+        return index + 1;
+      },
     },
     {
       title: "SKU",
