@@ -5,9 +5,6 @@ import type { MenuProps } from "antd";
 import { DeleteFilled, DownOutlined } from "@ant-design/icons";
 
 function Uncheck() {
-  const [statuschange, setStatusChange] = useState<string>("");
-
-
   return (
     <Layout style={{ backgroundColor: "EDEDED" }}>
       <Card

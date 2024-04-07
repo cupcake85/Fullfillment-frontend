@@ -54,7 +54,6 @@ const TableStatus: React.FC<Props> = ({
 
   const onClick: MenuProps["onClick"] = ({ key }) => {
     setStatusChange(key);
-    console.log(`Click on item ${key}`);
   };
 
   const items: MenuProps["items"] = [
@@ -84,7 +83,6 @@ const TableStatus: React.FC<Props> = ({
     onChange: (_: React.Key[], selectedRow: DataType[]) => {
       //onChange เอาไปใช้ใน table ได้เลย
       setSelectedRows(selectedRow); // เมื่อมีการเลือกแถวใหม่ให้เซ็ตค่า state
-      console.log("selectedRow -> ", selectedRow);
     },
   };
 
@@ -92,7 +90,6 @@ const TableStatus: React.FC<Props> = ({
     const request = await axios.get("http://192.168.2.57:3000/orders", {
       params: { status: status },
     });
-    console.log("request ", { status }, request);
     setItemData(request.data.data);
   };
 
@@ -101,7 +98,6 @@ const TableStatus: React.FC<Props> = ({
       return item.id;
     });
     const body = { orderId, status: { status: statuschange } }; //จัด format เตรียมส่งให้หลังบ้าน
-    console.log("body ได้อะไร -> ", body);
     updateMultiple(body);
   };
 
@@ -114,10 +110,7 @@ const TableStatus: React.FC<Props> = ({
       );
       getItemData();
     } catch (err: any) {
-      console.log(
-        "multipleUpadate() เออเร่อ -> ",
-        err?.response?.data?.message
-      );
+      console.log(err?.response?.data?.message);
     }
   };
 
@@ -125,7 +118,7 @@ const TableStatus: React.FC<Props> = ({
     console.log("selectedRow ที่รับมากับปุ่มลบ ", selectedRows);
     const body: any = { ids: selectedRows.map((e: any) => e.id) }; //map แค่ id ส่ง **ควรทำ interface ของ e
 
-    await axios.delete("http://192.168.2.57:3000/order/remove-multiple", {
+    await axios.delete("http://192.168.2.57:3000/orders/remove-multiple", {
       data: body,
     });
     getItemData();
@@ -147,7 +140,7 @@ const TableStatus: React.FC<Props> = ({
       title: "วันที่",
       dataIndex: "orderDate",
       render: (rc: any) => {
-        const date = dayjs(rc).format("DD/MMMM/YYYY");
+        const date = dayjs(rc).format("DD/MM/YYYY");
         return <>{date}</>;
       },
     },
@@ -167,7 +160,41 @@ const TableStatus: React.FC<Props> = ({
       title: "สถานะ",
       dataIndex: "status",
       render: (rc: any) => {
-        return <>{rc}</>;
+        let status = "";
+        let backgroundColor = ""; // เพิ่มตัวแปรสำหรับสีพื้นหลัง
+
+        switch (rc) {
+          case "NOTCHECKED":
+            status = "สินค้ายังไม่ถูกตรวจสอบ";
+            backgroundColor = "#BC211C";
+            break;
+          case "OUTOFSTOCK":
+            status = "กำลังแพ็คของออกจากคลัง";
+            backgroundColor = "#78CBC1";
+            break;
+          case "INPROGRESS":
+            status = "สินค้ากำลังดำเนินการ";
+            backgroundColor = "#EF8822";
+            break;
+          case "DELIVERED":
+            status = "จัดส่งสินค้าเรียบร้อย";
+            backgroundColor = "#679CCE";
+            break;
+          case "RETURNED":
+            status = "สินค้าถูกนำกลับ";
+            backgroundColor = "#000000";
+            break;
+        }
+        return (
+          <>
+            <div
+              className=" text-center text-white rounded-3xl p-1"
+              style={{ backgroundColor }}
+            >
+              {status}
+            </div>
+          </>
+        );
       },
     },
     {
