@@ -3,56 +3,49 @@ import {
   Form,
   Select,
   Table,
-  TableColumnsType,
   notification,
   InputNumber,
   Input,
   Layout,
   Card,
 } from "antd";
-import form, { FormInstance } from "antd/es/form";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 
 const UpdateOrderPage = () => {
   const [getItem, setItem] = useState([]);
   const [api, contextHolder] = notification.useNotification();
   const [selectItem, setSelectItem] = useState([]);
-  // const navigate = useNavigate();
   const location = useLocation();
   let { id } = location.state;
 
-  const [order, setOrder] = useState([]);
   const [form] = Form.useForm();
   useEffect(() => {
     getItems();
   }, []);
+
+
   const getOrderItem = async () => {
-    console.log("item",getItem)
-    
-    const requestOrder = await axios.get("http://192.168.2.57:3000/order/" + id);
+    const requestOrder = await axios.get("http://192.168.2.57:3000/orders/" + id);
     const requestItem = await axios.get("http://192.168.2.57:3000/items");
     const orders = requestOrder?.data?.data?.orderno?.map((order:any)=>order.item.id)
     const items = requestItem?.data?.data?.filter((item:any)=>orders.includes(item.id)).map((item:any)=>{return {label: item.sku, value: item.id }})
     const tableqty = orders.reduce((prev:any,current:any) => {
-      console.log(current)
       return {...prev,[current]:requestOrder.data.data.orderno.find((order:any)=> order.item.id == current)?.quantity}
     },{})
     form.setFieldsValue({...requestOrder?.data?.data,item:orders,...tableqty});
-
-    console.log("Order",tableqty)
-    
-    
-    // console.log(request.data.data);
     setSelectItem(items)
 
   };
+
+
   useEffect(() => {
     if (id) {
       getOrderItem();
     }
   }, []);
+
 
   const getItems = async () => {
     const request = await axios.get("http://192.168.2.57:3000/items");
@@ -62,12 +55,29 @@ const UpdateOrderPage = () => {
     setItem(sortedData);
   };
 
+
+  const handleSubmit = async () => {
+    try{
+    await axios.put("http://192.168.2.57:3000/orders/" + id )
+
+    api.success({
+      message: "Success",
+      description: "Order updated successfully",
+    });
+    } catch (error) {
+      api.error({
+        message: "Error",
+      });
+    } finally {
+    }
+  } 
+
+
   const handleChange = (value: number[]) => {
     const filter = getItem.filter((item: any) => value.includes(item.value)); //include เช็คทีละตัวว่า ใน value มีเหมือนกันกับ item.value
     setSelectItem(filter);
   };
 
-  const handleSubmit = async () => {};
 
   const columns = [
     {
@@ -91,6 +101,7 @@ const UpdateOrderPage = () => {
       },
     },
   ];
+
 
   return (
     <Layout>

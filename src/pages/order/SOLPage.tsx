@@ -48,7 +48,7 @@ function Order() {
   };
 
   const getOrder = async () => {
-    const request = await axios.get("http://192.168.2.57:3000/order");
+    const request = await axios.get("http://192.168.2.57:3000/orders");
     const sortedData = request.data.data;
     setOrderData(sortedData);
   };
@@ -122,8 +122,8 @@ function Order() {
               <Form.Item name="" label="ชื่อร้านค้า">
                 <Input></Input>
               </Form.Item>
-              <Form.Item name="" label="ระยะเวลา">
-                <DatePicker /> <DatePicker />
+              <Form.Item name="" label="ระยะเวลา" >
+                <DatePicker format={"YYYY-MM-DD"}/> <DatePicker format={"YYYY-MM-DD"} />
               </Form.Item>
               <Form.Item name="" label="แขวง/ตำบล">
                 <Input></Input>

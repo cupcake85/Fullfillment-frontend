@@ -44,7 +44,7 @@ const AddOrderPage = () => {
     console.log({ ...orderValue, item });
     try {
       console.log(orderValue);
-      await axios.post("http://192.168.2.57:3000/order", {
+      await axios.post("http://192.168.2.57:3000/orders", {
         ...orderValue,
         item,
       });
@@ -147,7 +147,6 @@ const AddOrderPage = () => {
               type="primary"
               htmlType="submit"
               style={{ backgroundColor: "#1677ff" }}
-              // onClick={()=>navigate("/SOLPage")}
             >
               บันทึก
             </Button>
