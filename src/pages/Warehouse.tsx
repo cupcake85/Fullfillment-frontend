@@ -5,11 +5,9 @@ import {
   Modal,
   Table,
   Input,
-  Divider,
   Form,
   InputNumber,
   Layout,
-  Alert,
 } from "antd";
 import "../warehouse.css";
 import axios, { AxiosResponse } from "axios";
@@ -23,7 +21,6 @@ import {
 import { TTypeModal } from "../component/warehouse/modal";
 import dayjs from "dayjs";
 import { IResult, Iitem } from "../interface/item.interface";
-import CustomTable from "../component/table";
 
 const Warehouse = () => {
   const [warehousedata, setWarehouse] = useState<Iitem[]>([]);

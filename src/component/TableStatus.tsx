@@ -7,6 +7,7 @@ import {
   MenuProps,
   Space,
   Table,
+  TableColumnsType,
   TableProps,
 } from "antd";
 import axios from "axios";
@@ -51,6 +52,20 @@ const TableStatus: React.FC<Props> = ({
     }
     setStatusChange(""); //เพื่อให้ state ใน [] เกิดการเปลี่ยนแปลงให้สามารถใช้ useEffect ได้
   }, [statuschange]);
+
+  const onClickEdit = (value?: any) => {
+    console.log(value);
+
+    // if (value) {
+    //   const orderFormData = value;
+    //   form.setFieldsValue(orderFormData);
+    // }
+    navigate("/UpdateOrderPage", {
+      state: {
+        id: value.id,
+      },
+    });
+  };
 
   const onClick: MenuProps["onClick"] = ({ key }) => {
     setStatusChange(key);
@@ -124,7 +139,7 @@ const TableStatus: React.FC<Props> = ({
     getItemData();
   };
 
-  const columns: TableProps<DataType>["columns"] = [
+  const columns: TableColumnsType<DataType> = [
     {
       title: "รายละเอียด",
       dataIndex: "quantity",
@@ -135,6 +150,7 @@ const TableStatus: React.FC<Props> = ({
           </div>
         );
       },
+      align: 'center'
     },
     {
       title: "วันที่",
@@ -147,17 +163,30 @@ const TableStatus: React.FC<Props> = ({
     {
       title: "ที่อยู่",
       dataIndex: "address",
+      align: 'center'
     },
     {
       title: "รหัสไปรษณีย์",
       dataIndex: "zipCode",
+      align: 'center'
     },
     {
       title: "เก็บเงินปลายทาง",
       dataIndex: "cod",
+      render: (rc: any) => {
+        let cod = "";
+        if (rc !== null) { 
+          cod = rc;
+        } else {
+          cod = "0"
+        }
+        return <>{cod}</>
+      },
+      align: 'center'
     },
     {
       title: "สถานะ",
+      align: 'center',
       dataIndex: "status",
       render: (rc: any) => {
         let status = "";
@@ -205,7 +234,7 @@ const TableStatus: React.FC<Props> = ({
         return (
           <div style={{ textAlign: "center" }}>
             <Button
-              onClick={() => navigate("/EditPage")} //แก้ไข path ให้ไปหน้า edit ที่ต้องการ
+              onClick={() => onClickEdit(value)} //แก้ไข path ให้ไปหน้า edit ที่ต้องการ
               style={{
                 // backgroundColor: "white",
                 fontSize: "12px",
@@ -216,6 +245,7 @@ const TableStatus: React.FC<Props> = ({
               แก้ไข
             </Button>
             <Button
+            onClick={() => navigate('/DetailsOrder')}
               style={{
                 // backgroundColor: "pink",
                 fontSize: "12px",

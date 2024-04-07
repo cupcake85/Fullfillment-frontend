@@ -75,18 +75,18 @@ function Order() {
       title: "รายละเอียด",
       render: (value: any) => {
         console.log("iiii", value);
-        return (
-          <Card>
-            <Row>
-              <div className="Order no">{value.orderno}</div>
-            </Row>
-            <Row>
-              <div className="SKU">{value.orderno}</div>
-            </Row>
-            <Row>
-              <div className="Order no">{value.orderno}</div>
-            </Row>
-          </Card>
+        return ( <></>
+          // <Card>
+          //   <Row>
+          //     <div className="Order no">{value.orderno}</div>
+          //   </Row>
+          //   <Row>
+          //     <div className="SKU">{value.orderno}</div>
+          //   </Row>
+          //   <Row>
+          //     <div className="Order no">{value.orderno}</div>
+          //   </Row>
+          // </Card>
         );
       },
     },

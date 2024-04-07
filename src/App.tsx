@@ -13,6 +13,7 @@ import ReturnPage from "./pages/order/ReturnPage.tsx";
 import Table from "./component/index.tsx";
 import AddOrderPage from "./pages/FormOrder/AddOrderPage.tsx";
 import UpdateOrderPage from "./pages/FormOrder/UpdateOrderPage.tsx";
+import DetailsOrder from "./pages/FormOrder/DetailsOrderPage.tsx";
 
 function Fullfill() {
   return (
@@ -32,6 +33,7 @@ function Fullfill() {
           <Route path="/table" element={<Table />} />
           <Route path="/AddOrderPage" element={<AddOrderPage />} />
           <Route path="/UpdateOrderPage" element={<UpdateOrderPage />} />
+          <Route path="/DetailsOrder" element={<DetailsOrder />} />
         </Route>
       </Routes>
     </BrowserRouter>
