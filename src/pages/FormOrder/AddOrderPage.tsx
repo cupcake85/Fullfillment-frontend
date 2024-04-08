@@ -19,6 +19,7 @@ const AddOrderPage = () => {
   const [api, contextHolder] = notification.useNotification();
   const [selectItem, setSelectItem] = useState([]);
   const navigate = useNavigate();
+
   const getItems = async () => {
     const request = await axios.get("http://192.168.2.57:3000/items");
     const sortedData = request.data.data.map((data: any) => {
@@ -37,25 +38,25 @@ const AddOrderPage = () => {
   };
 
   const handleSubmit = async (orderValue: any) => {
-    console.log(orderValue);
+    console.log("add",orderValue);
     const item = orderValue.item.map((id: any) => {
       return { itemId: id, qty: orderValue[id] };
     });
-    console.log({ ...orderValue, item });
+    console.log('item',{ item });
     try {
-      console.log(orderValue);
-      await axios.post("http://192.168.2.57:3000/order", {
+      console.log('order',{ ...orderValue });
+      await axios.post("http://192.168.2.57:3000/orders", {
         ...orderValue,
         item,
       });
       api.success({
         message: "Success",
-        description: "Item added successfully",
+        description: "บันทึกสำเร็จ",
       });
       navigate("/SOLPage");
     } catch (error) {
       api.error({
-        message: "Error",
+        message: "เกิดข้อผิดพลาด",
       });
     }
   };
@@ -85,56 +86,56 @@ const AddOrderPage = () => {
 
   return (
     <Layout>
-      <Card className=" m-[70px]" title="เพิ่มรายการ order">
+      <Card className=" m-[70px]" title="เพิ่มรายการ order" >
         <Form onFinish={handleSubmit}>
           <Form.Item name="uom" label="UOM">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="cod" label="COD">
-            <InputNumber />
+            <InputNumber className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="item" label="Item">
             <Select
               mode="multiple"
-              style={{ width: 500 }}
+              style={{ width: 300 }}
               options={getItem}
               onChange={handleChange}
             />
           </Form.Item>
           <Form.Item>
-            <Table dataSource={selectItem}></Table>
+            <Table style={{width:300}} dataSource={selectItem} columns={columns}></Table>
           </Form.Item>
           <Form.Item name="customerName" label="ชื่อลูกค้า">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
 
           <Form.Item name="phoneNumber" label="เบอร์โทรศัพท์">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="address" label="ที่อยู่">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="alley" label="ซอย">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="road" label="ถนน">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="zipCode" label="รหัสไปรษณีย์">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="province" label="จังหวัด">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="district" label="เขต/อำเภอ">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="parish" label="แขวง/ตำบล">
-            <Input />
+            <Input className= " rounded-3xl w-[300px]"/>
           </Form.Item>
           <Form.Item name="country" label="ประเทศ">
             <Select
-              style={{ width: 500 }}
+              style={{ width: 300 }}
               options={[
                 { value: "ThaiLand", label: "ThaiLand" },
                 { value: "Japan", label: "Japan" },
@@ -147,7 +148,6 @@ const AddOrderPage = () => {
               type="primary"
               htmlType="submit"
               style={{ backgroundColor: "#1677ff" }}
-              // onClick={()=>navigate("/SOLPage")}
             >
               บันทึก
             </Button>

@@ -7,6 +7,7 @@ import {
   MenuProps,
   Space,
   Table,
+  TableColumnsType,
   TableProps,
 } from "antd";
 import axios from "axios";
@@ -54,9 +55,31 @@ const TableStatus: React.FC<Props> = ({
     setStatusChange(""); //เพื่อให้ state ใน [] เกิดการเปลี่ยนแปลงให้สามารถใช้ useEffect ได้
   }, [statuschange]);
 
+  const onClickEdit = (value?: any) => {
+    console.log(value);
+
+    // if (value) {
+    //   const orderFormData = value;
+    //   form.setFieldsValue(orderFormData);
+    // }
+    navigate("/UpdateOrderPage", {
+      state: {
+        id: value.id,
+      },
+    });
+  };
+
+  const onClickDetail = (value?: any) => {
+    console.log('detail click', value);
+    navigate("/DetailsOrderPage", {
+      state: {
+        id: value.id,
+      },
+    });
+  }
+
   const onClick: MenuProps["onClick"] = ({ key }) => {
     setStatusChange(key);
-    console.log(`Click on item ${key}`);
   };
 
   const items: MenuProps["items"] = [
@@ -86,7 +109,6 @@ const TableStatus: React.FC<Props> = ({
     onChange: (_: React.Key[], selectedRow: DataType[]) => {
       //onChange เอาไปใช้ใน table ได้เลย
       setSelectedRows(selectedRow); // เมื่อมีการเลือกแถวใหม่ให้เซ็ตค่า state
-      console.log("selectedRow -> ", selectedRow);
     },
   };
 
@@ -94,7 +116,6 @@ const TableStatus: React.FC<Props> = ({
     const request = await axios.get("http://192.168.2.57:3000/orders", {
       params: { status: status, ...search },
     });
-    console.log("request ", { status }, request);
     setItemData(request.data.data);
   };
 
@@ -103,7 +124,6 @@ const TableStatus: React.FC<Props> = ({
       return item.id;
     });
     const body = { orderId, status: { status: statuschange } }; //จัด format เตรียมส่งให้หลังบ้าน
-    console.log("body ได้อะไร -> ", body);
     updateMultiple(body);
   };
 
@@ -116,10 +136,7 @@ const TableStatus: React.FC<Props> = ({
       );
       getItemData();
     } catch (err: any) {
-      console.log(
-        "multipleUpadate() เออเร่อ -> ",
-        err?.response?.data?.message
-      );
+      console.log(err?.response?.data?.message);
     }
   };
 
@@ -127,13 +144,13 @@ const TableStatus: React.FC<Props> = ({
     console.log("selectedRow ที่รับมากับปุ่มลบ ", selectedRows);
     const body: any = { ids: selectedRows.map((e: any) => e.id) }; //map แค่ id ส่ง **ควรทำ interface ของ e
 
-    await axios.delete("http://192.168.2.57:3000/order/remove-multiple", {
+    await axios.delete("http://192.168.2.57:3000/orders/remove-multiple", {
       data: body,
     });
     getItemData();
   };
 
-  const columns: TableProps<DataType>["columns"] = [
+  const columns: TableColumnsType<DataType> = [
     {
       title: "รายละเอียด",
       dataIndex: "quantity",
@@ -144,32 +161,80 @@ const TableStatus: React.FC<Props> = ({
           </div>
         );
       },
+      align: 'center'
     },
     {
       title: "วันที่",
       dataIndex: "orderDate",
       render: (rc: any) => {
-        const date = dayjs(rc).format("DD/MMMM/YYYY");
+        const date = dayjs(rc).format("DD/MM/YYYY");
         return <>{date}</>;
       },
     },
     {
       title: "ที่อยู่",
       dataIndex: "address",
+      align: 'center'
     },
     {
       title: "รหัสไปรษณีย์",
       dataIndex: "zipCode",
+      align: 'center'
     },
     {
       title: "เก็บเงินปลายทาง",
       dataIndex: "cod",
+      render: (rc: any) => {
+        let cod = "";
+        if (rc !== null) { 
+          cod = rc;
+        } else {
+          cod = "0"
+        }
+        return <>{cod}</>
+      },
+      align: 'center'
     },
     {
       title: "สถานะ",
+      align: 'center',
       dataIndex: "status",
       render: (rc: any) => {
-        return <>{rc}</>;
+        let status = "";
+        let backgroundColor = ""; // เพิ่มตัวแปรสำหรับสีพื้นหลัง
+
+        switch (rc) {
+          case "NOTCHECKED":
+            status = "สินค้ายังไม่ถูกตรวจสอบ";
+            backgroundColor = "#BC211C";
+            break;
+          case "OUTOFSTOCK":
+            status = "กำลังแพ็คของออกจากคลัง";
+            backgroundColor = "#78CBC1";
+            break;
+          case "INPROGRESS":
+            status = "สินค้ากำลังดำเนินการ";
+            backgroundColor = "#EF8822";
+            break;
+          case "DELIVERED":
+            status = "จัดส่งสินค้าเรียบร้อย";
+            backgroundColor = "#679CCE";
+            break;
+          case "RETURNED":
+            status = "สินค้าถูกนำกลับ";
+            backgroundColor = "#000000";
+            break;
+        }
+        return (
+          <>
+            <div
+              className=" text-center text-white rounded-3xl p-1"
+              style={{ backgroundColor }}
+            >
+              {status}
+            </div>
+          </>
+        );
       },
     },
     {
@@ -180,7 +245,7 @@ const TableStatus: React.FC<Props> = ({
         return (
           <div style={{ textAlign: "center" }}>
             <Button
-              onClick={() => navigate("/EditPage")} //แก้ไข path ให้ไปหน้า edit ที่ต้องการ
+              onClick={() => onClickEdit(value)} //แก้ไข path ให้ไปหน้า edit ที่ต้องการ
               style={{
                 // backgroundColor: "white",
                 fontSize: "12px",
@@ -191,6 +256,8 @@ const TableStatus: React.FC<Props> = ({
               แก้ไข
             </Button>
             <Button
+            // onClick={() => navigate('/DetailsOrder')}
+            onClick={() => onClickDetail(value)}
               style={{
                 // backgroundColor: "pink",
                 fontSize: "12px",

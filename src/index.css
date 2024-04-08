@@ -58,6 +58,7 @@ body {
 :where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper
   .ant-table-thead {
   background-color: #3b4248;
+  text-align: center;
 }
 
 .ant-btn-default {
