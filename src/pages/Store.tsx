@@ -10,6 +10,7 @@ import {
   Table,
   Input,
   TableColumnsType,
+  notification,
 } from "antd";
 import type { FormItemProps } from "antd";
 import { useForm } from "antd/es/form/Form";
@@ -42,6 +43,7 @@ const Store = () => {
   const [isReload, setIsReload] = useState(false);
   const [isModalOpenAdd, setIsModalOpenAdd] = useState(false);
   const [getHistory, setHistory] = useState([]);
+  const [searchQuery, setSearchQuery] = useState<Record<string, unknown>>();
 
   useEffect(() => {
     getItemData();
@@ -149,14 +151,30 @@ const Store = () => {
   ];
 
   const getItemData = async () => {
-    const request = await axios.get("http://192.168.2.57:3000/stores/");
+    const request = await axios.get("http://192.168.2.57:3000/stores/", {
+      params: { ...searchQuery },
+    });
     console.log("request", request);
     setItemData(request.data.data);
   };
 
+  const onClickSearch = () => {
+    getItemData();
+  };
+
   const deleteStore = async (value: any) => {
-    await axios.delete("http://192.168.2.57:3000/stores/" + value.id, value);
-    setIsReload(true);
+    const confirmDelete = window.confirm("คุณต้องการลบร้านค้านี้หรือไม่?"); // แสดง Popup ยืนยันการลบ
+    if (confirmDelete) {
+      try {
+        await axios.delete(
+          "http://192.168.2.57:3000/stores/" + value.id, // ทำการลบข้อมูลโดยใช้ axios.delete
+          value
+        );
+        setIsReload(true); // อัปเดตสถานะเพื่อให้โหลดข้อมูลใหม่
+      } catch (error) {
+        console.error("เกิดข้อผิดพลาดในการลบร้านค้า:", error);
+      }
+    }
   };
 
   return (
@@ -182,6 +200,12 @@ const Store = () => {
             </div>
             <Form.Item>
               <Input
+                onChange={(e) =>
+                  setSearchQuery({
+                    ...searchQuery,
+                    shipperCode: e.target.value,
+                  })
+                }
                 style={{
                   width: "250px",
                   borderRadius: "25px",
@@ -201,6 +225,12 @@ const Store = () => {
             </div>
             <Form.Item>
               <Input
+                onChange={(e) =>
+                  setSearchQuery({
+                    ...searchQuery,
+                    shipperName: e.target.value,
+                  })
+                }
                 style={{
                   width: "250px",
                   borderRadius: "25px",
@@ -220,6 +250,12 @@ const Store = () => {
             <div style={{ fontSize: "20px", fontWeight: "bold" }}>ร้านค้า</div>
             <Form.Item>
               <Input
+                onChange={(e) =>
+                  setSearchQuery({
+                    ...searchQuery,
+                    storesName: e.target.value,
+                  })
+                }
                 style={{
                   width: "250px",
                   borderRadius: "25px",
@@ -232,6 +268,7 @@ const Store = () => {
                 placeholder="ร้านค้า"
               />
               <Button
+                onClick={onClickSearch}
                 style={{
                   backgroundColor: "#2F353A",
                   borderRadius: "25px",
