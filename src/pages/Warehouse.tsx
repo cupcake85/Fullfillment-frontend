@@ -189,7 +189,7 @@ const Warehouse = () => {
     },
 
     {
-      title: "บันทึก",
+      title: "หมายเหตุ",
       dataIndex: "remark",
     },
   ];
