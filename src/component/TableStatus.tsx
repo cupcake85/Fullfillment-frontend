@@ -57,11 +57,6 @@ const TableStatus: React.FC<Props> = ({
 
   const onClickEdit = (value?: any) => {
     console.log(value);
-
-    // if (value) {
-    //   const orderFormData = value;
-    //   form.setFieldsValue(orderFormData);
-    // }
     navigate("/UpdateOrderPage", {
       state: {
         id: value.id,
@@ -70,13 +65,22 @@ const TableStatus: React.FC<Props> = ({
   };
 
   const onClickDetail = (value?: any) => {
-    console.log('detail click', value);
+    console.log("detail click", value);
     navigate("/DetailsOrderPage", {
       state: {
         id: value.id,
       },
     });
-  }
+  };
+
+  const onClickHistory = (value?: any) => {
+    console.log("valueId", value);
+    navigate("/OrderHistory", {
+      state: {
+        id: value.id,
+      },
+    });
+  };
 
   const onClick: MenuProps["onClick"] = ({ key }) => {
     setStatusChange(key);
@@ -161,7 +165,7 @@ const TableStatus: React.FC<Props> = ({
           </div>
         );
       },
-      align: 'center'
+      align: "center",
     },
     {
       title: "วันที่",
@@ -174,30 +178,30 @@ const TableStatus: React.FC<Props> = ({
     {
       title: "ที่อยู่",
       dataIndex: "address",
-      align: 'center'
+      align: "center",
     },
     {
       title: "รหัสไปรษณีย์",
       dataIndex: "zipCode",
-      align: 'center'
+      align: "center",
     },
     {
       title: "เก็บเงินปลายทาง",
       dataIndex: "cod",
       render: (rc: any) => {
         let cod = "";
-        if (rc !== null) { 
+        if (rc !== null) {
           cod = rc;
         } else {
-          cod = "0"
+          cod = "0";
         }
-        return <>{cod}</>
+        return <>{cod}</>;
       },
-      align: 'center'
+      align: "center",
     },
     {
       title: "สถานะ",
-      align: 'center',
+      align: "center",
       dataIndex: "status",
       render: (rc: any) => {
         let status = "";
@@ -256,10 +260,8 @@ const TableStatus: React.FC<Props> = ({
               แก้ไข
             </Button>
             <Button
-            // onClick={() => navigate('/DetailsOrder')}
-            onClick={() => onClickDetail(value)}
+              onClick={() => onClickDetail(value)}
               style={{
-                // backgroundColor: "pink",
                 fontSize: "12px",
                 borderRadius: "0px 0px 0px 0px",
                 width: 88,
@@ -268,8 +270,8 @@ const TableStatus: React.FC<Props> = ({
               รายละเอียด
             </Button>
             <Button
+              onClick={() => onClickHistory(value)}
               style={{
-                // backgroundColor: "green",
                 fontSize: "12px",
                 borderRadius: "0px 0px 5px 5px",
                 width: 88,
