@@ -225,7 +225,6 @@ const Warehouse = () => {
   const history = async (id: number) => {
     try {
       const request = await axios.get("http://192.168.2.57:3000/history/" + id);
-      console.log("เป็นอะไร -> ", request);
       setHistory(request.data.data); //data.data => data แรกคือ data จาก axios, data ที่สองคือ data จากหลังบ้าน
     } catch (err: any) {
       alert(err?.response?.data?.message);
