@@ -38,13 +38,13 @@ const AddOrderPage = () => {
   };
 
   const handleSubmit = async (orderValue: any) => {
-    console.log(orderValue);
+    console.log("add",orderValue);
     const item = orderValue.item.map((id: any) => {
       return { itemId: id, qty: orderValue[id] };
     });
-    console.log({ ...orderValue, item });
+    console.log('item',{ item });
     try {
-      console.log(orderValue);
+      console.log('order',{ ...orderValue });
       await axios.post("http://192.168.2.57:3000/orders", {
         ...orderValue,
         item,
