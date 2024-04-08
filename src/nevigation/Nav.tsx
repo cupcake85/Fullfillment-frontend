@@ -109,21 +109,6 @@ const App: React.FC = () => {
         },
       ],
     },
-
-    {
-      key: "/table",
-      icon: React.createElement(
-        ShopOutlined,
-        c === "/table" ? { style: { color: "red" } } : undefined
-      ),
-      label: "Test",
-      children: [
-        {
-          key: "/table",
-          label: "เทมเพลส",
-        },
-      ],
-    },
   ];
 
   const onClick = (e: string) => {
