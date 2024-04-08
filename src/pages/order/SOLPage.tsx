@@ -133,7 +133,7 @@ function Order() {
             </Form.Item>
 
             <Form.Item name="" label="ชื่อร้านค้า">
-              <Input placeholder="รหัสใบสั่งของ" className=" rounded-3xl w-[250px]"></Input>
+              <Input placeholder="ชื่อร้านค้า" className=" rounded-3xl w-[250px]"></Input>
             </Form.Item>
 
             <Form.Item name="" label="ระยะเวลา">
@@ -141,15 +141,15 @@ function Order() {
             </Form.Item>
 
             <Form.Item name="" label="แขวง/ตำบล">
-              <Input placeholder="รหัสใบสั่งของ" className=" rounded-3xl w-[250px]"></Input>
+              <Input placeholder="แขวง/ตำบล" className=" rounded-3xl w-[250px]"></Input>
             </Form.Item>
 
             <Form.Item name="" label="รหัสไปรษณี">
-              <Input placeholder="รหัสใบสั่งของ" className=" rounded-3xl w-[250px]"></Input>
+              <Input placeholder="รหัสไปรษณี" className=" rounded-3xl w-[250px]"></Input>
             </Form.Item>
 
             <Form.Item name="" label="ค่าส่งปลายทางต่ำสุด">
-              <Input placeholder="รหัสใบสั่งของ" className=" rounded-3xl w-[250px]"></Input>
+              <Input placeholder="ค่าส่งปลายทางต่ำสุด" className=" rounded-3xl w-[250px]"></Input>
             </Form.Item>
 
             <Form.Item name="" label="เรียงค่าส่งปลายทาง">
@@ -159,7 +159,7 @@ function Order() {
 
           <Col span={10} style={{ margin: 10 }}>
             <Form.Item name="" label="รหัสสินค้า">
-              <Input placeholder="รหัสใบสั่งของ" className=" rounded-3xl w-[250px]"></Input>
+              <Input placeholder="รหัสสินค้า" className=" rounded-3xl w-[250px]"></Input>
             </Form.Item>
 
             <Form.Item name="" label="สถานะใบสั่งของ">
@@ -167,15 +167,15 @@ function Order() {
             </Form.Item>
 
             <Form.Item name="" label="เบอร์โทรศัพท์">
-              <Input placeholder="รหัสใบสั่งของ" className=" rounded-3xl w-[250px]"></Input>
+              <Input placeholder="เบอร์โทรศัพท์" className=" rounded-3xl w-[250px]"></Input>
             </Form.Item>
 
             <Form.Item name="" label="เขต/อำเภอ">
-              <Input className=" rounded-3xl w-[250px]"></Input>
+              <Input placeholder="เขต/อำเภอ" className=" rounded-3xl w-[250px]"></Input>
             </Form.Item>
 
             <Form.Item name="" label="จังหวัด">
-              <Input className=" rounded-3xl w-[250px]"></Input>
+              <Input placeholder="จังหวัด" className=" rounded-3xl w-[250px]"></Input>
             </Form.Item>
 
             <Form.Item name="" label="เก็บเงินปลายทาง">
@@ -183,7 +183,7 @@ function Order() {
             </Form.Item>
 
             <Form.Item name="" label="ค่าเก็บเงินปลายทางสูงสุด">
-              <Input className=" rounded-3xl w-[250px]"></Input>
+              <Input placeholder="ค่าเก็บเงินปลายทางสูงสุด" className=" rounded-3xl w-[250px]"></Input>
             </Form.Item>
 
             <Form.Item name="" label="ระยะทาง">
