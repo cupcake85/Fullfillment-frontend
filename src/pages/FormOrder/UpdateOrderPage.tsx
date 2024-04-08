@@ -27,6 +27,8 @@ const UpdateOrderPage = () => {
     getItems();
   }, []);
 
+  console.log("idUpdate",id)
+
   const getOrderItem = async () => {
     const requestOrder = await axios.get(
       "http://192.168.2.57:3000/orders/" + id
