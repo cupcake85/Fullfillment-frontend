@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, Layout } from "antd";
+import { Button, Card, DatePicker, Form, Input, Layout } from "antd";
 import Table from "../../component/table";
 import { InboxOutlined, SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 function PackPage() {
   const navigate = useNavigate();
   const [recordItem, setRecordItem] = useState([]);
+  const [searchQuery, setSearchQuery] = useState<Record<string, unknown>>();
 
   useEffect(() => {
     getRecordItem();
@@ -47,12 +48,18 @@ function PackPage() {
 
   const getRecordItem = async () => {
     try {
-      const res = await axios.get("http://192.168.2.57:3000/records/item");
+      const res = await axios.get("http://192.168.2.57:3000/records/item", {
+        params: { ...searchQuery },
+      });
       setRecordItem(res.data.data);
       console.log(res);
     } catch (error: any) {
       alert(error?.response?.data.message);
     }
+  };
+
+  const onClickSearch = () => {
+    getRecordItem();
   };
 
   return (
@@ -65,23 +72,94 @@ function PackPage() {
           </span>
         }
         className=" m-[70px]"
-        
       >
         {/* กลุ่ม Form Filter */}
 
-        <Form className=" m-5 text-center">
-          <Form.Item label="รหัสสินค้า">
-            <Input className=" rounded-3xl w-[250px]" />
-          </Form.Item>
-          <Form.Item label="ร้านค้า">
-            <Input className=" rounded-3xl w-[250px]" />
-          </Form.Item>
-          <Form.Item>
-            <Button style={{backgroundColor:'#2F353A', color:'white'}} icon={<SearchOutlined />}>
-              ค้นหา
-            </Button>
-          </Form.Item>
-        </Form>
+        <div className="flex items-baseline">
+          <div className="flex items-baseline">
+            <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+              รหัสสินค้า
+            </div>
+            <Form.Item>
+              <Input
+                onChange={(e) =>
+                  setSearchQuery({
+                    ...searchQuery,
+                    sku: e.target.value,
+                  })
+                }
+                style={{
+                  width: "250px",
+                  borderRadius: "25px",
+                  marginBottom: "15px",
+                  height: "35px",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  border: "solid 1px",
+                }}
+                placeholder="รหัสสินค้า"
+              />
+            </Form.Item>
+          </div>
+          <div className="flex items-baseline">
+            <div style={{ fontSize: "20px", fontWeight: "bold" }}>ร้านค้า</div>
+            <Form.Item>
+              <Input
+                style={{
+                  width: "250px",
+                  borderRadius: "25px",
+                  marginBottom: "15px",
+                  height: "35px",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  border: "solid 1px",
+                }}
+                placeholder="ร้านค้า"
+              />
+            </Form.Item>
+          </div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <div className="flex items-baseline">
+            <div style={{ fontSize: "20px", fontWeight: "bold" }}>ระยะเวลา</div>
+            <Form.Item>
+              <DatePicker
+                style={{
+                  width: "200px",
+                  borderRadius: "20px",
+                  marginBottom: "15px",
+                  height: "35px",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  border: "solid 1px",
+                }}
+              />
+              <DatePicker
+                style={{
+                  width: "200px",
+                  borderRadius: "20px",
+                  marginBottom: "15px",
+                  height: "35px",
+                  marginRight: "15px",
+                  border: "solid 1px",
+                }}
+              />
+              <Button
+                onClick={onClickSearch}
+                style={{
+                  backgroundColor: "#2F353A",
+                  borderRadius: "25px",
+                  marginBottom: "15px",
+                  height: "40px",
+                  width: "40px",
+
+                  color: "#fff",
+                }}
+                icon={<SearchOutlined />}
+              ></Button>
+            </Form.Item>
+          </div>
+        </div>
 
         {/* กลุ่ม Form Filter */}
         <Table

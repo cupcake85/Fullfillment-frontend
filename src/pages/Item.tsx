@@ -116,7 +116,6 @@ const Item = () => {
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[]) => {
-      console.log({ selectedRowKeys });
       setSelectedRowKeys(selectedRowKeys);
     },
   };
