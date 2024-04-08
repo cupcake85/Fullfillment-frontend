@@ -37,6 +37,7 @@ const Item = () => {
   const [isReload, setIsReload] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [getHistory, setHistory] = useState([]);
+  const [searchQuery, setSearchQuery] = useState<Record<string, unknown>>();
 
   useEffect(() => {
     getItemData();
@@ -121,7 +122,9 @@ const Item = () => {
   };
 
   const getItemData = async () => {
-    const request = await axios.get("http://192.168.2.57:3000/items");
+    const request = await axios.get("http://192.168.2.57:3000/items", {
+      params: { ...searchQuery },
+    });
     const sortedData = request.data.data;
     setItemData(sortedData);
   };
@@ -167,6 +170,10 @@ const Item = () => {
 
   const [size] = useState<SizeType>("large");
 
+  const onClickSearch = () => {
+    getItemData();
+  };
+
   return (
     <Layout>
       <Card
@@ -189,6 +196,9 @@ const Item = () => {
             <div style={{ fontSize: "20px", fontWeight: "bold" }}>SKU</div>
             <Form.Item>
               <Input
+                onChange={
+                  (e) => setSearchQuery({ ...searchQuery, sku: e.target.value }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
+                }
                 style={{
                   width: "150px",
                   borderRadius: "25px",
@@ -206,6 +216,10 @@ const Item = () => {
             <div style={{ fontSize: "20px", fontWeight: "bold" }}>ร้านค้า</div>
             <Form.Item>
               <Input
+                onChange={
+                  (e) =>
+                    setSearchQuery({ ...searchQuery, stores: e.target.value }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
+                }
                 style={{
                   width: "280px",
                   borderRadius: "25px",
@@ -225,6 +239,10 @@ const Item = () => {
             </div>
             <Form.Item>
               <Input
+                onChange={
+                  (e) =>
+                    setSearchQuery({ ...searchQuery, name: e.target.value }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
+                }
                 style={{
                   width: "200px",
                   borderRadius: "25px",
@@ -247,6 +265,13 @@ const Item = () => {
               </div>
               <Form.Item>
                 <Input
+                  onChange={
+                    (e) =>
+                      setSearchQuery({
+                        ...searchQuery,
+                        details: e.target.value,
+                      }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
+                  }
                   style={{
                     width: "500px",
                     borderRadius: "25px",
@@ -259,6 +284,7 @@ const Item = () => {
                   placeholder="รายละเอียด"
                 />
                 <Button
+                  onClick={() => onClickSearch()}
                   style={{
                     backgroundColor: "#2F353A",
                     borderRadius: "25px",
