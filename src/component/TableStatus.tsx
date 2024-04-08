@@ -28,6 +28,7 @@ interface Props {
   changestatus?: boolean;
   customColumns?: any;
   statusReturn?: boolean;
+  search?: Record<string, unknown>;
 }
 
 const TableStatus: React.FC<Props> = ({
@@ -35,6 +36,7 @@ const TableStatus: React.FC<Props> = ({
   changestatus = false,
   customColumns,
   statusReturn,
+  search,
 }) => {
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
   const [itemData, setItemData] = useState([]);
@@ -90,7 +92,7 @@ const TableStatus: React.FC<Props> = ({
 
   const getItemData = async () => {
     const request = await axios.get("http://192.168.2.57:3000/orders", {
-      params: { status: status },
+      params: { status: status, ...search },
     });
     console.log("request ", { status }, request);
     setItemData(request.data.data);

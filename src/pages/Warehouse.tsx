@@ -35,8 +35,8 @@ const Warehouse = () => {
   const [warehousedata, setWarehouse] = useState<Iitem[]>([]);
   const [addModal, setAddmodal] = useState(false);
   const [selectedRows, setSelectedRows] = useState<Iitem[]>([]); // เพิ่ม state เก็บข้อมูลที่เลือกไว้
+  const [searchQuery, setSearchQuery] = useState<Record<string, unknown>>();
 
-  const [open, setOpen] = useState(false);
   const [value, setValue] = useState<{ type: TTypeModal; item?: any }>({
     type: "edit",
   });
@@ -199,7 +199,10 @@ const Warehouse = () => {
     AxiosResponse<IResult<Iitem[]>>
   > => {
     const request: AxiosResponse<IResult<Iitem[]>> = await axios.get(
-      "http://192.168.2.57:3000/items/"
+      "http://192.168.2.57:3000/items/",
+      {
+        params: { ...searchQuery },
+      }
     );
     return request;
   };
@@ -249,7 +252,6 @@ const Warehouse = () => {
   const history = async (id: number) => {
     try {
       const request = await axios.get("http://192.168.2.57:3000/history/" + id);
-      console.log("เป็นอะไร -> ", request);
       setHistory(request.data.data); //data.data => data แรกคือ data จาก axios, data ที่สองคือ data จากหลังบ้าน
     } catch (err: any) {
       alert(err?.response?.data?.message);
@@ -267,7 +269,6 @@ const Warehouse = () => {
     const rowData = selectedRows.map((item: any) => {
       return { item: item.id, quantity: rowValue[item.id] };
     });
-    console.log("Rowdata ได้อะไร -> ", rowData);
     updateMultiple(rowData);
     form.resetFields();
     setAddmodal(false);
@@ -283,6 +284,10 @@ const Warehouse = () => {
     } catch (err: any) {
       alert(err?.response?.data?.message);
     }
+  };
+
+  const onClickSearch = () => {
+    getWarehouse();
   };
 
   return (
@@ -329,6 +334,10 @@ const Warehouse = () => {
             </Dropdown>
           </Button>{" "}
           <Input
+            onChange={
+              (e) =>
+                setSearchQuery({ ...searchQuery, everything: e.target.value }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
+            }
             style={{
               width: "350px",
               borderRadius: "25px",
@@ -341,6 +350,7 @@ const Warehouse = () => {
             placeholder="พิมพ์คำค้นหา"
           />
           <Button
+            onClick={() => onClickSearch()}
             style={{
               backgroundColor: "#2F353A",
               borderRadius: "25px",
