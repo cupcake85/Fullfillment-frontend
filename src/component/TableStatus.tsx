@@ -67,6 +67,15 @@ const TableStatus: React.FC<Props> = ({
     });
   };
 
+  const onClickDetail = (value?: any) => {
+    console.log('detail click', value);
+    navigate("/DetailsOrderPage", {
+      state: {
+        id: value.id,
+      },
+    });
+  }
+
   const onClick: MenuProps["onClick"] = ({ key }) => {
     setStatusChange(key);
   };
@@ -245,7 +254,8 @@ const TableStatus: React.FC<Props> = ({
               แก้ไข
             </Button>
             <Button
-            onClick={() => navigate('/DetailsOrder')}
+            // onClick={() => navigate('/DetailsOrder')}
+            onClick={() => onClickDetail(value)}
               style={{
                 // backgroundColor: "pink",
                 fontSize: "12px",

@@ -33,7 +33,7 @@ function Fullfill() {
           <Route path="/table" element={<Table />} />
           <Route path="/AddOrderPage" element={<AddOrderPage />} />
           <Route path="/UpdateOrderPage" element={<UpdateOrderPage />} />
-          <Route path="/DetailsOrder" element={<DetailsOrder />} />
+          <Route path="/DetailsOrderPage" element={<DetailsOrder />} />
         </Route>
       </Routes>
     </BrowserRouter>
