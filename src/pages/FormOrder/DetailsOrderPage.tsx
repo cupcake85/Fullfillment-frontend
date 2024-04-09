@@ -3,9 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import dayjs from "dayjs";
-import { ColumnsType } from "antd/es/table";
-
 import { IorderDetail } from "../../interface/orderDetail.interface";
+import { ColumnsType } from "antd/es/table";
 
 const DetailsOrder = () => {
   const [detail, setDetail] = useState<IorderDetail>();
