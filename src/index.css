@@ -77,3 +77,10 @@ body {
   background-color: #3b4248;
   color: azure;
 }
+
+.ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+  color: #ffffff;
+  border-color: #111212;
+  background: #000000;
+  
+}

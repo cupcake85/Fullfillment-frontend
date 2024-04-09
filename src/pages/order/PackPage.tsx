@@ -1,5 +1,4 @@
-import { Button, Card, DatePicker, Form, Input, Layout } from "antd";
-import Table from "../../component/table";
+import { Button, Card, DatePicker, Form, Input, Layout, Table} from "antd";
 import { InboxOutlined, SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -20,6 +19,7 @@ function PackPage() {
       render: (_: any, __: any, index: number) => {
         return index + 1;
       },
+      align: 'center'
     },
     {
       title: "SKU",
@@ -27,6 +27,7 @@ function PackPage() {
       render: (value: any, record: any) => {
         return <p>{value?.sku}</p>;
       },
+      align: 'center'
     },
     {
       title: "ร้านค้า",
@@ -34,10 +35,12 @@ function PackPage() {
       render: (value: any, record: any) => {
         return <p>{value?.stores.name}</p>;
       },
+      align: 'center'
     },
     {
       title: "จำนวน",
       dataIndex: "quantity",
+      align: 'center'
     },
     {
       title: "คงเหลือ",
@@ -45,6 +48,7 @@ function PackPage() {
       render: (value: any, record: any) => {
         return <p>{value?.quantity}</p>;
       },
+      align: 'center'
     },
   ];
 
@@ -165,22 +169,14 @@ function PackPage() {
 
         {/* กลุ่ม Form Filter */}
         <Table
-          data={recordItem}
+          dataSource={recordItem}
           columns={columns}
-          pagination={{
-            current: 0,
-            setCurrent: function (value: number): void {
-              throw new Error("Function not implemented.");
-            },
-          }}
-          pageSize={{
-            pageSize: 0,
-            setPageSize: function (value: number): void {
-              throw new Error("Function not implemented.");
-            },
-          }}
-          total={10}
           key={"id"}
+          pagination={{
+            total: recordItem.length,
+            showSizeChanger: true,
+            
+          }}
         />
       </Card>
     </Layout>
