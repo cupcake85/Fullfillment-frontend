@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import dayjs from "dayjs";
+import { ColumnsType } from "antd/es/table";
 export interface IorderDetail {
   id: number;
   customerName: string;
@@ -70,7 +71,7 @@ const DetailsOrder = () => {
     }
   };
 
-  const column = [
+  const column: ColumnsType<any> = [
     {
       title: "SKU",
       dataIndex: "item",
@@ -110,7 +111,9 @@ const DetailsOrder = () => {
       <Card title={"รายการ"}>
         <Row className=" p-3">
           <Col className=" w-[50%]">
-            <div className=" mb-3 text-[16px] font-bold p-1">รายละเอียดรายการ</div>
+            <div className=" mb-3 text-[16px] font-bold p-1">
+              รายละเอียดรายการ
+            </div>
             <Row>
               <Col className=" bg-[#3B4248] text-white rounded-xl pl-4 py-4 pr-2 p-1 ">
                 <p>สถานะ</p>
@@ -184,7 +187,7 @@ const DetailsOrder = () => {
       </Card>
       <div className=" flex flex-row justify-between w-100vw mt-6">
         <Card title="สินค้า" className=" w-[50%] mr-4">
-          <Table columns={column} dataSource={detail?.orderno} rowKey="id"/>
+          <Table columns={column} dataSource={detail?.orderno} rowKey="id" />
         </Card>
         <Card title="หมายเลขติดตาม" className=" w-[50%] ml-4">
           <Row>
