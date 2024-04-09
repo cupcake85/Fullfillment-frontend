@@ -5,6 +5,7 @@ import {
   Dropdown,
   Layout,
   MenuProps,
+  Modal,
   Space,
   Table,
   TableColumnsType,
@@ -145,13 +146,30 @@ const TableStatus: React.FC<Props> = ({
   };
 
   const deleteMutiItem = async (selectedRows: any) => {
-    console.log("selectedRow ที่รับมากับปุ่มลบ ", selectedRows);
-    const body: any = { ids: selectedRows.map((e: any) => e.id) }; //map แค่ id ส่ง **ควรทำ interface ของ e
+    const body: any = { ids: selectedRows.map((e: any) => e.id) };
 
-    await axios.delete("http://192.168.2.57:3000/orders/remove-multiple", {
-      data: body,
+    Modal.confirm({
+      title: "ยืนยันการลบ",
+      content: "คุณต้องการลบรายการที่เลือกทั้งหมดหรือไม่?",
+      onOk: async () => {
+        try {
+          await axios.delete(
+            "http://192.168.2.57:3000/orders/remove-multiple",
+            {
+              data: body,
+            }
+          );
+
+          // เรียกฟังก์ชัน getItemData() เพื่อโหลดข้อมูลใหม่หลังจากลบเสร็จ
+          getItemData();
+        } catch (error) {
+          console.error("เกิดข้อผิดพลาดในการลบ:", error);
+        }
+      },
+      onCancel: () => {
+        console.log("ยกเลิกการลบ");
+      },
     });
-    getItemData();
   };
 
   const columns: TableColumnsType<DataType> = [
@@ -246,11 +264,16 @@ const TableStatus: React.FC<Props> = ({
       width: "100px",
       render: (value: any) => {
         return (
-          <div style={{ textAlign: "center", backgroundColor:'aquamarine' }}>
+          <div
+            style={{
+              textAlign: "center",
+              backgroundColor: "white",
+              color: "black",
+            }}
+          >
             <Button
-              onClick={() => onClickEdit(value)} //แก้ไข path ให้ไปหน้า edit ที่ต้องการ
+              onClick={() => onClickEdit(value)}
               style={{
-                // backgroundColor: "white",
                 fontSize: "12px",
                 borderRadius: "5px 5px 0px 0px",
                 width: 88,
