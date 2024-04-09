@@ -86,7 +86,7 @@ const AddOrderPage = () => {
   ];
 
   return (
-    <Layout>
+    <Layout >
       <Card className=" m-[70px]" title="เพิ่มรายการ order">
         <Form onFinish={handleSubmit}>
           <Form.Item name="uom" label="UOM">
@@ -97,6 +97,7 @@ const AddOrderPage = () => {
           </Form.Item>
           <Form.Item name="item" label="Item">
             <Select
+            placeholder="WHO054"
               mode="multiple"
               style={{ width: 300 }}
               options={getItem}
@@ -111,40 +112,39 @@ const AddOrderPage = () => {
             ></Table>
           </Form.Item>
           <Form.Item name="customerName" label="ชื่อลูกค้า">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="Nick" className=" rounded-3xl w-[300px]" />
           </Form.Item>
 
           <Form.Item name="phoneNumber" label="เบอร์โทรศัพท์">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="062xxxxxxx" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="address" label="ที่อยู่">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="123 ลาดพร้าว พลับพลา วังทองหลาง" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="alley" label="ซอย">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="ลาดพร้าว" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="road" label="ถนน">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="ลาดพร้าว" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="zipCode" label="รหัสไปรษณีย์">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="10310" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="province" label="จังหวัด">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="กรุงเทพฯ" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="district" label="เขต/อำเภอ">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="วังทองหลาง" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="parish" label="แขวง/ตำบล">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="พลับพลา" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="country" label="ประเทศ">
             <Select
+            placeholder="ประเทศ"
               style={{ width: 300 }}
               options={[
                 { value: "ThaiLand", label: "ThaiLand" },
-                { value: "Japan", label: "Japan" },
-                { value: "China", label: "China" },
               ]}
             />
           </Form.Item>

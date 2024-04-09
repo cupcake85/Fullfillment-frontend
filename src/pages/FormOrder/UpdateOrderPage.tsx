@@ -8,12 +8,13 @@ import {
   Input,
   Layout,
   Card,
+  Row,
 } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
-import { putOrderById } from "../../service/order";
+import { getOrderById, putOrderById } from "../../service/order";
 import { CreateOrder } from "../../service/order/interface/interface";
 import { ColumnsType } from "antd/es/table";
 
@@ -30,16 +31,20 @@ const UpdateOrderPage = () => {
     getItems();
   }, []);
 
+  useEffect(() => {
+    if (id) {
+      getOrderItem();
+    }
+  }, []);
+
   console.log("idUpdate", id);
 
   const getOrderItem = async () => {
-    const requestOrder = await axios.get(
-      "http://192.168.2.57:3000/orders/" + id
-    );
+    const requestOrder = await getOrderById(id);
+    console.log("requestOrder", requestOrder);
     const requestItem = await axios.get("http://192.168.2.57:3000/items");
-    const orders = requestOrder?.data?.data?.orderno?.map(
-      (order: any) => order.item.id
-    );
+    const orders = requestOrder.orderno?.map((order: any) => order.item.id);
+
     const items = requestItem?.data?.data
       ?.filter((item: any) => orders.includes(item.id))
       .map((item: any) => {
@@ -48,24 +53,18 @@ const UpdateOrderPage = () => {
     const tableqty = orders.reduce((prev: any, current: any) => {
       return {
         ...prev,
-        [current]: requestOrder.data.data.orderno.find(
+        [current]: requestOrder.orderno.find(
           (order: any) => order.item.id == current
         )?.quantity,
       };
     }, {});
     form.setFieldsValue({
-      ...requestOrder?.data?.data,
+      ...requestOrder,
       item: orders,
       ...tableqty,
     });
     setSelectItem(items);
   };
-
-  useEffect(() => {
-    if (id) {
-      getOrderItem();
-    }
-  }, []);
 
   const getItems = async () => {
     const request = await axios.get("http://192.168.2.57:3000/items");
@@ -80,7 +79,7 @@ const UpdateOrderPage = () => {
       return { itemId: id, qty: valueOrder[id] };
     });
     try {
-      const body:Partial <CreateOrder> = {
+      const body: Partial<CreateOrder> = {
         customerName: valueOrder.customerName,
         uom: valueOrder.uom,
         cod: valueOrder.cod,
@@ -95,7 +94,7 @@ const UpdateOrderPage = () => {
         country: valueOrder.country,
         item,
       };
-      await putOrderById(id, body );
+      await putOrderById(id, body);
 
       api.success({
         message: "Success",
@@ -142,20 +141,20 @@ const UpdateOrderPage = () => {
   ];
 
   return (
-    <Layout>
+    <Layout style={{ alignItems: "center" }}>
       <Card className=" m-[70px]" title="แก้ไขรายการ order">
         <Form onFinish={handleSubmit} form={form}>
           <Form.Item name="uom" label="UOM">
-            <Input placeholder="กล่อง" className=" rounded-3xl w-[300px]" />
+            <Input placeholder="กล่อง" className=" rounded-3xl w-[300px] float-end" />
           </Form.Item>
           <Form.Item name="cod" label="COD">
-            <InputNumber placeholder="0" className=" rounded-3xl w-[300px]" />
+            <InputNumber placeholder="0" className=" rounded-3xl w-[300px] float-end" />
           </Form.Item>
           <Form.Item name="item" label="Item">
             <Select
-            placeholder="เลือกสินค้า"
+              placeholder="WHO054"
               mode="multiple"
-              style={{ width: 300 }}
+              className=" rounded-3xl w-[300px] float-end"
               options={getItem}
               onChange={handleChange}
             />
@@ -168,40 +167,50 @@ const UpdateOrderPage = () => {
             ></Table>
           </Form.Item>
           <Form.Item name="customerName" label="ชื่อลูกค้า">
-            <Input placeholder="ชื่อลูกค้า" className=" rounded-3xl w-[300px]" />
+            <Input
+              placeholder="Nick"
+             className="rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
 
           <Form.Item name="phoneNumber" label="เบอร์โทรศัพท์">
-            <Input placeholder="061xxxxxxx" className=" rounded-3xl w-[300px]" />
+            <Input
+              placeholder="061xxxxxxx"
+              className=" rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
+
           <Form.Item name="address" label="ที่อยู่">
-            <Input placeholder="ที่อยู่" className=" rounded-3xl w-[300px]" />
+            <Input placeholder="123 ลาดพร้าว พลับพลา วังทองหลาง" className=" rounded-3xl w-[300px] float-end"  />
           </Form.Item>
+
           <Form.Item name="alley" label="ซอย">
-            <Input placeholder="ซอย" className=" rounded-3xl w-[300px]" />
+            <Input placeholder="ลาดพร้าว" className=" rounded-3xl w-[300px] float-end" />
           </Form.Item>
           <Form.Item name="road" label="ถนน">
-            <Input placeholder="ถนน" className=" rounded-3xl w-[300px]" />
+            <Input placeholder="ลาดพร้าว" className=" rounded-3xl w-[300px] float-end" />
           </Form.Item>
           <Form.Item name="zipCode" label="รหัสไปรษณีย์">
-            <Input placeholder="10220" className=" rounded-3xl w-[300px]" />
+            <Input placeholder="10310" className=" rounded-3xl w-[300px] float-end" />
           </Form.Item>
           <Form.Item name="province" label="จังหวัด">
-            <Input placeholder="กรุงเทพฯ" className=" rounded-3xl w-[300px]" />
+            <Input placeholder="กรุงเทพฯ" className=" rounded-3xl w-[300px] float-end" />
           </Form.Item>
           <Form.Item name="district" label="เขต/อำเภอ">
-            <Input placeholder="วังทองหลาง" className=" rounded-3xl w-[300px]" />
+            <Input
+              placeholder="วังทองหลาง"
+              className=" rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
           <Form.Item name="parish" label="แขวง/ตำบล">
-            <Input placeholder="พลับพลา" className=" rounded-3xl w-[300px]" />
+            <Input placeholder="พลับพลา" className=" rounded-3xl w-[300px] float-end" />
           </Form.Item>
           <Form.Item name="country" label="ประเทศ">
             <Select
-            placeholder="ประเทศ"
+              placeholder="ประเทศ"
               style={{ width: 300 }}
-              options={[
-                { value: "ThaiLand", label: "ThaiLand" },
-              ]}
+              options={[{ value: "ThaiLand", label: "ThaiLand" }]}
+              className="float-end"
             />
           </Form.Item>
           <Form.Item>
