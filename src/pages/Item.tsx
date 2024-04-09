@@ -135,9 +135,7 @@ const Item = () => {
       content: "คุณต้องการลบรายการนี้หรือไม่?",
       onOk: async () => {
         try {
-          const request = await axios.delete(
-            "http://192.168.2.57:3000/items/" + value.id
-          );
+          await axios.delete("http://192.168.2.57:3000/items/" + value.id);
           notification.success({
             message: "ลบสำเร็จ",
             description: "ลบรายการเรียบร้อยแล้ว",
