@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import dayjs from "dayjs";
 import { IorderDetail } from "../../interface/orderDetail.interface";
+import { ColumnsType } from "antd/es/table";
 
 const DetailsOrder = () => {
   const [detail, setDetail] = useState<IorderDetail>();
@@ -26,7 +27,7 @@ const DetailsOrder = () => {
     }
   };
 
-  const column = [
+  const column: ColumnsType<any> = [
     {
       title: "SKU",
       dataIndex: "item",

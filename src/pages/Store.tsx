@@ -163,18 +163,27 @@ const Store = () => {
   };
 
   const deleteStore = async (value: any) => {
-    const confirmDelete = window.confirm("คุณต้องการลบร้านค้านี้หรือไม่?"); // แสดง Popup ยืนยันการลบ
-    if (confirmDelete) {
-      try {
-        await axios.delete(
-          "http://192.168.2.57:3000/stores/" + value.id, // ทำการลบข้อมูลโดยใช้ axios.delete
-          value
-        );
-        setIsReload(true); // อัปเดตสถานะเพื่อให้โหลดข้อมูลใหม่
-      } catch (error) {
-        console.error("เกิดข้อผิดพลาดในการลบร้านค้า:", error);
-      }
-    }
+    Modal.confirm({
+      title: "ยืนยันการลบ",
+      content: "คุณต้องการลบรายการนี้หรือไม่?",
+      onOk: async () => {
+        try {
+          const request = await axios.delete(
+            "http://192.168.2.57:3000/stores/" + value.id
+          );
+          notification.success({
+            message: "ลบสำเร็จ",
+            description: "ลบรายการเรียบร้อยแล้ว",
+          });
+          setIsReload(true);
+        } catch (error) {
+          console.error("เกิดข้อผิดพลาดในการลบรายการ:", error);
+        }
+      },
+      onCancel: () => {
+        console.log("ยกเลิกการลบรายการ");
+      },
+    });
   };
 
   return (

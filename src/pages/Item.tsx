@@ -12,6 +12,7 @@ import {
   Space,
   Form,
   Input,
+  notification,
 } from "antd";
 import {
   DeleteFilled,
@@ -129,22 +130,53 @@ const Item = () => {
   };
 
   const deleteItem = async (value: any) => {
-    const request = await axios.delete(
-      "http://192.168.2.57:3000/items/" + value.id
-    );
-    setIsReload(true);
+    Modal.confirm({
+      title: "ยืนยันการลบ",
+      content: "คุณต้องการลบรายการนี้หรือไม่?",
+      onOk: async () => {
+        try {
+          const request = await axios.delete(
+            "http://192.168.2.57:3000/items/" + value.id
+          );
+          notification.success({
+            message: "ลบสำเร็จ",
+            description: "ลบรายการเรียบร้อยแล้ว",
+          });
+          setIsReload(true);
+        } catch (error) {
+          console.error("เกิดข้อผิดพลาดในการลบรายการ:", error);
+        }
+      },
+      onCancel: () => {
+        console.log("ยกเลิกการลบรายการ");
+      },
+    });
   };
 
   const deleteMutiItem = async (selectedRowKeys: any) => {
     const body: any = {
       ids: selectedRowKeys,
-    }; /**สร้าง body รับ selectedRowkeys เข้า keys ids */
-    // console.log(body)
-    const request = await axios.delete(
-      "http://192.168.2.57:3000/items/remove-multiple",
-      { data: body }
-    );
-    setIsReload(true);
+    };
+    Modal.confirm({
+      title: "ยืนยันการลบ",
+      content: "คุณต้องการลบรายการที่เลือกทั้งหมดหรือไม่?",
+
+      onOk: async () => {
+        try {
+          const request = await axios.delete(
+            "http://192.168.2.57:3000/items/remove-multiple",
+            { data: body }
+          );
+          setIsReload(true);
+          setSelectedRowKeys([]);
+        } catch (error) {
+          console.error("เกิดข้อผิดพลาดในการลบ:", error);
+        }
+      },
+      onCancel: () => {
+        console.log("ยกเลิกการลบ");
+      },
+    });
   };
 
   //------------------------------------------------------------Table----------------------------------------------------------------------------------------

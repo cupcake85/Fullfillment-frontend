@@ -70,13 +70,10 @@ body {
   width: 800px;
 }
 
-/* .ant-layout .ant-layout-sider-children{
-  width: 250px;
-  height: 708px;
-} */
-
-/* .element.style .ant-layout .ant-layout-sider {
-  background:#2F353A;
-  width: 300px;
-  height: 200vh;
-} */
+.ant-modal-confirm .ant-modal-confirm-btns .ant-btn+.ant-btn{
+  background-color: #bc211c;
+}
+.ant-modal-confirm .ant-btn-default{
+  background-color: #3b4248;
+  color: azure;
+}
