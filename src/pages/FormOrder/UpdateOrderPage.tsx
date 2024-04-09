@@ -13,6 +13,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
+import { putOrderById } from "../../service/order";
+import { CreateOrder } from "../../service/order/interface/interface";
+import { ColumnsType } from "antd/es/table";
 
 const UpdateOrderPage = () => {
   const [getItem, setItem] = useState([]);
@@ -27,7 +30,7 @@ const UpdateOrderPage = () => {
     getItems();
   }, []);
 
-  console.log("idUpdate",id)
+  console.log("idUpdate", id);
 
   const getOrderItem = async () => {
     const requestOrder = await axios.get(
@@ -77,26 +80,27 @@ const UpdateOrderPage = () => {
       return { itemId: id, qty: valueOrder[id] };
     });
     try {
-      await axios.put("http://192.168.2.57:3000/orders/" + id, {
-        customerName:valueOrder.customerName,
-        uom:valueOrder.uom,
-        cod:valueOrder.cod,
-        phoneNumber:valueOrder.phoneNumber,
-        address:valueOrder.address,
-        alley:valueOrder.alley,
-        road:valueOrder.road,
-        zipCode:valueOrder.zipCode,
-        province:valueOrder.province,
-        district:valueOrder.district,
-        parish:valueOrder.parish,
-        country:valueOrder.country,
+      const body:Partial <CreateOrder> = {
+        customerName: valueOrder.customerName,
+        uom: valueOrder.uom,
+        cod: valueOrder.cod,
+        phoneNumber: valueOrder.phoneNumber,
+        address: valueOrder.address,
+        alley: valueOrder.alley,
+        road: valueOrder.road,
+        zipCode: valueOrder.zipCode,
+        province: valueOrder.province,
+        district: valueOrder.district,
+        parish: valueOrder.parish,
+        country: valueOrder.country,
         item,
-      });
+      };
+      await putOrderById(id, body );
+
       api.success({
         message: "Success",
         description: "แก้ไขข้อมูลเรียบร้อบ",
       });
-      
     } catch (error) {
       api.error({
         message: "เกิดข้อผิดพลาด",
@@ -111,9 +115,10 @@ const UpdateOrderPage = () => {
     setSelectItem(filter);
   };
 
-  const columns = [
+  const columns: ColumnsType<any> = [
     {
       title: "#",
+      align: "center",
       render: (_: any, __: any, index: number) => {
         return index + 1;
       },
@@ -121,9 +126,11 @@ const UpdateOrderPage = () => {
     {
       title: "sku",
       dataIndex: "label",
+      align: "center",
     },
     {
       title: "QTY",
+      align: "center",
       render: (value: any) => {
         return (
           <Form.Item name={value.value}>
@@ -139,13 +146,14 @@ const UpdateOrderPage = () => {
       <Card className=" m-[70px]" title="แก้ไขรายการ order">
         <Form onFinish={handleSubmit} form={form}>
           <Form.Item name="uom" label="UOM">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="กล่อง" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="cod" label="COD">
-            <InputNumber className=" rounded-3xl w-[300px]" />
+            <InputNumber placeholder="0" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="item" label="Item">
             <Select
+            placeholder="เลือกสินค้า"
               mode="multiple"
               style={{ width: 300 }}
               options={getItem}
@@ -160,40 +168,39 @@ const UpdateOrderPage = () => {
             ></Table>
           </Form.Item>
           <Form.Item name="customerName" label="ชื่อลูกค้า">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="ชื่อลูกค้า" className=" rounded-3xl w-[300px]" />
           </Form.Item>
 
           <Form.Item name="phoneNumber" label="เบอร์โทรศัพท์">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="061xxxxxxx" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="address" label="ที่อยู่">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="ที่อยู่" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="alley" label="ซอย">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="ซอย" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="road" label="ถนน">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="ถนน" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="zipCode" label="รหัสไปรษณีย์">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="10220" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="province" label="จังหวัด">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="กรุงเทพฯ" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="district" label="เขต/อำเภอ">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="วังทองหลาง" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="parish" label="แขวง/ตำบล">
-            <Input className=" rounded-3xl w-[300px]" />
+            <Input placeholder="พลับพลา" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="country" label="ประเทศ">
             <Select
+            placeholder="ประเทศ"
               style={{ width: 300 }}
               options={[
                 { value: "ThaiLand", label: "ThaiLand" },
-                { value: "Japan", label: "Japan" },
-                { value: "China", label: "China" },
               ]}
             />
           </Form.Item>
