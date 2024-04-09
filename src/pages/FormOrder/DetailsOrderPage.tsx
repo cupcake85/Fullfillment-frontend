@@ -3,51 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import dayjs from "dayjs";
-export interface IorderDetail {
-  id: number;
-  customerName: string;
-  orderDate: string;
-  uom: string;
-  cod: number;
-  phoneNumber: string;
-  address: string;
-  alley: string;
-  road: string;
-  zipCode: string;
-  province: string;
-  district: string;
-  parish: string;
-  country: string;
-  status: string;
-  quantity: number;
-  orderno: Orderno[];
-}
-
-export interface Orderno {
-  id: number;
-  quantity: number;
-  item: Item;
-}
-
-export interface Item {
-  id: number;
-  sku: string;
-  name: string;
-  details: string;
-  quantity: number;
-  stores: Stores;
-}
-
-export interface Stores {
-  id: number;
-  name: string;
-  shipperCode: string;
-  shipperName: string;
-  zipCode: string;
-  phoneNumber: string;
-  email: string;
-  isDelete: boolean;
-}
+import { IorderDetail } from "../../interface/orderDetail.interface";
 
 const DetailsOrder = () => {
   const [detail, setDetail] = useState<IorderDetail>();
@@ -107,10 +63,12 @@ const DetailsOrder = () => {
 
   return (
     <Layout className="  m-[70px]">
-      <Card title={"รายการ"}>
+      <Card title={"รายการ"} className=" mb-8">
         <Row className=" p-3">
           <Col className=" w-[50%]">
-            <div className=" mb-3 text-[16px] font-bold p-1">รายละเอียดรายการ</div>
+            <div className=" mb-3 text-[16px] font-bold p-1">
+              รายละเอียดรายการ
+            </div>
             <Row>
               <Col className=" bg-[#3B4248] text-white rounded-xl pl-4 py-4 pr-2 p-1 ">
                 <p>สถานะ</p>
@@ -182,25 +140,17 @@ const DetailsOrder = () => {
           </Col>
         </Row>
       </Card>
-      <div className=" flex flex-row justify-between w-100vw mt-6">
-        <Card title="สินค้า" className=" w-[50%] mr-4">
-          <Table columns={column} dataSource={detail?.orderno} rowKey="id"/>
-        </Card>
-        <Card title="หมายเลขติดตาม" className=" w-[50%] ml-4">
-          <Row>
-            <Col className=" bg-[#3B4248] text-white rounded-xl pl-4 py-4 pr-2 p-1">
-              <p>หมายเลขติดตาม</p>
-              <p>วันที่</p>
-              <p>เวลา</p>
-            </Col>
-            <Col className=" col-span-2 bg-[#FBFBFB] rounded-r-[10px] pl-4 py-4 pr-2  w-[70%]">
-              <p>{detail?.orderno[0].id}</p>
-              <p>ยังไม่มี</p>
-              <p>{dayjs(detail?.orderDate).format("HH:mm:ss")}</p>
-            </Col>
-          </Row>
-        </Card>
-      </div>
+      <Card title="สินค้า" >
+        <div className=" mb-4 font-bold">
+          จำนวนสินค้า : {detail?.orderno.length} รายการ
+        </div>
+        <Table
+          columns={column}
+          dataSource={detail?.orderno}
+          rowKey="id"
+          scroll={{ x: 700 }}
+        />
+      </Card>
     </Layout>
   );
 };

@@ -245,9 +245,8 @@ const TableStatus: React.FC<Props> = ({
       title: "",
       width: "100px",
       render: (value: any) => {
-        // return <EditTable />;
         return (
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center", backgroundColor:'aquamarine' }}>
             <Button
               onClick={() => onClickEdit(value)} //แก้ไข path ให้ไปหน้า edit ที่ต้องการ
               style={{
