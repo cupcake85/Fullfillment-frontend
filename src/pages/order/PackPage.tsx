@@ -17,7 +17,9 @@ function PackPage() {
   const columns = [
     {
       title: "#",
-      dataIndex: "id", //แสดงเลขตามลำดับ
+      render: (_: any, __: any, index: number) => {
+        return index + 1;
+      },
     },
     {
       title: "SKU",
@@ -177,7 +179,7 @@ function PackPage() {
               throw new Error("Function not implemented.");
             },
           }}
-          total={0}
+          total={10}
           key={"id"}
         />
       </Card>
@@ -185,3 +187,4 @@ function PackPage() {
   );
 }
 export default PackPage;
+
