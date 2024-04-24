@@ -14,35 +14,43 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: 'kanit';
 }
 
 .ant-menu .ant-menu-item-selected {
   background: #272a2a;
   border-radius: inherit;
+  font-family: 'kanit';
 }
 
 .ant-btn-default {
   background-color: rgb(175, 175, 175);
+  font-family: 'kanit';
 }
 
 .ant-menu .ant-menu-submenu-title .ant-menu-item-icon {
   text-transform: none;
+  font-family: 'kanit';
 }
 
 .ant-menu-dark.ant-menu-inline .ant-menu-sub.ant-menu-inline {
   background-color: #2f353a;
+  font-family: 'kanit';
 }
 
 .ant-card .ant-card-head {
   background-color: #f7f7f7;
+  font-family: 'kanit';
 }
 
 .ant-card .ant-card-head-title {
   font-size: x-large;
+  font-family: 'kanit';
 }
 .ant-table-wrapper .ant-table-thead > tr > th {
   background-color: #3b4248;
   color: #fff;
+  font-family: 'kanit';
 }
 :where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper
   .ant-table-thead
@@ -51,6 +59,7 @@ body {
     .ant-table-row-expand-icon-cell
   ):not([colspan])::before {
   width: 0px;
+  font-family: 'kanit';
 }
 
 .ant-table-wrapper .ant-table-thead > tr > th,
@@ -58,28 +67,41 @@ body {
   .ant-table-thead {
   background-color: #3b4248;
   text-align: center;
+  font-family: 'kanit';
 }
 
 .ant-btn-default {
   background-color: rgba(175, 175, 175, 0);
   border-color: #d9d9d900;
+  font-family: 'kanit';
 }
 
 .ant-modal-content {
   width: 800px;
+  font-family: 'kanit';
 }
 
 .ant-modal-confirm .ant-modal-confirm-btns .ant-btn+.ant-btn{
   background-color: #bc211c;
+  font-family: 'kanit';
 }
 .ant-modal-confirm .ant-btn-default{
   background-color: #3b4248;
   color: azure;
+  font-family: 'kanit';
 }
 
 .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
   color: #ffffff;
   border-color: #111212;
   background: #000000;
-  
+  font-family: 'kanit';
+}
+
+:where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper .ant-table-tbody >tr >th, :where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper .ant-table-tbody >tr >td {
+  font-family: 'kanit';
+}
+
+:where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper .ant-table-pagination.ant-pagination {
+  font-family: 'kanit';
 }

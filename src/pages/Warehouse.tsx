@@ -8,7 +8,6 @@ import {
   Form,
   InputNumber,
   Layout,
-  Alert,
   Dropdown,
   Space,
 } from "antd";
@@ -21,24 +20,16 @@ import {
   DownOutlined,
   FolderFilled,
   PlusCircleFilled,
-  PlusCircleOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { TTypeModal } from "../component/warehouse/modal";
 import dayjs from "dayjs";
 import { IResult, Iitem } from "../interface/item.interface";
-import CustomTable from "../component/table";
-import { render } from "react-dom";
 
 const Warehouse = () => {
   const [warehousedata, setWarehouse] = useState<Iitem[]>([]);
   const [addModal, setAddmodal] = useState(false);
   const [selectedRows, setSelectedRows] = useState<Iitem[]>([]); // เพิ่ม state เก็บข้อมูลที่เลือกไว้
   const [searchQuery, setSearchQuery] = useState<Record<string, unknown>>();
-
-  const [value, setValue] = useState<{ type: TTypeModal; item?: any }>({
-    type: "edit",
-  });
 
   const [form] = useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -76,12 +67,13 @@ const Warehouse = () => {
     {
       title: "#",
       render: (_: any, __: any, index: number) => {
-        return index + 1;
+        return <div className=" font-[kanit]">{index + 1}</div>
       },
     },
     {
       title: "SKU",
       dataIndex: "sku", //ชื่อ dataIndex ตรงกับชื่อ field ใน dataSource
+      
     },
     {
       title: "ชื่อสินค้า",
@@ -208,7 +200,8 @@ const Warehouse = () => {
 
   const getWarehouse = async () => {
     const request = await retrieveAllItems();
-    setWarehouse(request.data.data);
+    console.log(request);
+    setWarehouse(request.data.data.items);
   };
 
   const editClick = (value: any) => {
@@ -251,7 +244,7 @@ const Warehouse = () => {
   const history = async (id: number) => {
     try {
       const request = await axios.get("http://192.168.2.57:3000/history/" + id);
-      setHistory(request.data.data); //data.data => data แรกคือ data จาก axios, data ที่สองคือ data จากหลังบ้าน
+      setHistory(request.data.data.items); //data.data => data แรกคือ data จาก axios, data ที่สองคือ data จากหลังบ้าน
     } catch (err: any) {
       alert(err?.response?.data?.message);
     }
@@ -345,8 +338,9 @@ const Warehouse = () => {
               marginLeft: "15px",
               marginRight: "15px",
               border: "solid 1px",
+              fontFamily:'kanit'
             }}
-            placeholder="พิมพ์คำค้นหา"
+            placeholder= "พิมพ์คำค้นหา"
           />
           <Button
             onClick={() => onClickSearch()}

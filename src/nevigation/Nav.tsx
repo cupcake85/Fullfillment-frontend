@@ -133,7 +133,8 @@ const App: React.FC = () => {
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            style={{ background: "#2F353A", overflowY: "auto" }}
+            style={{ background: "#2F353A", overflowY: "auto", scrollbarWidth:'none' }}
+            width={230}
           >
             <div className="demo-logo-vertical" /*สไลด์ด้านข้าง*/ />
             <Menu
