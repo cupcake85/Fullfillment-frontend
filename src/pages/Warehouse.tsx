@@ -67,13 +67,12 @@ const Warehouse = () => {
     {
       title: "#",
       render: (_: any, __: any, index: number) => {
-        return <div className=" font-[kanit]">{index + 1}</div>
+        return <div className=" font-[kanit]">{index + 1}</div>;
       },
     },
     {
       title: "SKU",
       dataIndex: "sku", //ชื่อ dataIndex ตรงกับชื่อ field ใน dataSource
-      
     },
     {
       title: "ชื่อสินค้า",
@@ -303,6 +302,7 @@ const Warehouse = () => {
           <Button
             style={{
               backgroundColor: "#2F353A",
+              padding:'20px',
               borderRadius: "25px",
               marginBottom: "15px",
               height: "35px",
@@ -311,14 +311,18 @@ const Warehouse = () => {
             }}
           >
             <Dropdown placement="bottom" trigger={["click"]}>
-              <a onClick={(e) => e.preventDefault()}>
+              <a style={{cursor:'pointer', padding:'20px'}}>
                 <Space>
-                  SOL 10 รายการ
+                  <div className=" flex items-center">
+                    <div className=" text-[20px] mr-4">SOL</div>
+                    <div className=" text-[10px] ">10 รายการ</div>
+                  </div>
                   <DownOutlined
                     style={{
                       backgroundColor: "#fff",
                       color: "#2F353A",
                       borderRadius: "7px 7px 7px 7px",
+
                     }}
                   />
                 </Space>
@@ -338,9 +342,9 @@ const Warehouse = () => {
               marginLeft: "15px",
               marginRight: "15px",
               border: "solid 1px",
-              fontFamily:'kanit'
+              fontFamily: "kanit",
             }}
-            placeholder= "พิมพ์คำค้นหา"
+            placeholder="พิมพ์คำค้นหา"
           />
           <Button
             onClick={() => onClickSearch()}
@@ -350,14 +354,13 @@ const Warehouse = () => {
               marginBottom: "15px",
               height: "40px",
               width: "40px",
-
               color: "#fff",
             }}
             icon={<SearchOutlined />}
           ></Button>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+        <div style={{ display: "flex", flexDirection: "row" }}>
           <Button
             icon={<PlusCircleFilled />}
             onClick={() => clickManage()}
@@ -367,6 +370,9 @@ const Warehouse = () => {
               borderRadius: "25px",
               marginBottom: "15px",
               height: "35px",
+              padding: "20px",
+              display: "flex",
+              alignItems: "center",
             }}
           >
             จัดการเพิ่ม/ลด
