@@ -54,7 +54,7 @@ function Order() {
 
   const getStore = async () => {
     const request = await axios.get("http://192.168.2.57:3000/stores");
-    const sortedData = request.data.data.map((data: any) => {
+    const sortedData = request.data.data.items.map((data: any) => {
       return { label: data.name, value: data.id };
     });
 
