@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
-  Card,
   Dropdown,
-  Layout,
   MenuProps,
   Modal,
   Space,
   Table,
   TableColumnsType,
-  TableProps,
 } from "antd";
 import axios from "axios";
 
@@ -122,7 +119,7 @@ const TableStatus: React.FC<Props> = ({
     const request = await axios.get("http://192.168.2.57:3000/orders", {
       params: { status: status, ...search },
     });
-    setItemData(request.data.data);
+    setItemData(request.data.data.items);
   };
 
   const multipleSubmit = () => {

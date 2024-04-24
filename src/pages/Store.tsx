@@ -155,7 +155,7 @@ const Store = () => {
       params: { ...searchQuery },
     });
     console.log("request", request);
-    setItemData(request.data.data);
+    setItemData(request.data.data.items);
   };
 
   const onClickSearch = () => {

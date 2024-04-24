@@ -3,6 +3,12 @@
   border-radius: 20px;  
 }
 
+@font-face {
+  font-family: 'kanit';
+  src: local("Kanit_Regular"),
+  url('./font/Kanit_Regular.ttf');
+}
+
 
 
 

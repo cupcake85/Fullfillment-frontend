@@ -125,7 +125,7 @@ const Item = () => {
     const request = await axios.get("http://192.168.2.57:3000/items", {
       params: { ...searchQuery },
     });
-    const sortedData = request.data.data;
+    const sortedData = request.data.data.items;
     setItemData(sortedData);
   };
 
