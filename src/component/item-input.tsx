@@ -26,8 +26,8 @@ const ItemInput = ({
         await axios.put("http://192.168.2.57:3000/items/" + value.id, value);
         getItemData();
         api.success({
-          message: "Success",
-          description: "Item updated successfully",
+          message: "สำเร็จ",
+          description: "เพิ่มรายการสำเร็จ",
         });
       } catch (error) {
         api.error({
@@ -43,8 +43,8 @@ const ItemInput = ({
         await axios.post("http://192.168.2.57:3000/items/", value);
         getItemData();
         api.success({
-          message: "Success",
-          description: "Item added successfully",
+          message: "สำเร็จ",
+          description: "เพิ่มรายการสำเร็จ",
         });
       } catch (error) {
         api.error({

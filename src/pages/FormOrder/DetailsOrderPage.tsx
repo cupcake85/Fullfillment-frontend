@@ -141,7 +141,7 @@ const DetailsOrder = () => {
           </Col>
         </Row>
       </Card>
-      <Card title="สินค้า" >
+      <Card title="สินค้า">
         <div className=" mb-4 font-bold">
           จำนวนสินค้า : {detail?.orderno.length} รายการ
         </div>

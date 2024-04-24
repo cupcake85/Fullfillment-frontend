@@ -10,9 +10,11 @@ import {
   Layout,
   Card,
 } from "antd";
+import { ColumnsType } from "antd/es/table";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { postOrder } from "../../service/order";
 
 const AddOrderPage = () => {
   const [getItem, setItem] = useState([]);
@@ -38,17 +40,13 @@ const AddOrderPage = () => {
   };
 
   const handleSubmit = async (orderValue: any) => {
-    console.log("add",orderValue);
+    console.log("add", orderValue);
     const item = orderValue.item.map((id: any) => {
       return { itemId: id, qty: orderValue[id] };
     });
-    console.log('item',{ item });
     try {
-      console.log('order',{ ...orderValue });
-      await axios.post("http://192.168.2.57:3000/orders", {
-        ...orderValue,
-        item,
-      });
+      console.log("order", { ...orderValue });
+      await postOrder({ ...orderValue, item });
       api.success({
         message: "Success",
         description: "บันทึกสำเร็จ",
@@ -61,9 +59,10 @@ const AddOrderPage = () => {
     }
   };
 
-  const columns: TableColumnsType = [
+  const columns: ColumnsType<[]> = [
     {
       title: "#",
+      align: "center",
       render: (_: any, __: any, index: number) => {
         return index + 1;
       },
@@ -71,9 +70,11 @@ const AddOrderPage = () => {
     {
       title: "sku",
       dataIndex: "label",
+      align: "center",
     },
     {
       title: "QTY",
+      align: "center",
       render: (value: any) => {
         return (
           <Form.Item name={value.value}>
@@ -85,17 +86,18 @@ const AddOrderPage = () => {
   ];
 
   return (
-    <Layout>
-      <Card className=" m-[70px]" title="เพิ่มรายการ order" >
+    <Layout >
+      <Card className=" m-[70px]" title="เพิ่มรายการ order">
         <Form onFinish={handleSubmit}>
           <Form.Item name="uom" label="UOM">
-            <Input className= " rounded-3xl w-[300px]" />
+            <Input className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="cod" label="COD">
-            <InputNumber className= " rounded-3xl w-[300px]"/>
+            <InputNumber className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="item" label="Item">
             <Select
+            placeholder="WHO054"
               mode="multiple"
               style={{ width: 300 }}
               options={getItem}
@@ -103,43 +105,46 @@ const AddOrderPage = () => {
             />
           </Form.Item>
           <Form.Item>
-            <Table style={{width:300}} dataSource={selectItem} columns={columns}></Table>
+            <Table
+              style={{ width: 300 }}
+              dataSource={selectItem}
+              columns={columns}
+            ></Table>
           </Form.Item>
           <Form.Item name="customerName" label="ชื่อลูกค้า">
-            <Input className= " rounded-3xl w-[300px]"/>
+            <Input placeholder="Nick" className=" rounded-3xl w-[300px]" />
           </Form.Item>
 
           <Form.Item name="phoneNumber" label="เบอร์โทรศัพท์">
-            <Input className= " rounded-3xl w-[300px]"/>
+            <Input placeholder="062xxxxxxx" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="address" label="ที่อยู่">
-            <Input className= " rounded-3xl w-[300px]"/>
+            <Input placeholder="123 ลาดพร้าว พลับพลา วังทองหลาง" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="alley" label="ซอย">
-            <Input className= " rounded-3xl w-[300px]"/>
+            <Input placeholder="ลาดพร้าว" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="road" label="ถนน">
-            <Input className= " rounded-3xl w-[300px]"/>
+            <Input placeholder="ลาดพร้าว" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="zipCode" label="รหัสไปรษณีย์">
-            <Input className= " rounded-3xl w-[300px]"/>
+            <Input placeholder="10310" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="province" label="จังหวัด">
-            <Input className= " rounded-3xl w-[300px]"/>
+            <Input placeholder="กรุงเทพฯ" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="district" label="เขต/อำเภอ">
-            <Input className= " rounded-3xl w-[300px]"/>
+            <Input placeholder="วังทองหลาง" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="parish" label="แขวง/ตำบล">
-            <Input className= " rounded-3xl w-[300px]"/>
+            <Input placeholder="พลับพลา" className=" rounded-3xl w-[300px]" />
           </Form.Item>
           <Form.Item name="country" label="ประเทศ">
             <Select
+            placeholder="ประเทศ"
               style={{ width: 300 }}
               options={[
                 { value: "ThaiLand", label: "ThaiLand" },
-                { value: "Japan", label: "Japan" },
-                { value: "China", label: "China" },
               ]}
             />
           </Form.Item>
