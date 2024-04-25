@@ -9,7 +9,7 @@ function FinishPage() {
     <Layout>
       <Card
         title={<span>จัดส่งสินค้าเรียบร้อย</span>}
-        style={{ margin: "70px" }}
+        style={{ margin: "70px", borderRadius: "20px" }}
       >
         <TableStatus status={"DELIVERED"} changestatus={true} />
       </Card>

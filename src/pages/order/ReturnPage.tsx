@@ -53,6 +53,7 @@ function ReturnPage() {
           style={{
             margin: "70px",
             height: "570px",
+            borderRadius: "20px",
             // backgroundColor: "red",
           }}
         >

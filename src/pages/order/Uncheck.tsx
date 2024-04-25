@@ -7,11 +7,9 @@ function Uncheck() {
     <Layout style={{ backgroundColor: "EDEDED" }}>
       <Card
         title={<span>สินค้ายังไม่ถูกตรวจสอบ</span>}
-        style={{ margin: "70px" }}
+        style={{ margin: "70px", borderRadius: "20px" }}
       >
-        <TableStatus
-          status={"NOTCHECKED"} changestatus={true}          
-        />
+        <TableStatus status={"NOTCHECKED"} changestatus={true} />
       </Card>
     </Layout>
   );

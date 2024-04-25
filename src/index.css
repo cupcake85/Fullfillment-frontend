@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'kanit';
   line-height: 1.5;
   font-weight: 400;
 }
@@ -15,6 +15,10 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: 'kanit';
+}
+
+.ant-layout{
+  background-color: #EDEDED;
 }
 
 .ant-menu .ant-menu-item-selected {
@@ -41,7 +45,10 @@ body {
 .ant-card .ant-card-head {
   background-color: #f7f7f7;
   font-family: 'kanit';
+  border-radius: 20px 20px 0 0;
 }
+
+
 
 .ant-card .ant-card-head-title {
   font-size: x-large;
@@ -105,3 +112,4 @@ body {
 :where(.css-dev-only-do-not-override-djtmh8).ant-table-wrapper .ant-table-pagination.ant-pagination {
   font-family: 'kanit';
 }
+

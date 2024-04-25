@@ -13,7 +13,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { DeleteFilled, DownOutlined, RetweetOutlined } from "@ant-design/icons";
-import '../App.css'
+import "../App.css";
 
 interface DataType {
   details: string;
@@ -119,7 +119,7 @@ const TableStatus: React.FC<Props> = ({
     const request = await axios.get("http://192.168.2.57:3000/orders", {
       params: { status: status, ...search },
     });
-    setItemData(request.data.data.items);
+    setItemData(request.data.data);
   };
 
   const multipleSubmit = () => {
@@ -267,8 +267,8 @@ const TableStatus: React.FC<Props> = ({
               textAlign: "center",
               backgroundColor: "white",
               color: "black",
-              border:'solid 0.5px #E5E5E5',
-              borderRadius: 9
+              border: "solid 0.5px #E5E5E5",
+              borderRadius: 9,
             }}
           >
             <Button
@@ -277,7 +277,6 @@ const TableStatus: React.FC<Props> = ({
                 fontSize: "12px",
                 borderRadius: "5px 5px 0px 0px",
                 width: 88,
-
               }}
             >
               แก้ไข

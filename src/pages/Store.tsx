@@ -188,9 +188,22 @@ const Store = () => {
     <Layout>
       <Card
         title={
-          <span>
-            <UserOutlined style={{ marginRight: 8, fontSize: "50px" }} />
-            ร้านค้า
+          <span
+            style={{
+              display: "flex",
+              alignContent: "baseline",
+              alignItems: "center",
+              padding: "20px",
+            }}
+          >
+            <UserOutlined
+              style={{
+                marginRight: "20px",
+                fontSize: "50px",
+                marginLeft: "20px",
+              }}
+            />
+            <div>ร้านค้า</div>
           </span>
         }
         bordered={false}
@@ -198,11 +211,18 @@ const Store = () => {
           backgroundColor: "white",
           margin: 65,
           borderRadius: 20,
+          marginTop: "40px",
         }}
       >
         <div className="flex items-baseline">
           <div className="flex items-baseline">
-            <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+            <div
+              style={{
+                fontSize: "20px",
+                fontWeight: "bold",
+                fontFamily: "kanit",
+              }}
+            >
               รหัสผู้จัดส่ง
             </div>
             <Form.Item>
@@ -221,13 +241,20 @@ const Store = () => {
                   marginLeft: "15px",
                   marginRight: "15px",
                   border: "solid 1px",
+                  fontFamily: "kanit",
                 }}
                 placeholder="รหัสผู้จัดส่ง"
               />
             </Form.Item>
           </div>
           <div className="flex items-baseline">
-            <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+            <div
+              style={{
+                fontSize: "20px",
+                fontWeight: "bold",
+                fontFamily: "kanit",
+              }}
+            >
               ชื่อผู้จัดส่ง
             </div>
             <Form.Item>
@@ -246,6 +273,7 @@ const Store = () => {
                   marginLeft: "15px",
                   marginRight: "15px",
                   border: "solid 1px",
+                  fontFamily: "kanit",
                 }}
                 placeholder="ชื่อผู้จัดส่ง"
               />
@@ -254,7 +282,15 @@ const Store = () => {
         </div>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div className="flex items-baseline">
-            <div style={{ fontSize: "20px", fontWeight: "bold" }}>ร้านค้า</div>
+            <div
+              style={{
+                fontSize: "20px",
+                fontWeight: "bold",
+                fontFamily: "kanit",
+              }}
+            >
+              ร้านค้า
+            </div>
             <Form.Item>
               <Input
                 onChange={(e) =>
@@ -271,6 +307,7 @@ const Store = () => {
                   marginLeft: "15px",
                   marginRight: "15px",
                   border: "solid 1px",
+                  fontFamily: "kanit",
                 }}
                 placeholder="ร้านค้า"
               />
@@ -289,7 +326,7 @@ const Store = () => {
               ></Button>
             </Form.Item>
           </div>
-          <div style={{ marginLeft: "570px" }}>
+          <div style={{ marginLeft: "570px", fontFamily: "kanit" }}>
             <Button
               type="primary"
               onClick={showModalAdd}
@@ -300,6 +337,7 @@ const Store = () => {
                 borderRadius: "25px",
                 marginBottom: "15px",
                 height: "35px",
+                fontFamily: "kanit",
               }}
             >
               เพิ่มผู้ใช้งาน
@@ -312,6 +350,7 @@ const Store = () => {
           onOk={handleOkAdd}
           onCancel={handleCancelAdd}
           footer={null}
+          style={{ fontFamily: "kanit" }}
         >
           <InputStore
             form={form}
