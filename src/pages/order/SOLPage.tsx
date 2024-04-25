@@ -22,6 +22,7 @@ function Order() {
   const [getStores, setStores] = useState();
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const { RangePicker } = DatePicker;
 
   useEffect(() => {
     getOrderList();
@@ -169,24 +170,28 @@ function Order() {
     },
   ];
   return (
-    <Form form={form}>
-      <Card title={"SOL"} style={{ margin: 70 }}>
+    <Form form={form} style={{ fontFamily: "kanit" }}>
+      <Card title={"SOL"} style={{ margin: 70, fontFamily: "kanit" }}>
         <Row justify={"center"}>
-          <Col span={10} style={{ margin: 10 }}>
-            <Form.Item name="stores" label="ร้านค้า">
+          <Col span={10} style={{ margin: 10, fontFamily: "kanit" }}>
+            <Form.Item
+              name="stores"
+              label="ร้านค้า"
+              style={{ borderRadius: "50px", fontFamily: "kanit" }}
+            >
               <Select
                 placeholder="EVE"
                 className=" rounded-3xl float-end "
                 allowClear
                 options={getStores}
-                style={{width:"250px"}}
+                style={{ width: "250px", fontFamily: "kanit" }}
               />
             </Form.Item>
 
             <Form.Item name="" label="รหัสใบสั่งของ">
               <Input
                 placeholder="รหัสใบสั่งของ"
-                className=" rounded-3xl w-[250px] float-end"
+                className=" rounded-3xl w-[250px] float-end "
               ></Input>
             </Form.Item>
 
@@ -198,7 +203,7 @@ function Order() {
             </Form.Item>
 
             <Form.Item name="" label="ระยะเวลา">
-              <DatePicker /> <DatePicker />
+              <RangePicker className="rounded-3xl w-[250px] float-end" />
             </Form.Item>
 
             <Form.Item name="" label="แขวง/ตำบล">
@@ -227,7 +232,7 @@ function Order() {
                 placeholder="ค่าน้อยขึ้นก่อน"
                 className="rounded-3xl float-end"
                 options={[]}
-                style={{width:"250px"}}
+                style={{ width: "250px" }}
               />
             </Form.Item>
           </Col>
@@ -245,7 +250,7 @@ function Order() {
                 placeholder="สถานะใบสั่งของ"
                 className="rounded-3xl float-end"
                 options={[]}
-                style={{width:"250px"}}
+                style={{ width: "250px" }}
               />
             </Form.Item>
 
@@ -275,7 +280,7 @@ function Order() {
                 placeholder="เก็บเงินปลายทาง"
                 className="rounded-3xl float-end"
                 options={[]}
-                style={{width:"250px"}}
+                style={{ width: "250px" }}
               />
             </Form.Item>
 
@@ -291,7 +296,7 @@ function Order() {
                 placeholder="SR Zone"
                 className="rounded-3xl float-end"
                 options={[]}
-                style={{width:"250px"}}
+                style={{ width: "250px" }}
               />
             </Form.Item>
           </Col>

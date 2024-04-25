@@ -93,9 +93,9 @@ const AddOrderPage = () => {
         <div
           style={{
             backgroundColor: "#FFFFFF",
+            fontFamily: "kanit",
           }}
         >
-          {" "}
           <Row>
             <Col span={4}></Col>
             <Col span={12}>
@@ -108,7 +108,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>UOM</div>
+                    <div style={{ fontFamily: "kanit" }}>UOM</div>
                     <Input
                       placeholder="Box"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -124,7 +124,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>COD</div>
+                    <div style={{ fontFamily: "kanit" }}>COD</div>
                     <InputNumber
                       placeholder="0"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -140,7 +140,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>Item</div>
+                    <div style={{ fontFamily: "kanit" }}>Item</div>
                     <Select
                       placeholder="WHO054"
                       mode="multiple"
@@ -176,7 +176,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>ชื่อลูกค้า</div>
+                    <div style={{ fontFamily: "kanit" }}>ชื่อลูกค้า</div>
                     <Input
                       placeholder="Mark Zuckerberg"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -192,7 +192,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>เบอร์โทรศัพท์</div>
+                    <div style={{ fontFamily: "kanit" }}>เบอร์โทรศัพท์</div>
                     <Input
                       placeholder="062xxxxxxx"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -208,7 +208,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>ที่อยู่</div>
+                    <div style={{ fontFamily: "kanit" }}>ที่อยู่</div>
                     <Input
                       placeholder="123 ลาดพร้าว พลับพลา วังทองหลาง"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -224,7 +224,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>ซอย</div>
+                    <div style={{ fontFamily: "kanit" }}>ซอย</div>
                     <Input
                       placeholder="ลาดพร้าว"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -240,7 +240,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>ถนน</div>
+                    <div style={{ fontFamily: "kanit" }}>ถนน</div>
                     <Input
                       placeholder="ลาดพร้าว"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -256,7 +256,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>รหัสไปรษณีย์</div>
+                    <div style={{ fontFamily: "kanit" }}>รหัสไปรษณีย์</div>
                     <Input
                       placeholder="10310"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -272,7 +272,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>จังหวัด</div>
+                    <div style={{ fontFamily: "kanit" }}>จังหวัด</div>
                     <Input
                       placeholder="กรุงเทพฯ"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -288,7 +288,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>เขต/อำเภอ</div>
+                    <div style={{ fontFamily: "kanit" }}>เขต/อำเภอ</div>
                     <Input
                       placeholder="วังทองหลาง"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -304,7 +304,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>แขวง/ตำบล</div>
+                    <div style={{ fontFamily: "kanit" }}>แขวง/ตำบล</div>
                     <Input
                       placeholder="พลับพลา"
                       className=" rounded-3xl w-[25vw] h-[5vh]"
@@ -320,7 +320,7 @@ const AddOrderPage = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <div>ประเทศ</div>
+                    <div style={{ fontFamily: "kanit" }}>ประเทศ</div>
                     <Select
                       placeholder="ประเทศ"
                       style={{ width: "25vw", height: "5vh" }}
@@ -329,7 +329,9 @@ const AddOrderPage = () => {
                   </Row>
                 </Form.Item>
 
-                <Row style={{ display: "flex", justifyContent:"space-around" }}>
+                <Row
+                  style={{ display: "flex", justifyContent: "space-around" }}
+                >
                   <div></div>
                   <Row>
                     <Form.Item>
@@ -341,7 +343,8 @@ const AddOrderPage = () => {
                           borderRadius: "30px",
                           width: "6vw",
                           height: "4vh",
-                          marginRight:30
+                          marginRight: 30,
+                          fontFamily: "kanit",
                         }}
                       >
                         บันทึก
@@ -355,6 +358,7 @@ const AddOrderPage = () => {
                           borderRadius: "30px",
                           width: "6vw",
                           height: "4vh",
+                          fontFamily: "kanit",
                         }}
                       >
                         ยกเลิก
