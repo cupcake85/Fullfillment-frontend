@@ -10,6 +10,7 @@ import {
   Layout,
   Dropdown,
   Space,
+  DatePicker,
 } from "antd";
 import "../warehouse.css";
 import axios, { AxiosResponse } from "axios";
@@ -24,6 +25,17 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { IResult, Iitem } from "../interface/item.interface";
+
+const inputFilterStyle: React.CSSProperties = {
+  width: "250px",
+  borderRadius: "25px",
+  marginBottom: "15px",
+  height: "35px",
+  marginLeft: "15px",
+  marginRight: "15px",
+  border: "solid 1px",
+  fontFamily: "kanit",
+};
 
 const Warehouse = () => {
   const [warehousedata, setWarehouse] = useState<Iitem[]>([]);
@@ -69,18 +81,22 @@ const Warehouse = () => {
       render: (_: any, __: any, index: number) => {
         return <div className=" font-[kanit]">{index + 1}</div>;
       },
+      align: "center",
     },
     {
       title: "SKU",
       dataIndex: "sku", //ชื่อ dataIndex ตรงกับชื่อ field ใน dataSource
+      align: "center",
     },
     {
       title: "ชื่อสินค้า",
       dataIndex: "name",
+      align: "center",
     },
     {
       title: "รายละเอียด",
       dataIndex: "details",
+      align: "center",
     },
     {
       title: "ร้านค้า",
@@ -89,14 +105,17 @@ const Warehouse = () => {
         //record คือ ทั้งแถว
         return <p>{value?.name}</p>; //value คือ เลือกเฉพาะ key ที่สนใจแล้วตามด้วยชื่อข้อมูลที่ต้องการมาแสดง
       },
+      align: "center",
     },
     {
       title: "คงเหลือ",
       key: "quantity",
       dataIndex: "quantity",
+      align: "center",
     },
     {
       title: "",
+      align: "center",
       render: (value: any, record: any) => {
         return (
           <div>
@@ -173,15 +192,18 @@ const Warehouse = () => {
         const date = dayjs(rc.outDate).format("DD/MM/YYYY HH:mm");
         return <>{date}</>;
       },
+      align: "center",
     },
     {
       title: "ปริมาณ",
       dataIndex: "quantity",
+      align: "center",
     },
 
     {
       title: "หมายเหตุ",
       dataIndex: "remark",
+      align: "center",
     },
   ];
 
@@ -200,7 +222,7 @@ const Warehouse = () => {
   const getWarehouse = async () => {
     const request = await retrieveAllItems();
     console.log(request);
-    setWarehouse(request.data.data.items);
+    setWarehouse(request.data.data);
   };
 
   const editClick = (value: any) => {
@@ -243,7 +265,7 @@ const Warehouse = () => {
   const history = async (id: number) => {
     try {
       const request = await axios.get("http://192.168.2.57:3000/history/" + id);
-      setHistory(request.data.data.items); //data.data => data แรกคือ data จาก axios, data ที่สองคือ data จากหลังบ้าน
+      setHistory(request.data.data); //data.data => data แรกคือ data จาก axios, data ที่สองคือ data จากหลังบ้าน
     } catch (err: any) {
       alert(err?.response?.data?.message);
     }
@@ -287,7 +309,7 @@ const Warehouse = () => {
       <Card
         title={
           <span>
-            <ContainerFilled style={{ marginRight: 8, fontSize: "50px" }} />
+            <ContainerFilled style={{ marginRight: 8, fontSize: "40px" }} />
             คลังสินค้า
           </span>
         }
@@ -302,27 +324,30 @@ const Warehouse = () => {
           <Button
             style={{
               backgroundColor: "#2F353A",
-              padding:'20px',
               borderRadius: "25px",
-              marginBottom: "15px",
+              marginBottom: "10px",
               height: "35px",
               width: "200px",
               color: "#fff",
             }}
           >
-            <Dropdown placement="bottom" trigger={["click"]}>
-              <a style={{cursor:'pointer', padding:'20px'}}>
+            <Dropdown trigger={["click"]}>
+              <a
+                style={{
+                  cursor: "pointer",
+                }}
+              >
                 <Space>
-                  <div className=" flex items-center">
-                    <div className=" text-[20px] mr-4">SOL</div>
-                    <div className=" text-[10px] ">10 รายการ</div>
-                  </div>
+                  <div className=" text-[20px] mr-4">SOL</div>
+                  <div className=" text-[12px] ">10 รายการ</div>
+
                   <DownOutlined
                     style={{
                       backgroundColor: "#fff",
                       color: "#2F353A",
-                      borderRadius: "7px 7px 7px 7px",
-
+                      borderRadius: "30px",
+                      padding: "4px",
+                      marginLeft: "8px",
                     }}
                   />
                 </Space>
@@ -334,16 +359,7 @@ const Warehouse = () => {
               (e) =>
                 setSearchQuery({ ...searchQuery, everything: e.target.value }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
             }
-            style={{
-              width: "350px",
-              borderRadius: "25px",
-              marginBottom: "15px",
-              height: "35px",
-              marginLeft: "15px",
-              marginRight: "15px",
-              border: "solid 1px",
-              fontFamily: "kanit",
-            }}
+            style={inputFilterStyle}
             placeholder="พิมพ์คำค้นหา"
           />
           <Button
@@ -387,7 +403,7 @@ const Warehouse = () => {
             showSizeChanger: true,
             pageSize: 10,
           }}
-          style={{ backgroundColor: "#e4e5e5" }}
+          style={{ backgroundColor: "#E4E5E5" }}
           dataSource={warehousedata}
           columns={warehouseColumns}
           // scroll={{ x: 400, y: 350 }} //ความกว้าง scroll ได้ 1200
@@ -399,38 +415,37 @@ const Warehouse = () => {
         open={isModalVisible}
         footer={null}
         onCancel={handleCancel}
-        style={{ width: "500px" }}
       >
         <Form
           name="basic"
           form={form}
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
+          style={{ maxWidth: 800}}
           autoComplete="off"
         >
-          <Form.Item label="SKU" name="sku">
+          <Form.Item label= {<div className=" font-[kanit]">SKU</div>} name="sku">
             <Input
               disabled
-              style={{ borderRadius: 100, border: "solid 1px grey" }}
+              style={{ borderRadius: 100, border: "solid 1px grey", fontFamily:'kanit', width:'200px'  }}
             />
           </Form.Item>
 
-          <Form.Item label="สินค้าคงเหลือ" name="quantity">
+          <Form.Item label={<div className=" font-[kanit]">สินค้าคงเหลือ</div>} name="quantity">
             <Input
               disabled
-              style={{ borderRadius: 100, border: "solid 0.5px grey" }}
+              style={{ borderRadius: 100, border: "solid 0.5px grey", fontFamily:'kanit'  }}
             />
           </Form.Item>
           <Form.Item
-            label="เพิ่มลดสินค้า"
+            label={<div className=" font-[kanit]">เพิ่ม-ลดสินค้า</div>}
             name="quantityEdit"
             rules={[{ required: true, message: "*โปรดกรอกจำนวนที่ต้องการ" }]}
           >
             <Input
               type="number"
               placeholder="Ex. 100/-100"
-              style={{ borderRadius: 100, border: "solid 0.5px grey" }}
+              style={{ borderRadius: 100, border: "solid 0.5px grey", fontFamily:'kanit'  }}
             />
           </Form.Item>
 
@@ -509,6 +524,22 @@ const Warehouse = () => {
         onCancel={handleCancelh}
         footer={null}
       >
+        <div className=" mb-4 flex flex-col justify-center items-center">
+          <div>
+            วันที่เริ่ม
+            <DatePicker style={inputFilterStyle} placeholder="2021-04-02"/>
+          </div>
+          <div>
+            วันที่จบ <DatePicker style={inputFilterStyle} placeholder="2021-04-02"/>
+          </div>
+          <Button
+            icon={<SearchOutlined />}
+            style={{ backgroundColor: "black", color: "white", width:'100px', borderRadius:'40px' }}
+          >
+            ค้นหา
+          </Button>
+        </div>
+
         <Table
           style={{ backgroundColor: "#e4e5e5" }}
           dataSource={getHistory}
