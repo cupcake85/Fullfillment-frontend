@@ -1,11 +1,10 @@
 import { Button, Card, DatePicker, Form, Input, Layout, Table } from "antd";
 import { InboxOutlined, SearchOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { render } from "react-dom";
 
 function PackPage() {
-  const navigate = useNavigate();
   const [recordItem, setRecordItem] = useState([]);
   const [searchQuery, setSearchQuery] = useState<Record<string, unknown>>();
 
@@ -23,32 +22,31 @@ function PackPage() {
     },
     {
       title: "SKU",
-      dataIndex: "item",
-      render: (value: any, record: any) => {
-        return <p>{value?.sku}</p>;
-      },
+      dataIndex: "item_sku",
       align: "center",
     },
     {
       title: "ร้านค้า",
-      dataIndex: "item",
-      render: (value: any, record: any) => {
-        return <p>{value?.stores.name}</p>;
-      },
+      dataIndex: "stores_name",
       align: "center",
     },
     {
       title: "จำนวน",
-      dataIndex: "quantity",
+      dataIndex: "item_quantity",
       align: "center",
     },
     {
       title: "คงเหลือ",
-      dataIndex: "item",
-      render: (value: any, record: any) => {
-        return <p>{value?.quantity}</p>;
-      },
+      dataIndex: "sum",
       align: "center",
+      render: (record: any) => {
+        return (
+          <div className=" flex justify-center">
+            <div className=" mr-3">{record}</div>
+            <div>ชิ้น</div>
+          </div>
+        );
+      },
     },
   ];
 

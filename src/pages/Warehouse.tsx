@@ -25,6 +25,7 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { IResult, Iitem } from "../interface/item.interface";
+import TextArea from "antd/es/input/TextArea";
 
 const inputFilterStyle: React.CSSProperties = {
   width: "250px",
@@ -154,18 +155,22 @@ const Warehouse = () => {
     {
       title: "#",
       dataIndex: "id",
+      key: "id",
     },
     {
       title: "SKU",
       dataIndex: "sku",
+      key: "sku",
     },
     {
       title: "ชื่อสินค้า",
       dataIndex: "name",
+      key: "name",
     },
     {
       title: "รายละเอียด",
       dataIndex: "details",
+      key: "details",
     },
     {
       title: "คงเหลือ",
@@ -174,18 +179,20 @@ const Warehouse = () => {
     },
     {
       tilte: "เพิ่ม/ลด",
-      render: (value: any, record: any) => {
+      render: (record: any) => {
         return (
           <Form.Item name={record.id} initialValue={0}>
-            <InputNumber />
+            <InputNumber className=" rounded-full" />
           </Form.Item>
         );
       },
+      key: "input",
     },
   ];
 
   const columnHistory = [
     {
+      key: "date",
       title: "วันที่",
       dataIndex: "outDate",
       render: (rc: any) => {
@@ -195,12 +202,14 @@ const Warehouse = () => {
       align: "center",
     },
     {
+      key: "quantity",
       title: "ปริมาณ",
       dataIndex: "quantity",
       align: "center",
     },
 
     {
+      key: "remark",
       title: "หมายเหตุ",
       dataIndex: "remark",
       align: "center",
@@ -376,7 +385,7 @@ const Warehouse = () => {
           ></Button>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div style={{ display: "flex", flexDirection: "row", justifyContent:'flex-end' }}>
           <Button
             icon={<PlusCircleFilled />}
             onClick={() => clickManage()}
@@ -421,20 +430,35 @@ const Warehouse = () => {
           form={form}
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 800}}
+          style={{ maxWidth: 800 }}
           autoComplete="off"
         >
-          <Form.Item label= {<div className=" font-[kanit]">SKU</div>} name="sku">
+          <Form.Item
+            label={<div className=" font-[kanit]">SKU</div>}
+            name="sku"
+          >
             <Input
               disabled
-              style={{ borderRadius: 100, border: "solid 1px grey", fontFamily:'kanit', width:'200px'  }}
+              style={{
+                borderRadius: 100,
+                border: "solid 1px grey",
+                fontFamily: "kanit",
+                width: "200px",
+              }}
             />
           </Form.Item>
 
-          <Form.Item label={<div className=" font-[kanit]">สินค้าคงเหลือ</div>} name="quantity">
+          <Form.Item
+            label={<div className=" font-[kanit]">สินค้าคงเหลือ</div>}
+            name="quantity"
+          >
             <Input
               disabled
-              style={{ borderRadius: 100, border: "solid 0.5px grey", fontFamily:'kanit'  }}
+              style={{
+                borderRadius: 100,
+                border: "solid 0.5px grey",
+                fontFamily: "kanit",
+              }}
             />
           </Form.Item>
           <Form.Item
@@ -445,7 +469,23 @@ const Warehouse = () => {
             <Input
               type="number"
               placeholder="Ex. 100/-100"
-              style={{ borderRadius: 100, border: "solid 0.5px grey", fontFamily:'kanit'  }}
+              style={{
+                borderRadius: 100,
+                border: "solid 0.5px grey",
+                fontFamily: "kanit",
+              }}
+            />
+          </Form.Item>
+          <Form.Item
+            label={<div className=" font-[kanit]">หมายเหตุ</div>}
+            name="quantityEdit"
+          >
+            <TextArea
+              style={{
+                borderRadius: 10,
+                border: "solid 0.5px grey",
+                fontFamily: "kanit",
+              }}
             />
           </Form.Item>
 
@@ -523,26 +563,32 @@ const Warehouse = () => {
         open={isModalHistory}
         onCancel={handleCancelh}
         footer={null}
-        style={{width:'800px'}}
+        style={{ width: "800px" }}
       >
         <div className=" mb-4 flex flex-col justify-center items-center">
           <div>
             วันที่เริ่ม
-            <DatePicker style={inputFilterStyle} placeholder="2021-04-02"/>
+            <DatePicker style={inputFilterStyle} placeholder="2021-04-02" />
           </div>
           <div>
-            วันที่จบ <DatePicker style={inputFilterStyle} placeholder="2021-04-02"/>
+            วันที่จบ{" "}
+            <DatePicker style={inputFilterStyle} placeholder="2021-04-02" />
           </div>
           <Button
             icon={<SearchOutlined />}
-            style={{ backgroundColor: "black", color: "white", width:'100px', borderRadius:'40px' }}
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              width: "100px",
+              borderRadius: "40px",
+            }}
           >
             ค้นหา
           </Button>
         </div>
 
         <Table
-          style={{ backgroundColor: "#e4e5e5" }}
+          style={{ backgroundColor: "#e4e5e5", width:'auto' }}
           dataSource={getHistory}
           columns={columnHistory}
           scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
