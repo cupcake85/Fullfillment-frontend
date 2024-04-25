@@ -58,10 +58,10 @@ function ReturnPage() {
             </span>
           }
           style={{
-            margin: "70px",
-            height: "570px",
-            borderRadius: "20px",
-            // backgroundColor: "red",
+            backgroundColor: "white",
+            margin: 65,
+            borderRadius: 20,
+            marginTop: "40px",
           }}
         >
           <TableStatus

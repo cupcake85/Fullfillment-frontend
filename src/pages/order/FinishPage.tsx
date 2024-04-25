@@ -20,7 +20,12 @@ function FinishPage() {
             จัดส่งสินค้าเรียบร้อย
           </span>
         }
-        style={{ margin: "70px", borderRadius: "20px" }}
+        style={{
+          backgroundColor: "white",
+          margin: 65,
+          borderRadius: 20,
+          marginTop: "40px",
+        }}
       >
         <TableStatus status={"DELIVERED"} changestatus={true} />
       </Card>

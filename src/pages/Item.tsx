@@ -125,7 +125,7 @@ const Item = () => {
     const request = await axios.get("http://192.168.2.57:3000/items", {
       params: { ...searchQuery },
     });
-    const sortedData = request.data.data.items;
+    const sortedData = request.data.data;
     setItemData(sortedData);
   };
 
@@ -320,7 +320,7 @@ const Item = () => {
                       }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
                   }
                   style={{
-                    width: "500px",
+                    width: "400px",
                     borderRadius: "25px",
                     marginBottom: "15px",
                     height: "35px",
@@ -349,8 +349,9 @@ const Item = () => {
           <div
             style={{
               flexDirection: "row-reverse",
-              marginLeft: "220px",
+              marginLeft: "270px",
               display: "flex",
+              justifyContent: "flex-end",
             }}
           >
             <Button
