@@ -145,10 +145,16 @@ const UpdateOrderPage = () => {
       <Card className=" m-[70px]" title="แก้ไขรายการ order">
         <Form onFinish={handleSubmit} form={form}>
           <Form.Item name="uom" label="UOM">
-            <Input placeholder="กล่อง" className=" rounded-3xl w-[300px] float-end" />
+            <Input
+              placeholder="กล่อง"
+              className=" rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
           <Form.Item name="cod" label="COD">
-            <InputNumber placeholder="0" className=" rounded-3xl w-[300px] float-end" />
+            <InputNumber
+              placeholder="0"
+              className=" rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
           <Form.Item name="item" label="Item">
             <Select
@@ -169,7 +175,7 @@ const UpdateOrderPage = () => {
           <Form.Item name="customerName" label="ชื่อลูกค้า">
             <Input
               placeholder="Nick"
-             className="rounded-3xl w-[300px] float-end"
+              className="rounded-3xl w-[300px] float-end"
             />
           </Form.Item>
 
@@ -181,20 +187,35 @@ const UpdateOrderPage = () => {
           </Form.Item>
 
           <Form.Item name="address" label="ที่อยู่">
-            <Input placeholder="123 ลาดพร้าว พลับพลา วังทองหลาง" className=" rounded-3xl w-[300px] float-end"  />
+            <Input
+              placeholder="123 ลาดพร้าว พลับพลา วังทองหลาง"
+              className=" rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
 
           <Form.Item name="alley" label="ซอย">
-            <Input placeholder="ลาดพร้าว" className=" rounded-3xl w-[300px] float-end" />
+            <Input
+              placeholder="ลาดพร้าว"
+              className=" rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
           <Form.Item name="road" label="ถนน">
-            <Input placeholder="ลาดพร้าว" className=" rounded-3xl w-[300px] float-end" />
+            <Input
+              placeholder="ลาดพร้าว"
+              className=" rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
           <Form.Item name="zipCode" label="รหัสไปรษณีย์">
-            <Input placeholder="10310" className=" rounded-3xl w-[300px] float-end" />
+            <Input
+              placeholder="10310"
+              className=" rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
           <Form.Item name="province" label="จังหวัด">
-            <Input placeholder="กรุงเทพฯ" className=" rounded-3xl w-[300px] float-end" />
+            <Input
+              placeholder="กรุงเทพฯ"
+              className=" rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
           <Form.Item name="district" label="เขต/อำเภอ">
             <Input
@@ -203,7 +224,10 @@ const UpdateOrderPage = () => {
             />
           </Form.Item>
           <Form.Item name="parish" label="แขวง/ตำบล">
-            <Input placeholder="พลับพลา" className=" rounded-3xl w-[300px] float-end" />
+            <Input
+              placeholder="พลับพลา"
+              className=" rounded-3xl w-[300px] float-end"
+            />
           </Form.Item>
           <Form.Item name="country" label="ประเทศ">
             <Select
@@ -217,7 +241,7 @@ const UpdateOrderPage = () => {
             <Button
               type="primary"
               htmlType="submit"
-              style={{ backgroundColor: "#1677ff" }}
+              style={{ backgroundColor: "#1677ff", fontFamily: "kanit" }}
             >
               บันทึก
             </Button>

@@ -69,12 +69,30 @@ function PackPage() {
     <Layout className=" bg-[#EDEDED]">
       <Card
         title={
-          <span>
-            <InboxOutlined className=" text-3xl font-bold mr-3" />
+          <span
+            style={{
+              display: "flex",
+              alignContent: "baseline",
+              alignItems: "center",
+              padding: "20px",
+            }}
+          >
+            <InboxOutlined
+              style={{
+                marginRight: "20px",
+                fontSize: "50px",
+                marginLeft: "20px",
+              }}
+            />
             แพ็คสินค้า
           </span>
         }
-        className=" m-[70px] rounded-[20px]"
+        style={{
+          backgroundColor: "white",
+          margin: 65,
+          borderRadius: 20,
+          marginTop: "40px",
+        }}
       >
         {/* กลุ่ม Form Filter */}
 

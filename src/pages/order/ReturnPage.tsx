@@ -40,7 +40,14 @@ function ReturnPage() {
       <Layout>
         <Card
           title={
-            <span>
+            <span
+              style={{
+                display: "flex",
+                alignContent: "baseline",
+                alignItems: "center",
+                padding: "20px",
+              }}
+            >
               <RetweetOutlined
                 style={{
                   fontSize: "40px",
@@ -51,10 +58,10 @@ function ReturnPage() {
             </span>
           }
           style={{
-            margin: "70px",
-            height: "570px",
-            borderRadius: "20px",
-            // backgroundColor: "red",
+            backgroundColor: "white",
+            margin: 65,
+            borderRadius: 20,
+            marginTop: "40px",
           }}
         >
           <TableStatus
