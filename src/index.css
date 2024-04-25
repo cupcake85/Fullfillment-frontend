@@ -84,7 +84,7 @@ body {
 }
 
 .ant-modal-content {
-  width: 800px;
+  /* width: 800px; */
   font-family: 'kanit';
 }
 

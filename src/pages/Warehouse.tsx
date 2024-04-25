@@ -523,6 +523,7 @@ const Warehouse = () => {
         open={isModalHistory}
         onCancel={handleCancelh}
         footer={null}
+        style={{width:'800px'}}
       >
         <div className=" mb-4 flex flex-col justify-center items-center">
           <div>
