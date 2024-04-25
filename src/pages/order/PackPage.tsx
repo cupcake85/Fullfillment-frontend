@@ -1,4 +1,4 @@
-import { Button, Card, DatePicker, Form, Input, Layout, Table} from "antd";
+import { Button, Card, DatePicker, Form, Input, Layout, Table } from "antd";
 import { InboxOutlined, SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -19,7 +19,7 @@ function PackPage() {
       render: (_: any, __: any, index: number) => {
         return index + 1;
       },
-      align: 'center'
+      align: "center",
     },
     {
       title: "SKU",
@@ -27,7 +27,7 @@ function PackPage() {
       render: (value: any, record: any) => {
         return <p>{value?.sku}</p>;
       },
-      align: 'center'
+      align: "center",
     },
     {
       title: "ร้านค้า",
@@ -35,12 +35,12 @@ function PackPage() {
       render: (value: any, record: any) => {
         return <p>{value?.stores.name}</p>;
       },
-      align: 'center'
+      align: "center",
     },
     {
       title: "จำนวน",
       dataIndex: "quantity",
-      align: 'center'
+      align: "center",
     },
     {
       title: "คงเหลือ",
@@ -48,7 +48,7 @@ function PackPage() {
       render: (value: any, record: any) => {
         return <p>{value?.quantity}</p>;
       },
-      align: 'center'
+      align: "center",
     },
   ];
 
@@ -77,7 +77,7 @@ function PackPage() {
             แพ็คสินค้า
           </span>
         }
-        className=" m-[70px]"
+        className=" m-[70px] rounded-[20px]"
       >
         {/* กลุ่ม Form Filter */}
 
@@ -175,7 +175,6 @@ function PackPage() {
           pagination={{
             total: recordItem.length,
             showSizeChanger: true,
-            
           }}
         />
       </Card>
@@ -183,4 +182,3 @@ function PackPage() {
   );
 }
 export default PackPage;
-

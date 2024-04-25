@@ -9,7 +9,7 @@ function OutPage() {
     <Layout>
       <Card
         title={<span>กำลังแพ็คของออกจากคลัง</span>}
-        style={{ margin: "70px" }}
+        style={{ margin: "70px", borderRadius: "20px" }}
       >
         <TableStatus status={"OUTOFSTOCK"} changestatus={true} />
       </Card>

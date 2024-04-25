@@ -5,7 +5,10 @@ import { Button, Card, Dropdown, Layout, Space } from "antd";
 function ProgressPage() {
   return (
     <Layout>
-      <Card title={<span>กำลังดำเนินการ</span>} style={{ margin: "70px" }}>
+      <Card
+        title={<span>กำลังดำเนินการ</span>}
+        style={{ margin: "70px", borderRadius: "20px" }}
+      >
         <TableStatus status={"INPROGRESS"} changestatus={true} />
       </Card>
     </Layout>

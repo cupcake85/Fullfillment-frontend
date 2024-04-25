@@ -15,7 +15,7 @@ const InputStore = ({
 
   const handleSubmit = async (value: any) => {
     try {
-      if(value.id){
+      if (value.id) {
         await axios.put("http://192.168.2.57:3000/stores/" + value.id, value);
         api.success({
           message: "Success",
@@ -43,22 +43,40 @@ const InputStore = ({
 
   return (
     <Form layout="vertical" onFinish={handleSubmit} form={form}>
-      <Form.Item label="ชื่อลูกค้า" name="name">
+      <Form.Item
+        label={<div style={{ fontFamily: "kanit" }}>ชื่อลูกค้า</div>}
+        name="name"
+      >
+        <Input style={{ fontFamily: "kanit" }} />
+      </Form.Item>
+      <Form.Item
+        label={<div style={{ fontFamily: "kanit" }}>รหัสผู้จัดส่ง</div>}
+        name="shipperCode"
+      >
         <Input />
       </Form.Item>
-      <Form.Item label="รหัสผู้จัดส่ง" name="shipperCode">
+      <Form.Item
+        label={<div style={{ fontFamily: "kanit" }}>ชื่อผู้จัดส่ง</div>}
+        name="shipperName"
+      >
         <Input />
       </Form.Item>
-      <Form.Item label="ชื่อผู้จัดส่ง" name="shipperName">
+      <Form.Item
+        label={<div style={{ fontFamily: "kanit" }}>รหัสไปรษณีย์</div>}
+        name="zipCode"
+      >
         <Input />
       </Form.Item>
-      <Form.Item label="รหัสไปรษณีย์" name="zipCode">
+      <Form.Item
+        label={<div style={{ fontFamily: "kanit" }}>เบอร์โทร</div>}
+        name="phoneNumber"
+      >
         <Input />
       </Form.Item>
-      <Form.Item label="เบอร์โทร" name="phoneNumber">
-        <Input />
-      </Form.Item>
-      <Form.Item label="อีเมล" name="email">
+      <Form.Item
+        label={<div style={{ fontFamily: "kanit" }}>อีเมล</div>}
+        name="email"
+      >
         <Input />
       </Form.Item>
       <Button
@@ -69,6 +87,7 @@ const InputStore = ({
           margin: 10,
           color: "white",
           borderRadius: 100,
+          fontFamily: "kanit",
         }}
       >
         บันทึก

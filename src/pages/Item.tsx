@@ -207,8 +207,21 @@ const Item = () => {
     <Layout>
       <Card
         title={
-          <span>
-            <ProfileFilled style={{ marginRight: 8, fontSize: "50px" }} />{" "}
+          <span
+            style={{
+              display: "flex",
+              alignContent: "baseline",
+              alignItems: "center",
+              padding: "20px",
+            }}
+          >
+            <ProfileFilled
+              style={{
+                marginRight: "20px",
+                fontSize: "50px",
+                marginLeft: "20px",
+              }}
+            />{" "}
             จัดการ
           </span>
         }
@@ -217,6 +230,8 @@ const Item = () => {
           backgroundColor: "white",
           margin: 65,
           borderRadius: 20,
+          fontFamily: "kanit",
+          marginTop: "40px",
         }}
       >
         {/* ---------------------------------------------------------------------------content-------------------------------------------------------------------------- */}
@@ -236,6 +251,7 @@ const Item = () => {
                   marginLeft: "15px",
                   marginRight: "15px",
                   border: "solid 1px",
+                  fontFamily: "kanit",
                 }}
                 placeholder="SKU"
               />
@@ -257,6 +273,7 @@ const Item = () => {
                   marginLeft: "15px",
                   marginRight: "15px",
                   border: "solid 1px",
+                  fontFamily: "kanit",
                 }}
                 placeholder="ร้านค้า"
               />
@@ -280,6 +297,7 @@ const Item = () => {
                   marginLeft: "15px",
                   marginRight: "15px",
                   border: "solid 1px",
+                  fontFamily: "kanit",
                 }}
                 placeholder="ชื่อสินค้า"
               />
@@ -341,6 +359,7 @@ const Item = () => {
                 color: "white",
                 borderRadius: "20px",
                 marginBottom: "15px",
+                fontFamily: "kanit",
               }}
               type="primary"
               shape="round"
@@ -357,6 +376,7 @@ const Item = () => {
                 borderRadius: "20px",
                 marginBottom: "15px",
                 marginRight: "10px",
+                fontFamily: "kanit",
               }}
               type="primary"
               shape="round"
