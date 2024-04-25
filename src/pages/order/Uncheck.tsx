@@ -6,7 +6,18 @@ function Uncheck() {
   return (
     <Layout style={{ backgroundColor: "EDEDED" }}>
       <Card
-        title={<span>สินค้ายังไม่ถูกตรวจสอบ</span>}
+        title={
+          <span
+            style={{
+              display: "flex",
+              alignContent: "baseline",
+              alignItems: "center",
+              padding: "20px",
+            }}
+          >
+            สินค้ายังไม่ถูกตรวจสอบ
+          </span>
+        }
         style={{ margin: "70px", borderRadius: "20px" }}
       >
         <TableStatus status={"NOTCHECKED"} changestatus={true} />

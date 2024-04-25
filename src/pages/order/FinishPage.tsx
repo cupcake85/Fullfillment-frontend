@@ -8,7 +8,18 @@ function FinishPage() {
   return (
     <Layout>
       <Card
-        title={<span>จัดส่งสินค้าเรียบร้อย</span>}
+        title={
+          <span
+            style={{
+              display: "flex",
+              alignContent: "baseline",
+              alignItems: "center",
+              padding: "20px",
+            }}
+          >
+            จัดส่งสินค้าเรียบร้อย
+          </span>
+        }
         style={{ margin: "70px", borderRadius: "20px" }}
       >
         <TableStatus status={"DELIVERED"} changestatus={true} />

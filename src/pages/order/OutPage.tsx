@@ -8,7 +8,18 @@ function OutPage() {
   return (
     <Layout>
       <Card
-        title={<span>กำลังแพ็คของออกจากคลัง</span>}
+        title={
+          <span
+            style={{
+              display: "flex",
+              alignContent: "baseline",
+              alignItems: "center",
+              padding: "20px",
+            }}
+          >
+            กำลังแพ็คของออกจากคลัง
+          </span>
+        }
         style={{ margin: "70px", borderRadius: "20px" }}
       >
         <TableStatus status={"OUTOFSTOCK"} changestatus={true} />

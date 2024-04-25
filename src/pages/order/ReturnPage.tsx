@@ -40,7 +40,14 @@ function ReturnPage() {
       <Layout>
         <Card
           title={
-            <span>
+            <span
+              style={{
+                display: "flex",
+                alignContent: "baseline",
+                alignItems: "center",
+                padding: "20px",
+              }}
+            >
               <RetweetOutlined
                 style={{
                   fontSize: "40px",
