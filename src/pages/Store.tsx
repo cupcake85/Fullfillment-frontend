@@ -11,6 +11,8 @@ import {
   Input,
   TableColumnsType,
   notification,
+  Row,
+  Col,
 } from "antd";
 import type { FormItemProps } from "antd";
 import { useForm } from "antd/es/form/Form";
@@ -214,18 +216,21 @@ const Store = () => {
           marginTop: "40px",
         }}
       >
-        <div className="flex items-baseline">
-          <div className="flex items-baseline">
+        <Row style={{ padding: "20px" }}>
+          <Col span={12}>
             <div
               style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginLeft: "30px",
+                marginRight: "30px",
                 fontSize: "20px",
                 fontWeight: "bold",
                 fontFamily: "kanit",
+                alignItems: "center",
               }}
             >
               รหัสผู้จัดส่ง
-            </div>
-            <Form.Item>
               <Input
                 onChange={(e) =>
                   setSearchQuery({
@@ -234,10 +239,9 @@ const Store = () => {
                   })
                 }
                 style={{
-                  width: "250px",
+                  width: "300px",
+                  height: "45px",
                   borderRadius: "25px",
-                  marginBottom: "15px",
-                  height: "35px",
                   marginLeft: "15px",
                   marginRight: "15px",
                   border: "solid 1px",
@@ -245,53 +249,21 @@ const Store = () => {
                 }}
                 placeholder="รหัสผู้จัดส่ง"
               />
-            </Form.Item>
-          </div>
-          <div className="flex items-baseline">
-            <div
-              style={{
-                fontSize: "20px",
-                fontWeight: "bold",
-                fontFamily: "kanit",
-              }}
-            >
-              ชื่อผู้จัดส่ง
             </div>
-            <Form.Item>
-              <Input
-                onChange={(e) =>
-                  setSearchQuery({
-                    ...searchQuery,
-                    shipperName: e.target.value,
-                  })
-                }
-                style={{
-                  width: "250px",
-                  borderRadius: "25px",
-                  marginBottom: "15px",
-                  height: "35px",
-                  marginLeft: "15px",
-                  marginRight: "15px",
-                  border: "solid 1px",
-                  fontFamily: "kanit",
-                }}
-                placeholder="ชื่อผู้จัดส่ง"
-              />
-            </Form.Item>
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div className="flex items-baseline">
             <div
               style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginLeft: "30px",
+                marginRight: "30px",
                 fontSize: "20px",
                 fontWeight: "bold",
                 fontFamily: "kanit",
+                marginTop: "22px",
+                alignItems: "center",
               }}
             >
               ร้านค้า
-            </div>
-            <Form.Item>
               <Input
                 onChange={(e) =>
                   setSearchQuery({
@@ -300,10 +272,9 @@ const Store = () => {
                   })
                 }
                 style={{
-                  width: "250px",
+                  width: "300px",
+                  height: "45px",
                   borderRadius: "25px",
-                  marginBottom: "15px",
-                  height: "35px",
                   marginLeft: "15px",
                   marginRight: "15px",
                   border: "solid 1px",
@@ -311,38 +282,93 @@ const Store = () => {
                 }}
                 placeholder="ร้านค้า"
               />
+            </div>
+          </Col>
+          <Col span={12}>
+            <div
+              style={{
+                display: "flex",
+                alignContent: "baseline",
+                justifyContent: "space-between",
+                marginRight: "30px",
+                fontSize: "20px",
+                fontWeight: "bold",
+                fontFamily: "kanit",
+                alignItems: "center",
+              }}
+            >
+              ชื่อผู้จัดส่ง
+              <Input
+                onChange={(e) =>
+                  setSearchQuery({
+                    ...searchQuery,
+                    shipperName: e.target.value,
+                  })
+                }
+                style={{
+                  width: "300px",
+                  height: "45px",
+                  borderRadius: "25px",
+                  marginLeft: "15px",
+                  border: "solid 1px",
+                  fontFamily: "kanit",
+                }}
+                placeholder="ชื่อผู้จัดส่ง"
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignContent: "baseline",
+                justifyContent: "space-between",
+                marginRight: "30px",
+                fontSize: "20px",
+                fontWeight: "bold",
+                fontFamily: "kanit",
+                alignItems: "center",
+                marginTop: "22px",
+              }}
+            >
               <Button
                 onClick={onClickSearch}
                 style={{
                   backgroundColor: "#2F353A",
                   borderRadius: "25px",
-                  marginBottom: "15px",
-                  height: "40px",
-                  width: "40px",
-
+                  height: "45px",
+                  width: "150px",
                   color: "#fff",
+                  fontSize: "20px",
                 }}
                 icon={<SearchOutlined />}
-              ></Button>
-            </Form.Item>
-          </div>
-          <div style={{ marginLeft: "570px", fontFamily: "kanit" }}>
-            <Button
-              type="primary"
-              onClick={showModalAdd}
-              icon={<PlusCircleFilled />}
-              style={{
-                backgroundColor: "#979A9C",
-                color: "white",
-                borderRadius: "25px",
-                marginBottom: "15px",
-                height: "35px",
-                fontFamily: "kanit",
-              }}
-            >
-              เพิ่มผู้ใช้งาน
-            </Button>
-          </div>
+              >
+                ค้นหา
+              </Button>
+            </div>
+          </Col>
+        </Row>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginBottom: "20px",
+          }}
+        >
+          <Button
+            type="primary"
+            onClick={showModalAdd}
+            icon={<PlusCircleFilled />}
+            style={{
+              backgroundColor: "#979A9C",
+              color: "white",
+              borderRadius: "25px",
+              width: "200px",
+              height: "45px",
+              fontFamily: "kanit",
+              fontSize: "20px",
+            }}
+          >
+            เพิ่มผู้ใช้งาน
+          </Button>
         </div>
         <Modal
           title="เพิ่มผู้ใช้งาน"
