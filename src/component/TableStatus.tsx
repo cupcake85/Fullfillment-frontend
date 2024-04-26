@@ -7,6 +7,7 @@ import {
   Space,
   Table,
   TableColumnsType,
+  notification,
 } from "antd";
 import axios from "axios";
 
@@ -42,6 +43,7 @@ const TableStatus: React.FC<Props> = ({
   const [itemData, setItemData] = useState([]);
   const [statuschange, setStatusChange] = useState<string>("");
   const navigate = useNavigate();
+  const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
     getItemData();
@@ -85,28 +87,41 @@ const TableStatus: React.FC<Props> = ({
     setStatusChange(key);
   };
 
-  const items: MenuProps["items"] = [
-    {
-      label: "สินค้ายังไม่ถูกตรวจสอบ",
-      key: "NOTCHECK",
-    },
-    {
-      label: "กำลังแพ็คของออกจากคลัง",
-      key: "OUTOFSTOCK",
-    },
-    {
-      label: "สินค้ากำลังดำเนินการ",
-      key: "INPROGRESS",
-    },
-    {
-      label: "จัดส่งสินค้าเรียบร้อย",
-      key: "DELIVERED",
-    },
-    {
-      label: "สินค้าถูกนำกลับ",
-      key: "RETURNED",
-    },
-  ];
+  let filteredItems: MenuItemProps[] = [];
+
+  if (status === "NOTCHECK") {
+    filteredItems = [
+      {
+        label: "กำลังแพ็คของออกจากคลัง",
+        key: "OUTOFSTOCK",
+      },
+    ];
+  } else if (status === "OUTOFSTOCK") {
+    filteredItems = [
+      {
+        label: "สินค้ากำลังดำเนินการ",
+        key: "INPROGRESS",
+      },
+    ];
+  } else if (status === "INPROGRESS") {
+    filteredItems = [
+      {
+        label: "จัดส่งสินค้าเรียบร้อย",
+        key: "DELIVERED",
+      },
+      {
+        label: "สินค้าถูกนำกลับ",
+        key: "RETURNED",
+      },
+    ];
+  } else {
+    filteredItems = [
+      {
+        label: "สินค้าถูกนำกลับ",
+        key: "RETURNED",
+      },
+    ];
+  }
 
   const rowSelection = {
     onChange: (_: React.Key[], selectedRow: DataType[]) => {
@@ -131,7 +146,6 @@ const TableStatus: React.FC<Props> = ({
   };
 
   const updateMultiple = async (body: any) => {
-    console.log("ได้อะไร", JSON.stringify(body));
     try {
       await axios.put(
         "http://192.168.2.57:3000/orders/update-status-multiple",
@@ -139,7 +153,10 @@ const TableStatus: React.FC<Props> = ({
       );
       getItemData();
     } catch (err: any) {
-      console.log(err?.response?.data?.message);
+      console.log('ข้อความ ',err?.response?.data?.message);
+      api.error({
+        message: err?.response?.data?.message,
+      });
     }
   };
 
@@ -310,33 +327,36 @@ const TableStatus: React.FC<Props> = ({
   return (
     <>
       <div hidden={!changestatus}>
-        <Button
-          style={{
-            backgroundColor: "#2F353A",
-            margin: "5px",
-            borderRadius: "20px",
-            color: "#fff",
-          }}
-        >
-          <Dropdown
-            menu={{ items, onClick }}
-            placement="bottom"
-            trigger={["click"]}
+        {status !== "DELIVERED" && changestatus && ( //เมื่อ status เป็น "DELIVERED" และ changestatus เป็น true โค้ดส่วนนี้จะไม่แสดง Dropdown
+          <Button
+            style={{
+              backgroundColor: "#2F353A",
+              margin: "5px",
+              borderRadius: "20px",
+              color: "#fff",
+            }}
           >
-            <a onClick={(e) => e.preventDefault()}>
-              <Space>
-                เปลี่ยนแปลงสถานะ
-                <DownOutlined />
-              </Space>
-            </a>
-          </Dropdown>
-        </Button>
+            <Dropdown
+              menu={{ items: filteredItems, onClick }}
+              placement="bottom"
+              trigger={["click"]}
+            >
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  เปลี่ยนแปลงสถานะ
+                  <DownOutlined />
+                </Space>
+              </a>
+            </Dropdown>
+          </Button>
+        )}
         <Button
           onClick={() => deleteMutiItem(selectedRows)}
           type="primary"
           style={{
             backgroundColor: "#2F353A",
             borderRadius: "20px",
+            marginBottom: status === 'DELIVERED' ? '10px' : '0'
           }}
         >
           <span>

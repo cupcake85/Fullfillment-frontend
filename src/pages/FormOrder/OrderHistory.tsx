@@ -2,13 +2,13 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, Card, Col, DatePicker, Layout, Row, Table } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import dayjs from "dayjs";
 import { ColumnsType } from "antd/es/table";
 
 const OrderHistory = () => {
   const [orderHistory, setOrderHistory] = useState([]);
-  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState<Record<string, unknown>>();
   const location = useLocation();
   let { id } = location.state;
 
@@ -20,7 +20,7 @@ const OrderHistory = () => {
       case "NOTCHECKED":
         status = "สินค้ายังไม่ถูกตรวจสอบ";
         backgroundColor = "#BC211C";
-        massage= 'สร้างออเดอร์โดย'
+        massage = "สร้างออเดอร์โดย";
         break;
       case "OUTOFSTOCK":
         status = "กำลังแพ็คของออกจากคลัง";
@@ -114,7 +114,10 @@ const OrderHistory = () => {
 
   const getHistoty = async () => {
     const history = await axios.get(
-      "http://192.168.2.57:3000/orders/history-status/" + id
+      "http://192.168.2.57:3000/orders/history-status/" + id,
+      {
+        params: { ...searchQuery },
+      }
     );
     setOrderHistory(history.data.data);
   };
@@ -122,39 +125,55 @@ const OrderHistory = () => {
   return (
     <Layout>
       <Card title={"รายการ:"} style={{ margin: 70 }}>
-        <Row>
-          <Col span={5}>
+        <Row >
+          <Col span={5} style={{fontFamily:'kanit'}}>
             <p>วันที่เริ่ม</p>
           </Col>
-          <Col span={7}>
+          <Col span={7} style={{fontFamily:'kanit'}}>
             <DatePicker
               placeholder="2024-04-08"
-              style={{ flex: "center", borderRadius: "25px" }}
+              style={{ flex: "center", borderRadius: "25px", fontFamily:'kanit' }}
+              onChange={(date) =>
+                setSearchQuery({
+                  ...searchQuery,
+                  startDate: date,
+                })
+              }
             />
           </Col>
-          <Col span={5}>
+          <Col span={5} style={{fontFamily:'kanit'}}>
             <p>วันที่สุดท้าย</p>
           </Col>
-          <Col span={7}>
+          <Col span={7} style={{fontFamily:'kanit'}}>
             <DatePicker
               placeholder="2024-04-08"
-              style={{ borderRadius: "25px" }}
+              style={{ borderRadius: "25px", fontFamily:'kanit' }}
+              onChange={(date) =>
+                setSearchQuery({
+                  ...searchQuery,
+                  endDate: date,
+                })
+              }
             />
           </Col>
         </Row>
-        <Button
-          style={{
-            backgroundColor: "#2F353A",
-            borderRadius: "25px",
-            marginBottom: "15px",
-            height: "40px",
-            width: "150px",
-            color: "#fff",
-          }}
-        >
-          {" "}
-          <SearchOutlined /> ค้นหา
-        </Button>
+        <div style={{display:'flex', justifyContent:'center', padding:'20px'}}>
+          <Button
+            style={{
+              backgroundColor: "#2F353A",
+              borderRadius: "25px",
+              marginBottom: "15px",
+              height: "40px",
+              width: "150px",
+              color: "#fff",
+              fontSize: '20px'
+            }}
+          >
+            {" "}
+            <SearchOutlined /> ค้นหา
+          </Button>
+        </div>
+
         <Table dataSource={orderHistory} columns={columns} rowKey="id"></Table>
       </Card>
     </Layout>
