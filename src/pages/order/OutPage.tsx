@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
 import TableStatus from "../../component/TableStatus";
-import { Button, Card, Dropdown, Layout, Space } from "antd";
+import { Card,Layout} from "antd";
 
 function OutPage() {
-  const [statuschange, setStatusChange] = useState<string>("");
 
   return (
     <Layout>

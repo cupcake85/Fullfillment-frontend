@@ -23,15 +23,18 @@ function ReturnPage() {
           </div>
         );
       },
+      align: 'center'
     },
 
     {
       title: "ลูกค้า",
       dataIndex: "customerName",
+      align: 'center'
     },
     {
       title: "รหัสไปรษณีย์",
       dataIndex: "zipCode",
+      align: 'center'
     },
   ];
 

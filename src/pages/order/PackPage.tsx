@@ -51,11 +51,10 @@ function PackPage() {
 
   const getRecordItem = async () => {
     try {
-      const res = await axios.get("http://192.168.2.57:3000/records/item", {
+      const res = await axios.get("http://192.168.2.57:3000/records/items", {
         params: { ...searchQuery },
       });
       setRecordItem(res.data.data);
-      console.log(res);
     } catch (error: any) {
       alert(error?.response?.data.message);
     }
