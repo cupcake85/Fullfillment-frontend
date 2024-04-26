@@ -1,10 +1,11 @@
 import axios from "axios";
 import { CreateOrder } from "./interface/interface";
+import { useState } from "react";
 
 export const getOrder = async () => {
   try {
     const request = await axios.get("http://192.168.2.57:3000/orders");
-    const sortedData = request?.data?.data?.items;
+    const sortedData = request?.data?.data;
     return sortedData;
   } catch (error) {
     throw error;
@@ -25,7 +26,7 @@ export const getOrderById = async (id: number) => {
     const requestOrder = await axios.get(
       "http://192.168.2.57:3000/orders/" + id
     );
-    const data = requestOrder.data.data.items;
+    const data = requestOrder.data.data;
     return data;
   } catch (error) {
     throw error;
@@ -38,7 +39,7 @@ export const putOrderById = async (id: number, body: Partial<CreateOrder> ) => {
       "http://192.168.2.57:3000/orders/" + id,
       body
     );
-    const data = requestOrder.data.data.items;
+    const data = requestOrder.data.data;
     return data;
   } catch (error) {
     throw error;
