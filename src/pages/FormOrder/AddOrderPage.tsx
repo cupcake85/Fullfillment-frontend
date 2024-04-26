@@ -156,10 +156,9 @@ const AddOrderPage = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "space-between",
+                      justifyContent: "end",
                     }}
                   >
-                    <div></div>
                     <Table
                       style={{ width: "25vw" }}
                       dataSource={selectItem}
