@@ -240,7 +240,7 @@ const Store = () => {
                 }
                 style={{
                   width: "300px",
-                  height: "45px",
+                  height: "40px",
                   borderRadius: "25px",
                   marginLeft: "15px",
                   marginRight: "15px",
@@ -273,7 +273,7 @@ const Store = () => {
                 }
                 style={{
                   width: "300px",
-                  height: "45px",
+                  height: "40px",
                   borderRadius: "25px",
                   marginLeft: "15px",
                   marginRight: "15px",
@@ -307,7 +307,7 @@ const Store = () => {
                 }
                 style={{
                   width: "300px",
-                  height: "45px",
+                  height: "40px",
                   borderRadius: "25px",
                   marginLeft: "15px",
                   border: "solid 1px",
@@ -334,7 +334,7 @@ const Store = () => {
                 style={{
                   backgroundColor: "#2F353A",
                   borderRadius: "25px",
-                  height: "45px",
+                  height: "40px",
                   width: "150px",
                   color: "#fff",
                   fontSize: "20px",
@@ -362,7 +362,7 @@ const Store = () => {
               color: "white",
               borderRadius: "25px",
               width: "200px",
-              height: "45px",
+              height: "40px",
               fontFamily: "kanit",
               fontSize: "20px",
             }}
