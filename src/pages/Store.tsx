@@ -334,15 +334,16 @@ const Store = () => {
                 style={{
                   backgroundColor: "#2F353A",
                   borderRadius: "25px",
-                  height: "40px",
-                  width: "150px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   color: "#fff",
-                  fontSize: "20px",
+                  fontSize: "25px",
+                  height: "40px",
+                  width: "40px",
                 }}
                 icon={<SearchOutlined />}
-              >
-                ค้นหา
-              </Button>
+              ></Button>
             </div>
           </Col>
         </Row>
@@ -361,10 +362,10 @@ const Store = () => {
               backgroundColor: "#979A9C",
               color: "white",
               borderRadius: "25px",
-              width: "200px",
+              width: "180px",
               height: "40px",
               fontFamily: "kanit",
-              fontSize: "20px",
+              fontSize: "18px",
             }}
           >
             เพิ่มผู้ใช้งาน
@@ -399,7 +400,11 @@ const Store = () => {
         </Modal>
         <Table
           dataSource={itemData}
-          style={{ backgroundColor: "#e4e5e5" }}
+          style={{
+            backgroundColor: "#e4e5e5",
+
+            borderRadius: "20px",
+          }}
           pagination={{
             total: getHistory.length,
             showSizeChanger: true,
