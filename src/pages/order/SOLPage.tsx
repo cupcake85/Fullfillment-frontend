@@ -50,14 +50,16 @@ function Order() {
 
   const getOrderList = async () => {
     const sortedData = await getOrder();
+    console.log("🚀 ~ getOrderList ~ sortedData:", sortedData);
     setOrderData(sortedData);
   };
 
   const getStore = async () => {
     const request = await axios.get("http://192.168.2.57:3000/stores");
-    const sortedData = request.data.data.items.map((data: any) => {
+    const sortedData = request.data.data.map((data: any) => {
       return { label: data.name, value: data.id };
     });
+    console.log("🚀 ~ sortedData ~ sortedData:", sortedData)
 
     setStores(sortedData);
   };
@@ -129,7 +131,11 @@ function Order() {
           <>
             <div
               className=" text-center text-white rounded-3xl p-1"
-              style={{ backgroundColor }}
+              style={{
+                width: "13vw",
+                backgroundColor,
+                justifyContent: "center",
+              }}
             >
               {status}
             </div>
@@ -175,7 +181,7 @@ function Order() {
         <Row justify={"center"}>
           <Col span={10} style={{ margin: 10, fontFamily: "kanit" }}>
             <Form.Item
-              name="stores"
+              name="orderno.item.stores.name"
               label="ร้านค้า"
               style={{ borderRadius: "50px", fontFamily: "kanit" }}
             >
@@ -188,39 +194,42 @@ function Order() {
               />
             </Form.Item>
 
-            <Form.Item name="" label="รหัสใบสั่งของ">
+            <Form.Item name="orderno.item.stores.shipperCode" label="รหัสใบสั่งของ">
               <Input
                 placeholder="รหัสใบสั่งของ"
                 className=" rounded-3xl w-[250px] float-end "
               ></Input>
             </Form.Item>
 
-            <Form.Item name="" label="ชื่อร้านค้า">
+            <Form.Item
+              name="orderno.stores.item.stores.shipperName"
+              label="ชื่อร้านค้า"
+            >
               <Input
                 placeholder="ชื่อร้านค้า"
                 className="rounded-3xl w-[250px] float-end"
               ></Input>
             </Form.Item>
 
-            <Form.Item name="" label="ระยะเวลา">
+            <Form.Item name="orderDate" label="ระยะเวลา">
               <RangePicker className="rounded-3xl w-[250px] float-end" />
             </Form.Item>
 
-            <Form.Item name="" label="แขวง/ตำบล">
+            <Form.Item name="parish" label="แขวง/ตำบล">
               <Input
                 placeholder="พลับพลา"
                 className="rounded-3xl w-[250px] float-end"
               ></Input>
             </Form.Item>
 
-            <Form.Item name="" label="รหัสไปรษณี">
+            <Form.Item name="zipCode" label="รหัสไปรษณี">
               <Input
                 placeholder="10820"
                 className="rounded-3xl w-[250px] float-end"
               ></Input>
             </Form.Item>
 
-            <Form.Item name="" label="ค่าส่งปลายทางต่ำสุด">
+            <Form.Item name="cod" label="ค่าส่งปลายทางต่ำสุด">
               <Input
                 placeholder="40 บาท"
                 className="rounded-3xl w-[250px] float-end"
@@ -238,14 +247,14 @@ function Order() {
           </Col>
 
           <Col span={10} style={{ margin: 10 }}>
-            <Form.Item name="" label="รหัสสินค้า">
+            <Form.Item name="sku" label="รหัสสินค้า">
               <Input
                 placeholder="WHO041"
                 className=" rounded-3xl w-[250px] float-end"
               ></Input>
             </Form.Item>
 
-            <Form.Item name="" label="สถานะใบสั่งของ">
+            <Form.Item name="status" label="สถานะใบสั่งของ">
               <Select
                 placeholder="สถานะใบสั่งของ"
                 className="rounded-3xl float-end"
@@ -254,21 +263,21 @@ function Order() {
               />
             </Form.Item>
 
-            <Form.Item name="" label="เบอร์โทรศัพท์">
+            <Form.Item name="phoneNumber" label="เบอร์โทรศัพท์">
               <Input
                 placeholder="086-943-9832"
                 className="rounded-3xl w-[250px] float-end"
               ></Input>
             </Form.Item>
 
-            <Form.Item name="" label="เขต/อำเภอ">
+            <Form.Item name="district" label="เขต/อำเภอ">
               <Input
                 placeholder="วังทองหลาง"
                 className="rounded-3xl w-[250px] float-end"
               ></Input>
             </Form.Item>
 
-            <Form.Item name="" label="จังหวัด">
+            <Form.Item name="province" label="จังหวัด">
               <Input
                 placeholder="กรุงเทพมหานคร"
                 className="rounded-3xl w-[250px] float-end"

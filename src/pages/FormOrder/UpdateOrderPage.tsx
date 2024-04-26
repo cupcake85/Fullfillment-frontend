@@ -26,8 +26,8 @@ const UpdateOrderPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   let { id } = location.state;
-
   const [form] = Form.useForm();
+
   useEffect(() => {
     getItems();
   }, []);
@@ -38,11 +38,8 @@ const UpdateOrderPage = () => {
     }
   }, []);
 
-  console.log("idUpdate", id);
-
   const getOrderItem = async () => {
     const requestOrder = await getOrderById(id);
-    console.log("requestOrder", requestOrder);
     const requestItem = await axios.get("http://192.168.2.57:3000/items");
     const orders = requestOrder.orderno?.map((order: any) => order.item.id);
 
@@ -59,6 +56,7 @@ const UpdateOrderPage = () => {
         )?.quantity,
       };
     }, {});
+
     form.setFieldsValue({
       ...requestOrder,
       item: orders,
@@ -76,6 +74,7 @@ const UpdateOrderPage = () => {
   };
 
   const handleSubmit = async (valueOrder: any) => {
+    valueOrder.cod = parseInt(valueOrder.cod);
     const item = valueOrder.item.map((id: any) => {
       return { itemId: id, qty: valueOrder[id] };
     });
@@ -150,276 +149,199 @@ const UpdateOrderPage = () => {
             fontFamily: "kanit",
           }}
         >
-          <Row>
-            <Col span={4}></Col>
-            <Col span={12}>
+          <Row style={{ display: "flex", justifyContent: "center" }}>
+            <Col
+              span={16}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                fontFamily: "kanit",
+              }}
+            >
               <Form onFinish={handleSubmit} form={form}>
-                <Form.Item name="uom">
-                  <Row
+                <Form.Item name="uom" label="UOM" >
+                  <Input
+                    placeholder="Box"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      borderRadius: "50px",
+                      width: "25vw",
+                      height: "5vh",
                     }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>UOM</div>
-                    <Input
-                      placeholder="กล่อง"
-                      className=" rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                  />
                 </Form.Item>
 
-                <Form.Item name="cod">
-                  <Row
+                <Form.Item name="cod" label="COD">
+                  <InputNumber
+                    placeholder="0"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      borderRadius: "50px",
+                      width: "25vw",
+                      height: "5vh",
                     }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>COD</div>
-                    <InputNumber
-                      placeholder="0"
-                      className=" rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                  />
                 </Form.Item>
 
-                <Form.Item name="item">
-                  <Row
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>Item</div>
-                    <Select
-                      placeholder="WHO054"
-                      mode="multiple"
-                      style={{ width: "25vw", height: "5vh" }}
-                      options={getItem}
-                      onChange={handleChange}
-                    />
-                  </Row>
+                <Form.Item name="item" label="Item">
+                  <Select
+                    placeholder="WHO054"
+                    mode="multiple"
+                    style={{ width: "25vw", height: "5vh" }}
+                    options={getItem}
+                    onChange={handleChange}
+                  />
                 </Form.Item>
 
                 <Form.Item>
-                  <Row
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "end",
-                    }}
-                  >
-                    <Table
-                      style={{ width: "25vw" }}
-                      dataSource={selectItem}
-                      columns={columns}
-                    ></Table>
-                  </Row>
+                  <Table
+                    style={{ width: "25vw" }}
+                    dataSource={selectItem}
+                    columns={columns}
+                  ></Table>
                 </Form.Item>
 
-                <Form.Item name="customerName">
-                  <Row
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>ชื่อลูกค้า</div>
-                    <Input
-                      placeholder="Nick"
-                      className="rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                <Form.Item name="customerName" label="ชื่อลูกค้า">
+                  <Input
+                    placeholder="Mark Zuckerberg"
+                    className="rounded-3xl w-[25vw] h-[5vh]"
+                  />
                 </Form.Item>
 
-                <Form.Item name="phoneNumber">
-                  <Row
+                <Form.Item name="phoneNumber" label="เบอร์โทรศัพท์">
+                  <Input
+                    placeholder="061xxxxxxx"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      borderRadius: "50px",
+                      width: "25vw",
+                      height: "5vh",
                     }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>เบอร์โทรศัพท์</div>
-                    <Input
-                      placeholder="061xxxxxxx"
-                      className=" rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                  />
                 </Form.Item>
 
-                <Form.Item name="address">
-                  <Row
+                <Form.Item name="address" label="ที่อยู่">
+                  <Input
+                    placeholder="123 ลาดพร้าว พลับพลา วังทองหลาง"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      borderRadius: "50px",
+                      width: "25vw",
+                      height: "5vh",
                     }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>ที่อยู่</div>
-                    <Input
-                      placeholder="123 ลาดพร้าว พลับพลา วังทองหลาง"
-                      className=" rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                  />
                 </Form.Item>
 
-                <Form.Item name="alley">
-                  <Row
+                <Form.Item name="alley" label="ซอย">
+                  <Input
+                    placeholder="ลาดพร้าว"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      borderRadius: "50px",
+                      width: "25vw",
+                      height: "5vh",
                     }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>ซอย</div>
-                    <Input
-                      placeholder="ลาดพร้าว"
-                      className=" rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                  />
                 </Form.Item>
 
-                <Form.Item name="road">
-                  <Row
+                <Form.Item name="road" label="ถนน">
+                  <Input
+                    placeholder="ลาดพร้าว"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      borderRadius: "50px",
+                      width: "25vw",
+                      height: "5vh",
                     }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>ถนน</div>
-                    <Input
-                      placeholder="ลาดพร้าว"
-                      className=" rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                  />
                 </Form.Item>
 
-                <Form.Item name="zipCode">
-                  <Row
+                <Form.Item name="zipCode" label="รหัสไปรษณีย์">
+                  <Input
+                    placeholder="10310"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      borderRadius: "50px",
+                      width: "25vw",
+                      height: "5vh",
                     }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>รหัสไปรษณีย์</div>
-                    <Input
-                      placeholder="10310"
-                      className=" rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                  />
                 </Form.Item>
 
-                <Form.Item name="province">
-                  <Row
+                <Form.Item name="province" label="จังหวัด">
+                  <Input
+                    placeholder="กรุงเทพฯ"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      borderRadius: "50px",
+                      width: "25vw",
+                      height: "5vh",
                     }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>จังหวัด</div>
-                    <Input
-                      placeholder="กรุงเทพฯ"
-                      className=" rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                  />
                 </Form.Item>
 
-                <Form.Item name="district">
-                  <Row
+                <Form.Item name="district" label="เขต/อำเภอ">
+                  <Input
+                    placeholder="วังทองหลาง"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      borderRadius: "50px",
+                      width: "25vw",
+                      height: "5vh",
                     }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>เขต/อำเภอ</div>
-                    <Input
-                      placeholder="วังทองหลาง"
-                      className=" rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                  />
                 </Form.Item>
 
-                <Form.Item name="parish">
-                  <Row
+                <Form.Item name="parish" label="แขวง/ตำบล">
+                  <Input
+                    placeholder="พลับพลา"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      borderRadius: "50px",
+                      width: "25vw",
+                      height: "5vh",
                     }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>แขวง/ตำบล</div>
-                    <Input
-                      placeholder="พลับพลา"
-                      className=" rounded-3xl w-[25vw] h-[5vh]"
-                    />
-                  </Row>
+                  />
                 </Form.Item>
 
-                <Form.Item name="country">
-                  <Row
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <div style={{ fontFamily: "kanit" }}>ประเทศ</div>
-                    <Select
-                      placeholder="ประเทศ"
-                      style={{ width: "25vw", height: "5vh" }}
-                      options={[{ value: "ThaiLand", label: "ThaiLand" }]}
-                      className="float-end"
-                    />
-                  </Row>
+                <Form.Item name="country" label="ประเทศ">
+                  <Select
+                    placeholder="ประเทศ"
+                    style={{ width: "25vw", height: "5vh" }}
+                    options={[{ value: "ThaiLand", label: "ThaiLand" }]}
+                    className="float-end"
+                  />
                 </Form.Item>
 
-                <Row
-                  style={{ display: "flex", justifyContent: "space-around" }}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyItems: "baseline",
+                    justifyContent: "center",
+                  }}
                 >
-                  <div></div>
-                  <Row>
-                    <Form.Item>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        style={{
-                          backgroundColor: "#BC211C",
-                          borderRadius: "30px",
-                          width: "6vw",
-                          height: "4vh",
-                          marginRight: 30,
-                          fontFamily: "kanit",
-                        }}
-                      >
-                        บันทึก
-                      </Button>
-                    </Form.Item>
-                    <Form.Item>
-                      <Button
-                        type="primary"
-                        style={{
-                          backgroundColor: "#2F353A",
-                          borderRadius: "30px",
-                          width: "6vw",
-                          height: "4vh",
-                          fontFamily: "kanit",
-                        }}
-                      >
-                        ยกเลิก
-                      </Button>
-                    </Form.Item>
-                  </Row>
-                </Row>
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      style={{
+                        backgroundColor: "#BC211C",
+                        borderRadius: "30px",
+                        width: "6vw",
+                        height: "4vh",
+                        marginRight: 30,
+                        fontFamily: "kanit",
+                      }}
+                    >
+                      บันทึก
+                    </Button>
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      style={{
+                        backgroundColor: "#2F353A",
+                        borderRadius: "30px",
+                        width: "6vw",
+                        height: "4vh",
+                        fontFamily: "kanit",
+                      }}
+                      onClick={()=>navigate("/SOLPage")}
+                    >
+                      ยกเลิก
+                    </Button>
+                  </Form.Item>
+                </div>
                 {contextHolder}
               </Form>
             </Col>
