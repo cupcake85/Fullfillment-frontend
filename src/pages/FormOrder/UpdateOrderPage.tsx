@@ -151,10 +151,8 @@ const UpdateOrderPage = () => {
         >
           <Row style={{ display: "flex", justifyContent: "center" }}>
             <Col
-              span={16}
+              span={13}
               style={{
-                display: "flex",
-                justifyContent: "center",
                 fontFamily: "kanit",
               }}
             >
@@ -162,28 +160,21 @@ const UpdateOrderPage = () => {
                 <Form.Item name="uom" label="UOM" >
                   <Input
                     placeholder="Box"
-                    style={{
-                      borderRadius: "50px",
-                      width: "25vw",
-                      height: "5vh",
-                    }}
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh]"
                   />
                 </Form.Item>
 
                 <Form.Item name="cod" label="COD">
                   <InputNumber
                     placeholder="0"
-                    style={{
-                      borderRadius: "50px",
-                      width: "25vw",
-                      height: "5vh",
-                    }}
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh] "
                   />
                 </Form.Item>
 
                 <Form.Item name="item" label="Item">
                   <Select
                     placeholder="WHO054"
+                    className=" rounded-3xl float-end"
                     mode="multiple"
                     style={{ width: "25vw", height: "5vh" }}
                     options={getItem}
@@ -194,6 +185,7 @@ const UpdateOrderPage = () => {
                 <Form.Item>
                   <Table
                     style={{ width: "25vw" }}
+                    className=" rounded-3xl float-end "
                     dataSource={selectItem}
                     columns={columns}
                   ></Table>
@@ -202,104 +194,72 @@ const UpdateOrderPage = () => {
                 <Form.Item name="customerName" label="ชื่อลูกค้า">
                   <Input
                     placeholder="Mark Zuckerberg"
-                    className="rounded-3xl w-[25vw] h-[5vh]"
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh] "
                   />
                 </Form.Item>
 
                 <Form.Item name="phoneNumber" label="เบอร์โทรศัพท์">
                   <Input
                     placeholder="061xxxxxxx"
-                    style={{
-                      borderRadius: "50px",
-                      width: "25vw",
-                      height: "5vh",
-                    }}
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh] "
                   />
                 </Form.Item>
 
                 <Form.Item name="address" label="ที่อยู่">
                   <Input
                     placeholder="123 ลาดพร้าว พลับพลา วังทองหลาง"
-                    style={{
-                      borderRadius: "50px",
-                      width: "25vw",
-                      height: "5vh",
-                    }}
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh] "
                   />
                 </Form.Item>
 
                 <Form.Item name="alley" label="ซอย">
                   <Input
                     placeholder="ลาดพร้าว"
-                    style={{
-                      borderRadius: "50px",
-                      width: "25vw",
-                      height: "5vh",
-                    }}
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh] "
                   />
                 </Form.Item>
 
                 <Form.Item name="road" label="ถนน">
                   <Input
                     placeholder="ลาดพร้าว"
-                    style={{
-                      borderRadius: "50px",
-                      width: "25vw",
-                      height: "5vh",
-                    }}
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh] "
                   />
                 </Form.Item>
 
                 <Form.Item name="zipCode" label="รหัสไปรษณีย์">
                   <Input
                     placeholder="10310"
-                    style={{
-                      borderRadius: "50px",
-                      width: "25vw",
-                      height: "5vh",
-                    }}
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh] "
                   />
                 </Form.Item>
 
                 <Form.Item name="province" label="จังหวัด">
                   <Input
                     placeholder="กรุงเทพฯ"
-                    style={{
-                      borderRadius: "50px",
-                      width: "25vw",
-                      height: "5vh",
-                    }}
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh] "
                   />
                 </Form.Item>
 
                 <Form.Item name="district" label="เขต/อำเภอ">
                   <Input
                     placeholder="วังทองหลาง"
-                    style={{
-                      borderRadius: "50px",
-                      width: "25vw",
-                      height: "5vh",
-                    }}
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh] "
                   />
                 </Form.Item>
 
                 <Form.Item name="parish" label="แขวง/ตำบล">
                   <Input
                     placeholder="พลับพลา"
-                    style={{
-                      borderRadius: "50px",
-                      width: "25vw",
-                      height: "5vh",
-                    }}
+                    className=" rounded-3xl float-end w-[25vw] h-[5vh] "
                   />
                 </Form.Item>
 
                 <Form.Item name="country" label="ประเทศ">
                   <Select
                     placeholder="ประเทศ"
+                    className=" rounded-3xl float-end "
                     style={{ width: "25vw", height: "5vh" }}
                     options={[{ value: "ThaiLand", label: "ThaiLand" }]}
-                    className="float-end"
                   />
                 </Form.Item>
 
