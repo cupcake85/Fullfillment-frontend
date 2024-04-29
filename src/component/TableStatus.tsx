@@ -94,6 +94,7 @@ const TableStatus: React.FC<Props> = ({
       {
         label: "กำลังแพ็คของออกจากคลัง",
         key: "OUTOFSTOCK",
+        style: { fontFamily: 'kanit' } 
       },
     ];
   } else if (status === "OUTOFSTOCK") {
@@ -101,6 +102,7 @@ const TableStatus: React.FC<Props> = ({
       {
         label: "สินค้ากำลังดำเนินการ",
         key: "INPROGRESS",
+        style: { fontFamily: 'kanit' }
       },
     ];
   } else if (status === "INPROGRESS") {
@@ -108,10 +110,12 @@ const TableStatus: React.FC<Props> = ({
       {
         label: "จัดส่งสินค้าเรียบร้อย",
         key: "DELIVERED",
+        style: { fontFamily: 'kanit' }
       },
       {
         label: "สินค้าถูกนำกลับ",
         key: "RETURNED",
+        style: { fontFamily: 'kanit' }
       },
     ];
   } else {
@@ -119,6 +123,7 @@ const TableStatus: React.FC<Props> = ({
       {
         label: "สินค้าถูกนำกลับ",
         key: "RETURNED",
+        style: { fontFamily: 'kanit' }
       },
     ];
   }
@@ -153,9 +158,12 @@ const TableStatus: React.FC<Props> = ({
       );
       getItemData();
     } catch (err: any) {
-      console.log('ข้อความ ',err?.response?.data?.message);
+      console.log("ข้อความ ", err?.response?.data?.message);
       api.error({
-        message: err?.response?.data?.message,
+        message:  err?.response?.data?.message,
+        style: {
+          fontFamily:'kanit'
+        }
       });
     }
   };
@@ -327,36 +335,38 @@ const TableStatus: React.FC<Props> = ({
   return (
     <>
       <div hidden={!changestatus}>
-        {status !== "DELIVERED" && changestatus && ( //เมื่อ status เป็น "DELIVERED" และ changestatus เป็น true โค้ดส่วนนี้จะไม่แสดง Dropdown
-          <Button
-            style={{
-              backgroundColor: "#2F353A",
-              margin: "5px",
-              borderRadius: "20px",
-              color: "#fff",
-            }}
-          >
-            <Dropdown
-              menu={{ items: filteredItems, onClick }}
-              placement="bottom"
-              trigger={["click"]}
+        {status !== "DELIVERED" &&
+          changestatus && ( //เมื่อ status เป็น "DELIVERED" และ changestatus เป็น true โค้ดส่วนนี้จะไม่แสดง Dropdown
+            <Button
+              style={{
+                backgroundColor: "#2F353A",
+                margin: "5px",
+                borderRadius: "20px",
+                color: "#fff",
+              }}
             >
-              <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  เปลี่ยนแปลงสถานะ
-                  <DownOutlined />
-                </Space>
-              </a>
-            </Dropdown>
-          </Button>
-        )}
+              <Dropdown
+                menu={{ items: filteredItems, onClick }}
+                placement="bottom"
+                trigger={["click"]}
+              >
+                <a onClick={(e) => e.preventDefault()} style={{fontFamily:'kanit'}}>
+                  <Space>
+                    เปลี่ยนแปลงสถานะ
+                    <DownOutlined />
+                  </Space>
+                </a>
+              </Dropdown>
+            </Button>
+          )}
         <Button
           onClick={() => deleteMutiItem(selectedRows)}
           type="primary"
           style={{
             backgroundColor: "#2F353A",
             borderRadius: "20px",
-            marginBottom: status === 'DELIVERED' ? '10px' : '0'
+            marginBottom: status === "DELIVERED" ? "10px" : "0",
+            fontFamily: 'kanit' 
           }}
         >
           <span>
@@ -395,6 +405,7 @@ const TableStatus: React.FC<Props> = ({
         rowSelection={rowSelection}
         rowKey="id"
       />
+       {contextHolder}
     </>
   );
 };
