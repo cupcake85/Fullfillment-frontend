@@ -4,6 +4,7 @@ import {
   HomeOutlined,
   ShopOutlined,
   DiffOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Image, Row, Col } from "antd";
 import { useNavigate, Outlet } from "react-router-dom";
@@ -47,20 +48,7 @@ const App: React.FC = () => {
         },
       ],
     },
-    {
-      key: "/store",
-      icon: React.createElement(
-        ShopOutlined,
-        c === "/store" ? { style: { color: "red" } } : undefined
-      ),
-      label: "Store",
-      children: [
-        {
-          key: "/store",
-          label: "ร้านค้า",
-        },
-      ],
-    },
+
     {
       key: "/order",
       icon: React.createElement(
@@ -109,6 +97,40 @@ const App: React.FC = () => {
         },
       ],
     },
+    {
+      key: "/store",
+      icon: React.createElement(
+        ShopOutlined,
+        ["/store", "/Admin"].includes(c)
+          ? { style: { color: "red" } }
+          : undefined
+      ),
+      label: "Store",
+      children: [
+        {
+          key: "/store",
+          label: "ผู้ใช้งาน",
+        },
+        {
+          key: "/Admin",
+          label: "ผู้ดูแล",
+        },
+      ],
+    },
+    {
+      key: "/Location",
+      icon: React.createElement(
+        SettingOutlined,
+        c === "/Location" ? { style: { color: "red" } } : undefined
+      ),
+      label: " Setting ",
+      children: [
+        {
+          key: "/Location",
+          label: "พื้นที่",
+        },
+      ],
+    },
   ];
 
   const onClick = (e: string) => {
@@ -133,7 +155,11 @@ const App: React.FC = () => {
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            style={{ background: "#2F353A", overflowY: "auto", scrollbarWidth:'none' }}
+            style={{
+              background: "#2F353A",
+              overflowY: "auto",
+              scrollbarWidth: "none",
+            }}
             width={230}
           >
             <div className="demo-logo-vertical" /*สไลด์ด้านข้าง*/ />

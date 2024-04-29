@@ -16,8 +16,8 @@ import {
 } from "antd";
 import type { FormItemProps } from "antd";
 import { useForm } from "antd/es/form/Form";
-import InputStore from "../component/storeInput";
-import EditStore from "../component/storeEdit";
+import InputStore from "../../component/storeInput";
+import EditStore from "../../component/storeEdit";
 import axios from "axios";
 import {
   DeleteFilled,

@@ -26,6 +26,7 @@ import {
 import dayjs from "dayjs";
 import { IResult, Iitem } from "../interface/item.interface";
 import TextArea from "antd/es/input/TextArea";
+import { useNavigate } from "react-router-dom";
 
 const inputFilterStyle: React.CSSProperties = {
   width: "250px",
@@ -43,12 +44,13 @@ const Warehouse = () => {
   const [addModal, setAddmodal] = useState(false);
   const [selectedRows, setSelectedRows] = useState<Iitem[]>([]); // เพิ่ม state เก็บข้อมูลที่เลือกไว้
   const [searchQuery, setSearchQuery] = useState<Record<string, unknown>>();
-
   const [form] = useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalHistory, setIsModalHistory] = useState(false);
   const [getHistory, setHistory] = useState([]);
   const [sku, setSku] = useState();
+
+  const navigate = useNavigate();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -385,7 +387,13 @@ const Warehouse = () => {
           ></Button>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "row", justifyContent:'flex-end' }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+        >
           <Button
             icon={<PlusCircleFilled />}
             onClick={() => clickManage()}
@@ -588,12 +596,13 @@ const Warehouse = () => {
         </div>
 
         <Table
-          style={{ backgroundColor: "#e4e5e5", width:'auto' }}
+          style={{ backgroundColor: "#e4e5e5", width: "auto" }}
           dataSource={getHistory}
           columns={columnHistory}
           scroll={{ x: 700 }} //ความกว้าง scroll ได้ 1200
         />
       </Modal>
+      <button onClick={() => navigate("/Login")}>ไปที่ Login</button>
     </Layout>
   );
 };

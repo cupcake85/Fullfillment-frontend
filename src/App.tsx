@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Full from "./nevigation/Nav.tsx";
 import Warehouse from "./pages/Warehouse.tsx";
 import Item from "./pages/Item.tsx";
-import StoreU from "./pages/Store.tsx";
+import StoreU from "./pages/๊User/Store.tsx";
 import SOLPage from "./pages/order/SOLPage.tsx";
 import PackPage from "./pages/order/PackPage.tsx";
 import Uncheck from "./pages/order/Uncheck.tsx";
@@ -14,6 +14,9 @@ import AddOrderPage from "./pages/FormOrder/AddOrderPage.tsx";
 import UpdateOrderPage from "./pages/FormOrder/UpdateOrderPage.tsx";
 import DetailsOrder from "./pages/FormOrder/DetailsOrderPage.tsx";
 import OrderHistory from "./pages/FormOrder/OrderHistory.tsx";
+import Admin from "./pages/๊User/Admin.tsx";
+import Location from "./pages/Location.tsx";
+import Login from "./pages/Login.tsx";
 
 function Fullfill() {
   return (
@@ -34,6 +37,9 @@ function Fullfill() {
           <Route path="/UpdateOrderPage" element={<UpdateOrderPage />} />
           <Route path="/DetailsOrderPage" element={<DetailsOrder />} />
           <Route path="/OrderHistory" element={<OrderHistory />} />
+          <Route path="/Admin" element={<Admin />} />
+          <Route path="/Location" element={<Location />} />
+          <Route path="/Login" element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>
