@@ -1,6 +1,5 @@
 import axios from "axios";
 import { CreateOrder } from "./interface/interface";
-import { useState } from "react";
 
 export const getOrder = async () => {
   try {

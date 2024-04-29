@@ -1,4 +1,4 @@
-import { SearchOutlined } from "@ant-design/icons";
+import { DownCircleFilled, SearchOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
@@ -23,6 +23,7 @@ function Order() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { RangePicker } = DatePicker;
+  const [query, setQuery] = useState<Record<string, unknown>>();
 
   useEffect(() => {
     getOrderList();
@@ -59,19 +60,19 @@ function Order() {
     const sortedData = request.data.data.map((data: any) => {
       return { label: data.name, value: data.id };
     });
-    console.log("🚀 ~ sortedData ~ sortedData:", sortedData)
+    console.log("🚀 ~ sortedData ~ sortedData:", sortedData);
 
     setStores(sortedData);
   };
 
   const columns: ColumnsType<Record<string, unknown>> = [
-    {
-      title: "#",
-      align: "center",
-      render: (_: any, __: any, index: number) => {
-        return index + 1;
-      },
-    },
+    // {
+    //   title: "#",
+    //   align: "center",
+    //   render: (_: any, __: any, index: number) => {
+    //     return index + 1;
+    //   },
+    // },
     {
       title: "รายละเอียด",
       dataIndex: "customerName",
@@ -100,6 +101,7 @@ function Order() {
     {
       title: "สถานะ",
       dataIndex: "status",
+      // align: "center",
       align: "center",
       render: (rc: any) => {
         let status = "";
@@ -177,7 +179,29 @@ function Order() {
   ];
   return (
     <Form form={form} style={{ fontFamily: "kanit" }}>
-      <Card title={"SOL"} style={{ margin: 70, fontFamily: "kanit" }}>
+      <Card
+        title={
+          <span
+            style={{
+              color: "#FFFFFF",
+              backgroundColor: "#2F353A",
+              width: "10vw",
+              marginLeft: 70,
+              display: "flex",
+              justifyItems: "baseline",
+              justifyContent: "space-around",
+              alignItems: "center",
+              borderRadius: "20px",
+            }}
+          >
+            SOL
+            <div style={{ fontSize: "16px" }}>
+              <DownCircleFilled />
+            </div>
+          </span>
+        }
+        style={{margin:70}}
+      >
         <Row justify={"center"}>
           <Col span={10} style={{ margin: 10, fontFamily: "kanit" }}>
             <Form.Item
@@ -194,10 +218,16 @@ function Order() {
               />
             </Form.Item>
 
-            <Form.Item name="orderno.item.stores.shipperCode" label="รหัสใบสั่งของ">
+            <Form.Item name="shipperCode" label="รหัสใบสั่งของ">
               <Input
                 placeholder="รหัสใบสั่งของ"
                 className=" rounded-3xl w-[250px] float-end "
+                // onChange={(e) =>
+                //   setOrderData({
+                //     ...orderData,
+                //     shipperCode: e.target.value,
+                //   })
+                // }
               ></Input>
             </Form.Item>
 
@@ -267,6 +297,12 @@ function Order() {
               <Input
                 placeholder="086-943-9832"
                 className="rounded-3xl w-[250px] float-end"
+                onChange={(e) =>
+                  setOrderData({
+                    ...orderData,
+                    // phoneNumber: e.target.value,
+                  })
+                }
               ></Input>
             </Form.Item>
 
@@ -316,7 +352,8 @@ function Order() {
             style={{
               backgroundColor: "#2F353A",
               borderRadius: "25px",
-              marginBottom: "15px",
+              marginBottom: "30px",
+              marginRight: 80,
               height: "40px",
               width: "150px",
               color: "#fff",
