@@ -16,8 +16,8 @@ import {
 } from "antd";
 import type { FormItemProps } from "antd";
 import { useForm } from "antd/es/form/Form";
-import InputStore from "../component/storeInput";
-import EditStore from "../component/storeEdit";
+import InputStore from "../../component/storeInput";
+import EditStore from "../../component/storeEdit";
 import axios from "axios";
 import {
   DeleteFilled,
@@ -240,7 +240,7 @@ const Store = () => {
                 }
                 style={{
                   width: "300px",
-                  height: "45px",
+                  height: "40px",
                   borderRadius: "25px",
                   marginLeft: "15px",
                   marginRight: "15px",
@@ -273,7 +273,7 @@ const Store = () => {
                 }
                 style={{
                   width: "300px",
-                  height: "45px",
+                  height: "40px",
                   borderRadius: "25px",
                   marginLeft: "15px",
                   marginRight: "15px",
@@ -307,7 +307,7 @@ const Store = () => {
                 }
                 style={{
                   width: "300px",
-                  height: "45px",
+                  height: "40px",
                   borderRadius: "25px",
                   marginLeft: "15px",
                   border: "solid 1px",
@@ -334,15 +334,16 @@ const Store = () => {
                 style={{
                   backgroundColor: "#2F353A",
                   borderRadius: "25px",
-                  height: "45px",
-                  width: "150px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   color: "#fff",
-                  fontSize: "20px",
+                  fontSize: "25px",
+                  height: "40px",
+                  width: "40px",
                 }}
                 icon={<SearchOutlined />}
-              >
-                ค้นหา
-              </Button>
+              ></Button>
             </div>
           </Col>
         </Row>
@@ -361,10 +362,10 @@ const Store = () => {
               backgroundColor: "#979A9C",
               color: "white",
               borderRadius: "25px",
-              width: "200px",
-              height: "45px",
+              width: "180px",
+              height: "40px",
               fontFamily: "kanit",
-              fontSize: "20px",
+              fontSize: "18px",
             }}
           >
             เพิ่มผู้ใช้งาน
@@ -399,7 +400,11 @@ const Store = () => {
         </Modal>
         <Table
           dataSource={itemData}
-          style={{ backgroundColor: "#e4e5e5" }}
+          style={{
+            backgroundColor: "#e4e5e5",
+
+            borderRadius: "20px",
+          }}
           pagination={{
             total: getHistory.length,
             showSizeChanger: true,

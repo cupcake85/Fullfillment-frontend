@@ -235,19 +235,29 @@ const Item = () => {
         }}
       >
         {/* ---------------------------------------------------------------------------content-------------------------------------------------------------------------- */}
-        <div className="flex items-baseline">
-          <div className="flex items-baseline">
-            <div style={{ fontSize: "20px", fontWeight: "bold" }}>SKU</div>
-            <Form.Item>
+        <div style={{ padding: "20px" }}>
+          <div className="flex items-baseline ">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginLeft: "20px",
+                marginRight: "20px",
+                fontSize: "20px",
+                fontWeight: "bold",
+                fontFamily: "kanit",
+                alignItems: "center",
+              }}
+            >
+              SKU
               <Input
                 onChange={
                   (e) => setSearchQuery({ ...searchQuery, sku: e.target.value }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
                 }
                 style={{
                   width: "150px",
+                  height: "40px",
                   borderRadius: "25px",
-                  marginBottom: "15px",
-                  height: "35px",
                   marginLeft: "15px",
                   marginRight: "15px",
                   border: "solid 1px",
@@ -255,11 +265,21 @@ const Item = () => {
                 }}
                 placeholder="SKU"
               />
-            </Form.Item>
-          </div>
-          <div className="flex items-baseline">
-            <div style={{ fontSize: "20px", fontWeight: "bold" }}>ร้านค้า</div>
-            <Form.Item>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginLeft: "20px",
+                marginRight: "20px",
+                fontSize: "20px",
+                fontWeight: "bold",
+                fontFamily: "kanit",
+                alignItems: "center",
+              }}
+            >
+              ร้านค้า
               <Input
                 onChange={
                   (e) =>
@@ -267,9 +287,8 @@ const Item = () => {
                 }
                 style={{
                   width: "280px",
+                  height: "40px",
                   borderRadius: "25px",
-                  marginBottom: "15px",
-                  height: "35px",
                   marginLeft: "15px",
                   marginRight: "15px",
                   border: "solid 1px",
@@ -277,117 +296,159 @@ const Item = () => {
                 }}
                 placeholder="ร้านค้า"
               />
-            </Form.Item>
-          </div>
-          <div className="flex items-baseline">
-            <div style={{ fontSize: "20px", fontWeight: "bold" }}>
-              ชื่อสินค้า
             </div>
-            <Form.Item>
-              <Input
-                onChange={
-                  (e) =>
-                    setSearchQuery({ ...searchQuery, name: e.target.value }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
-                }
-                style={{
-                  width: "200px",
-                  borderRadius: "25px",
-                  marginBottom: "15px",
-                  height: "35px",
-                  marginLeft: "15px",
-                  marginRight: "15px",
-                  border: "solid 1px",
-                  fontFamily: "kanit",
-                }}
-                placeholder="ชื่อสินค้า"
-              />
-            </Form.Item>
-          </div>
-        </div>
-        <div className="flex items-baseline">
-          <div className="flex items-baseline">
+
             <div className="flex items-baseline">
-              <div style={{ fontSize: "20px", fontWeight: "bold" }}>
-                รายละเอียด
-              </div>
-              <Form.Item>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginLeft: "20px",
+                  marginRight: "20px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  fontFamily: "kanit",
+                  alignItems: "center",
+                }}
+              >
+                ชื่อสินค้า
                 <Input
                   onChange={
                     (e) =>
-                      setSearchQuery({
-                        ...searchQuery,
-                        details: e.target.value,
-                      }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
+                      setSearchQuery({ ...searchQuery, name: e.target.value }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
                   }
                   style={{
-                    width: "400px",
+                    width: "200px",
+                    height: "40px",
                     borderRadius: "25px",
-                    marginBottom: "15px",
-                    height: "35px",
                     marginLeft: "15px",
                     marginRight: "15px",
                     border: "solid 1px",
+                    fontFamily: "kanit",
                   }}
-                  placeholder="รายละเอียด"
+                  placeholder="ชื่อสินค้า"
                 />
+              </div>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignContent: "baseline",
+            }}
+          >
+            <div className="flex items-baseline">
+              <div className="flex items-baseline">
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginLeft: "30px",
+                    marginRight: "10px",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    fontFamily: "kanit",
+                    alignItems: "center",
+                    marginTop: "22px",
+                  }}
+                >
+                  รายละเอียด
+                  <Input
+                    onChange={
+                      (e) =>
+                        setSearchQuery({
+                          ...searchQuery,
+                          details: e.target.value,
+                        }) //สร้าง {} ใหม่ โยการเอาค่าเก่าเข้ามาใส่ใน {} ใหม่ด้วย
+                    }
+                    style={{
+                      width: "450px",
+                      height: "40px",
+                      borderRadius: "25px",
+                      marginLeft: "15px",
+                      marginRight: "15px",
+                      border: "solid 1px",
+                      fontFamily: "kanit",
+                    }}
+                    placeholder="รายละเอียด"
+                  />
+                </div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignContent: "baseline",
+                  justifyContent: "space-between",
+                  marginRight: "30px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  fontFamily: "kanit",
+                  alignItems: "center",
+                  marginTop: "22px",
+                }}
+              >
                 <Button
                   onClick={() => onClickSearch()}
                   style={{
                     backgroundColor: "#2F353A",
                     borderRadius: "25px",
-                    marginBottom: "15px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#fff",
+                    fontSize: "25px",
                     height: "40px",
                     width: "40px",
-
-                    color: "#fff",
                   }}
                   icon={<SearchOutlined />}
                 ></Button>
-              </Form.Item>
+              </div>
             </div>
           </div>
-          <div
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginBottom: "20px",
+          }}
+        >
+          <Button
             style={{
-              flexDirection: "row-reverse",
-              marginLeft: "270px",
-              display: "flex",
-              justifyContent: "flex-end",
+              backgroundColor: "#979A9C",
+              color: "white",
+              borderRadius: "25px",
+              width: "80px",
+              height: "40px",
+              fontFamily: "kanit",
+              fontSize: "18px",
+              marginRight: "10px",
             }}
+            type="primary"
+            shape="round"
+            icon={<DeleteFilled />}
+            size={size}
+            onClick={() => deleteMutiItem(selectedRowKeys)}
           >
-            <Button
-              style={{
-                backgroundColor: "#979A9C",
-                color: "white",
-                borderRadius: "20px",
-                marginBottom: "15px",
-                fontFamily: "kanit",
-              }}
-              type="primary"
-              shape="round"
-              icon={<DeleteFilled />}
-              size={size}
-              onClick={() => deleteMutiItem(selectedRowKeys)}
-            >
-              ลบ
-            </Button>{" "}
-            <Button
-              style={{
-                backgroundColor: "#979A9C",
-                color: "white",
-                borderRadius: "20px",
-                marginBottom: "15px",
-                marginRight: "10px",
-                fontFamily: "kanit",
-              }}
-              type="primary"
-              shape="round"
-              icon={<PlusCircleFilled />}
-              size={size}
-              onClick={showModalAdd}
-            >
-              สินค้า
-            </Button>
-          </div>
+            ลบ
+          </Button>{" "}
+          <Button
+            style={{
+              backgroundColor: "#979A9C",
+              color: "white",
+              borderRadius: "20px",
+              height: "40px",
+              fontSize: "18px",
+              fontFamily: "kanit",
+            }}
+            type="primary"
+            shape="round"
+            icon={<PlusCircleFilled />}
+            size={size}
+            onClick={showModalAdd}
+          >
+            สินค้า
+          </Button>
         </div>
         {/* ---------------------------------------------------------------------------modal-------------------------------------------------------------------------- */}
         <Modal
